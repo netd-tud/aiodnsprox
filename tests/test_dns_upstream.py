@@ -6,31 +6,12 @@
 #
 # Distributed under terms of the MIT license.
 
-import random
-import subprocess
-
 import dns.message
 import pytest
 
-from dns.rdtypes.IN.AAAA import AAAA
-
 from aiodnsprox import dns_upstream
 
-
-TEST_HOSTNAME = 'example.org'
-TEST_ADDRESS = '2001:db8::1'
-
-
-@pytest.fixture
-def dns_server():
-    port = random.randint(1 << 2, 0xff) << 8 | 53
-    proc = subprocess.Popen(
-        ['dnsmasq', '-k', '-p', str(port),
-         f'--host-record={TEST_HOSTNAME},{TEST_ADDRESS}']
-    )
-    yield {'host': '::1', 'port': port}
-    proc.kill()
-    proc.wait()
+from .fixtures import dns_server        # noqa: F401
 
 
 def test_upstream_init__unknown_transport():
@@ -72,20 +53,21 @@ def test_upstream_init(port, transport, exp_port):
         (41905, dns_upstream.DNSTransport.TCP),
     ]
 )
-async def test_upstream_query(dns_server, id, transport):
+async def test_upstream_query(dns_server, id, transport):   # noqa: F811
     upstream = dns_upstream.DNSUpstream(
         host=dns_server['host'],
         port=dns_server['port'],
         transport=transport
     )
-    query = dns.message.make_query(TEST_HOSTNAME, 'AAAA')
+    query = dns.message.make_query(dns_server['req_hostname'],
+                                   dns_server['resp_rtype'].__name__)
     query.id = id
     response_bytes = await upstream.query(query.to_wire())
     response = dns.message.from_wire(response_bytes)
     found_answer = False
     for rset in response.answer:
-        for rd in rset:
-            if isinstance(rd, AAAA):
+        for rda in rset:
+            if isinstance(rda, dns_server['resp_rtype']):
                 found_answer = True
-                assert rd.address == TEST_ADDRESS
+                assert rda.address == dns_server['resp_address']
     assert found_answer

@@ -5,6 +5,7 @@
 #
 # Distributed under terms of the MIT license.
 
+import asyncio
 import enum
 import typing
 
@@ -58,3 +59,27 @@ class DNSUpstream:
             resp = resp[0]
         resp.id = id_
         return resp.to_wire()
+
+
+class DNSUpstreamProtocolMixin:
+    def __init__(self, host, port: typing.Optional[int] = None,
+                 transport: typing.Optional[DNSTransport] = DNSTransport.UDP,
+                 timeout: typing.Optional[float] = None):
+        self._dns_upstream = DNSUpstream(
+            host=host,
+            port=port,
+            transport=transport
+        )
+        self._timeout = timeout
+
+    async def _get_query_response(self, query, requester):
+        resp = await self._dns_upstream.query(query, timeout=self._timeout)
+        self.send_response_to_requester(resp, requester)
+
+    def query_received(self, query, requester):
+        loop = asyncio.get_event_loop()
+        coroutine = self._get_query_response(query, requester)
+        loop.create_task(coroutine)
+
+    def send_response_to_requester(self, response, requester):
+        raise NotImplementedError
