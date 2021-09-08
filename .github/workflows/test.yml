@@ -38,7 +38,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install tox
         sudo apt-get update
-        sudo apt-get install -y tmux
+        sudo apt-get install -y tmux dnsmasq
     - name: Test with tox
       run: |
         pyenv="py$(echo "${{ matrix.python-version }}" | tr -d '.')"
