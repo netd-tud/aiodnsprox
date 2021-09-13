@@ -1,0 +1,9 @@
+{
+  "source_directories": [
+    {
+      "import_root": ".",
+      "source": "aiodnsprox"
+    }
+  ],
+  "taint_models_path": "/home/mlenders/Repositories/PIVOT/aiodnsprox/.tox/pyre/lib"
+}
