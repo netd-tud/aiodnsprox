@@ -8,12 +8,13 @@
 
 
 import abc
+import asyncio
 import typing
 
 from .dns_upstream import DNSTransport
 
 
-class BaseServerProtocolFactory(abc.ABC):
+class BaseServerFactory(abc.ABC):
     # pylint: disable=too-few-public-methods
     def __init__(self, upstream_host: str,
                  upstream_port: typing.Optional[int] = None,
@@ -25,5 +26,9 @@ class BaseServerProtocolFactory(abc.ABC):
         self.upstream_transport = upstream_transport
         self.upstream_timeout = upstream_timeout
 
-    def create_server_protocol(self, *args, **kwargs):
+    @abc.abstractmethod
+    async def create_server(
+        self, loop: asyncio.AbstractEventLoop, *args,
+        local_addr: typing.Tuple[str, int] = None, **kwargs
+    ):
         raise NotImplementedError

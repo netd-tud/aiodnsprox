@@ -37,20 +37,17 @@ async def test_udp_proxy(dns_server):   # noqa: C901, F811
             self.result = (dns.message.from_wire(response), addr)
             self.transport.close()
 
-        def send_response_to_requester(self, response, requester):
-            self.transport.sendto(resp, requester)
-
         def error_received(self, exc):
             raise exc
 
         def connection_lost(self, exc):
             self.on_connection_lost.set_result(self.result)
 
-    factory = udp.DNSOverUDPServerProtocolFactory(dns_server['host'],
-                                                  dns_server['port'])
+    factory = udp.DNSOverUDPServerFactory(dns_server['host'],
+                                          dns_server['port'])
     loop = asyncio.get_running_loop()
-    server_transport, _ = await loop.create_datagram_endpoint(
-        factory.create_server_protocol,
+    server = await factory.create_server(
+        loop,
         local_addr=proxy_bind
     )
     try:
@@ -72,4 +69,17 @@ async def test_udp_proxy(dns_server):   # noqa: C901, F811
         finally:
             client_transport.close()
     finally:
-        server_transport.close()
+        server.close()
+        server.close()  # call second time to check idempotency
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    'local_addr', [None, ('localhost', None)]
+)
+async def test_udp_factory_create_server(local_addr, mocker):
+    loop = mocker.MagicMock()
+    loop.create_datagram_endpoint = mocker.AsyncMock(return_value=(0, 0))
+    factory = udp.DNSOverUDPServerFactory("localhost", 53)
+    await factory.create_server(loop, local_addr=local_addr)
+    loop.create_datagram_endpoint.assert_called_once()
