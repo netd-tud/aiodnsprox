@@ -56,5 +56,5 @@ setup(
                  'Environment :: Console',
                  'Topic :: Utilities', ],
     install_requires=list(get_requirements()),
-    python_requires='>=3.9',
+    python_requires='>=3.7',
 )

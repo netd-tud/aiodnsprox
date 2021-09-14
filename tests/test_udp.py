@@ -79,7 +79,9 @@ async def test_udp_proxy(dns_server):   # noqa: C901, F811
 )
 async def test_udp_factory_create_server(local_addr, mocker):
     loop = mocker.MagicMock()
-    loop.create_datagram_endpoint = mocker.AsyncMock(return_value=(0, 0))
+    future = asyncio.Future()
+    future.set_result((0, 0))
+    loop.create_datagram_endpoint.return_value = future
     factory = udp.DNSOverUDPServerFactory("localhost", 53)
     await factory.create_server(loop, local_addr=local_addr)
     loop.create_datagram_endpoint.assert_called_once()
