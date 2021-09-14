@@ -13,15 +13,18 @@ import dns.message
 import pytest
 
 from aiodnsprox import dtls
+from aiodnsprox import config
 
 from .fixtures import dns_server        # noqa: F401
 
 
 @pytest.mark.asyncio
-async def test_dtls_proxy(dns_server):   # noqa: C901, F811
+async def test_dtls_proxy(dns_server, monkeypatch):     # noqa: C901, F811
     proxy_bind = ('::1', 2304)
-    psk_id = b"Client_identifier"
-    psk_store = {psk_id: b"secretPSK"}
+    monkeypatch.setattr(config.Config(), 'get', lambda key, defaults: {
+        'client_identity': 'Client_identifier',
+        'psk': 'secretPSK',
+    })
 
     class ClientProtocol(asyncio.DatagramProtocol):
         def __init__(self, loop, on_connection_lost):
@@ -38,7 +41,7 @@ async def test_dtls_proxy(dns_server):   # noqa: C901, F811
 
         def connection_made(self, transport):
             self.transport = transport
-            self._dtls = dtls.TinyDTLSWrapper(transport, psk_id, psk_store)
+            self._dtls = dtls.TinyDTLSWrapper(transport)
             self._dtls.connect(proxy_bind)
 
         def datagram_received(self, response, session):
@@ -63,8 +66,6 @@ async def test_dtls_proxy(dns_server):   # noqa: C901, F811
     loop = asyncio.get_running_loop()
     server = await factory.create_server(
         loop,
-        psk_id,
-        psk_store,
         local_addr=proxy_bind
     )
     try:

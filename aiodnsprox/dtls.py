@@ -7,12 +7,12 @@
 
 import abc
 import asyncio
-import functools
 import logging
 import typing
 
 from DTLSSocket import dtls
 
+from .config import Config
 from .dns_upstream import DNSUpstreamServerMixin
 from .server_factory import BaseServerFactory
 
@@ -21,11 +21,8 @@ logger = logging.getLogger()
 
 
 class BaseDTLSWrapper(abc.ABC):
-    def __init__(self, transport: asyncio.DatagramTransport, psk_id: bytes,
-                 psk_store: typing.Mapping[bytes, bytes]):
+    def __init__(self, transport: asyncio.DatagramTransport):
         self.transport = transport
-        self.psk_id = psk_id
-        self.psk_store = psk_store
 
     @abc.abstractmethod
     def is_connected(self, addr: typing.Tuple):
@@ -56,14 +53,16 @@ class BaseDTLSWrapper(abc.ABC):
 class TinyDTLSWrapper(BaseDTLSWrapper):
     EVENT_CONNECTED = 0x1de
 
-    def __init__(self, transport, psk_id, psk_store):
-        super().__init__(transport, psk_id, psk_store)
+    def __init__(self, transport):
+        super().__init__(transport)
         # pylint: disable=c-extension-no-member
-        self._dtls = dtls.DTLS(read=self._read,
-                               write=self._write,
-                               event=self._event,
-                               pskId=self.psk_id,
-                               pskStore=self.psk_store)
+        config = Config()
+        client_identity = config.get('dtls', {})['client_identity'].encode()
+        psk = config.get('dtls', {})['psk'].encode()
+        self._dtls = dtls.DTLS(
+            read=self._read, write=self._write, event=self._event,
+            pskId=client_identity, pskStore={client_identity: psk}
+        )
         self._active_sessions = {}
         self._app_data = None
         self._last_event = None
@@ -140,14 +139,12 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
     dtls_class = TinyDTLSWrapper
 
     class DNSOverDTLSServer(DNSUpstreamServerMixin):
-        def __init__(self, factory, psk_id, psk_store):
+        def __init__(self, factory):
             super().__init__(host=factory.upstream_host,
                              port=factory.upstream_port,
                              transport=factory.upstream_transport,
                              timeout=factory.upstream_timeout)
             self.factory = factory
-            self.psk_id = psk_id
-            self.psk_store = psk_store
             self.transport = None
             self._dtls = None
 
@@ -157,9 +154,7 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
 
         def connection_made(self, transport):
             self.transport = transport
-            self._dtls = self.factory.dtls_class(self.transport,
-                                                 psk_id=self.psk_id,
-                                                 psk_store=self.psk_store)
+            self._dtls = self.factory.dtls_class(self.transport)
 
         def datagram_received(self, data, addr):
             data, addr, _ = self._dtls.handle_message(data, addr)
@@ -185,19 +180,17 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
         def connection_lost(self, exc):     # pylint: disable=unused-argument
             self._dtls = None
 
-    def _create_server_protocol(self, psk_id, psk_store, *args, **kwargs):
-        return self.DNSOverDTLSServer(self, psk_id, psk_store, *args, **kwargs)
+    def _create_server_protocol(self, *args, **kwargs):
+        return self.DNSOverDTLSServer(self, *args, **kwargs)
 
-    async def create_server(self, loop, psk_id, psk_store, *args,
-                            local_addr=None, **kwargs):
-        # pylint: disable=arguments-differ
+    async def create_server(self, loop, *args, local_addr=None, **kwargs):
         if local_addr is None:
             local_addr = ('localhost', self.DODTLS_PORT)
         if local_addr[1] is None:
             local_addr = (local_addr[0], self.DODTLS_PORT)
 
         _, protocol = await loop.create_datagram_endpoint(
-            functools.partial(self._create_server_protocol, psk_id, psk_store),
+            self._create_server_protocol,
             *args, local_addr=local_addr, **kwargs,
         )
         return protocol
