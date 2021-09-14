@@ -83,5 +83,6 @@ async def test_udp_factory_create_server(local_addr, mocker):
     future.set_result((0, 0))
     loop.create_datagram_endpoint.return_value = future
     factory = udp.DNSOverUDPServerFactory("localhost", 53)
-    await factory.create_server(loop, local_addr=local_addr)
+    server = await factory.create_server(loop, local_addr=local_addr)
     loop.create_datagram_endpoint.assert_called_once()
+    del server

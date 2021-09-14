@@ -7,15 +7,88 @@
 # Distributed under terms of the MIT license.
 
 import asyncio
-import socket
+import logging
 
 import dns.message
 import pytest
+
+from DTLSSocket import dtls as tinydtls
 
 from aiodnsprox import dtls
 from aiodnsprox import config
 
 from .fixtures import dns_server        # noqa: F401
+
+
+def test_tinydtls_wrapper__connect(mocker):
+    mocker.patch('aiodnsprox.config.Config.get', return_value={
+        'client_identity': 'Client_identifier',
+        'psk': 'secretPSK',
+    })
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._read')
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._write')
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._event')
+    wrapper = dtls.TinyDTLSWrapper(mocker.MagicMock())
+    wrapper.connect(('::1', 853))
+    wrapper._write.assert_called()
+    wrapper.close(('::1', 853))
+
+
+def test_tinydtls_wrapper__handle_message(caplog, mocker):
+    mocker.patch('aiodnsprox.config.Config.get', return_value={
+        'client_identity': 'Client_identifier',
+        'psk': 'secretPSK',
+    })
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._read')
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._write')
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._event')
+    wrapper = dtls.TinyDTLSWrapper(mocker.MagicMock())
+    assert wrapper.handle_message(b"abcd", ('::1', 853)) == (None, None, False)
+    assert wrapper.handle_message(
+            b"abcd", tinydtls.Session('::1', 853)
+        ) == (None, None, False)
+    with pytest.raises(ValueError):
+        wrapper.handle_message(b"abcd", "This is a string were non should be")
+    with caplog.at_level(logging.WARNING):
+        # try to handle Client Hello from unverified peer
+        assert wrapper.handle_message(
+                b"\x16\xfe\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x36\x01"
+                b"\x00\x00\x2a\x00\x00\x00\x00\x00\x00\x00\x2a\xfe\xfd\x00"
+                b"\x00\x00\x00\xc1\xfa\x0e\x7b\xbb\x9b\x30\xc8\xf2\xf0\x65"
+                b"\xe7\x6b\x15\x59\x68\xea\x69\x30\xb6\x08\x6e\x58\xba\x1e"
+                b"\x99\x61\x55\x00\x00\x00\x02\xc0\xa8\x01\x00", ('::1', 853)
+            ) == (None, None, False)
+    assert "Unable to handle incoming DTLS message from ('::1', 853)" \
+        in caplog.text
+
+
+def test_tinydtls_wrapper__write(caplog, mocker):
+    mocker.patch('aiodnsprox.config.Config.get', return_value={
+        'client_identity': 'Client_identifier',
+        'psk': 'secretPSK',
+    })
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._read')
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._write')
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._event')
+    wrapper = dtls.TinyDTLSWrapper(mocker.MagicMock())
+    with caplog.at_level(logging.WARNING):
+        wrapper.write(b"abcd", ('::1', 853))
+    assert "('::1', 853) does not have an active session" in caplog.text
+    # pylint: disable=no-member,protected-access
+    wrapper._write.assert_not_called()
+    mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper.is_connected',
+                 return_value=True)
+    wrapper._active_sessions = {('::1', 853): tinydtls.Session('::1', 853)}
+    caplog.clear()
+    with caplog.at_level(logging.WARNING):
+        wrapper.write(b"abcd", ('::1', 853))
+    assert "('::1', 853) does not have an active session" not in caplog.text
+    wrapper._write.assert_called()
+    caplog.clear()
+    with caplog.at_level(logging.WARNING):
+        wrapper.write(b"abcd", wrapper._active_sessions['::1', 853])
+    assert "('::1', 853) does not have an active session" not in caplog.text
+    wrapper._write.assert_called()
 
 
 @pytest.mark.asyncio
@@ -91,13 +164,16 @@ async def test_dtls_proxy(dns_server, monkeypatch):     # noqa: C901, F811
         server.close()  # call second time to check idempotency
 
 
-# @pytest.mark.asyncio
-# @pytest.mark.parametrize(
-    # 'local_addr', [None, ('localhost', None)]
-# )
-# async def test_udp_factory_create_datagram_endpoint(local_addr, mocker):
-    # loop = mocker.MagicMock()
-    # loop.create_datagram_endpoint = mocker.AsyncMock(return_value=(0, 0))
-    # factory = udp.DNSOverUDPServerProtocolFactory("localhost", 53)
-    # await factory.create_server(loop, local_addr=local_addr)
-    # loop.create_datagram_endpoint.assert_called_once()
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    'local_addr', [None, ('localhost', None)]
+)
+async def test_dtls_factory_create_server(local_addr, mocker):
+    loop = mocker.MagicMock()
+    future = asyncio.Future()
+    future.set_result((0, 0))
+    loop.create_datagram_endpoint.return_value = future
+    factory = dtls.DNSOverDTLSServerFactory("localhost", 53)
+    server = await factory.create_server(loop, local_addr=local_addr)
+    loop.create_datagram_endpoint.assert_called_once()
+    del server

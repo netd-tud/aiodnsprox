@@ -107,6 +107,8 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
             ret = self._dtls.handleMessage(session, msg)
             addr = session.addr, session.port, session.flowinfo, \
                 session.scope_id
+        else:
+            raise ValueError(f"Unexpected session type {type(session)}")
         if ret < 0:
             logger.warning('Unable to handle incoming DTLS message from '
                            '%s', addr)
