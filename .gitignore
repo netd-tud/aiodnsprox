@@ -1,5 +1,9 @@
 test-report.xml
 
+# ignore user configs
+*.yml
+*.yaml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

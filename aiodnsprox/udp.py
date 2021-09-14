@@ -31,8 +31,11 @@ class DNSOverUDPServerFactory(BaseServerFactory):
         def datagram_received(self, data, addr):
             self._dns_query_received(data, addr)
 
-        def error_received(self, exc):  # pylint: disable=no-self-use
-            raise exc   # pragma: no cover
+        def error_received(self, exc):      # pylint: disable=no-self-use
+            raise exc                       # pragma: no cover
+
+        def connection_lost(self, exc):     # pylint: disable=no-self-use
+            pass                            # pragma: no cover
 
         def close(self):
             if self.transport is not None:

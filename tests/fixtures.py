@@ -11,8 +11,18 @@ import subprocess
 from dns.rdtypes.IN.AAAA import AAAA
 import pytest
 
+from aiodnsprox.config import Config
+
 TEST_HOSTNAME = 'example.org'
 TEST_ADDRESS = '2001:db8::1'
+
+
+@pytest.fixture
+def config():
+    conf = Config()
+    conf._sections.clear()      # pylint: disable=protected-access
+    yield conf
+    conf._sections.clear()      # pylint: disable=protected-access
 
 
 @pytest.fixture

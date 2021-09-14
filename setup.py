@@ -56,5 +56,10 @@ setup(
                  'Environment :: Console',
                  'Topic :: Utilities', ],
     install_requires=list(get_requirements()),
+    entry_points= {
+        'console_scripts': [
+            'aiodns-proxy = aiodnsprox.cli.proxy:sync_main',
+        ],
+    },
     python_requires='>=3.7',
 )

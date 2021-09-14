@@ -57,8 +57,9 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
         super().__init__(transport)
         # pylint: disable=c-extension-no-member
         config = Config()
-        client_identity = config.get('dtls', {})['client_identity'].encode()
-        psk = config.get('dtls', {})['psk'].encode()
+        credentials = config.get('dtls_credentials', {})
+        client_identity = credentials['client_identity'].encode()
+        psk = credentials['psk'].encode()
         self._dtls = dtls.DTLS(
             read=self._read, write=self._write, event=self._event,
             pskId=client_identity, pskStore={client_identity: psk}
