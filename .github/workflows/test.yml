@@ -42,7 +42,7 @@ jobs:
     - name: Test with tox
       run: |
         pyenv="py$(echo "${{ matrix.python-version }}" | tr -d '.')"
-        tox -e ${pyenv},test,flake8,pylint,pyre
+        tox -e ${pyenv},flake8,pylint,pyre,test
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v1.2.2
       with:
