@@ -124,7 +124,6 @@ def get_config(args):
     config.add_args_config(args)
     if 'upstream_dns' not in config:
         raise RuntimeError("No upstream DNS server provided")
-    print(config)
     if 'transports' not in config:
         raise RuntimeError("No proxy config provided")
     return config
