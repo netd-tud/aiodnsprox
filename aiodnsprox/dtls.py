@@ -121,7 +121,7 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
             connected = True
         self._last_event = None
         if self._app_data is None:
-            logger.warning("Unable to fetch application data from DTLS")
+            logger.debug("Unable to fetch application data from DTLS")
             return None, None, connected
         data, addr = self._app_data
         self._app_data = None
