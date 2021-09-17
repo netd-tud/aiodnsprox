@@ -15,15 +15,16 @@ import pytest
 from DTLSSocket import dtls as tinydtls
 
 from aiodnsprox import dtls
-from aiodnsprox import config
 
-from .fixtures import dns_server        # noqa: F401
+from .fixtures import dns_server, config    # noqa: F401
 
 
-def test_tinydtls_wrapper__connect(mocker):
-    mocker.patch('aiodnsprox.config.Config.get', return_value={
-        'client_identity': 'Client_identifier',
-        'psk': 'secretPSK',
+def test_tinydtls_wrapper__connect(mocker, config):
+    config.add_config({
+        'dtls_credentials': {
+            'client_identity': 'Client_identifier',
+            'psk': 'secretPSK',
+        }
     })
     mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._read')
     mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._write')
@@ -34,10 +35,12 @@ def test_tinydtls_wrapper__connect(mocker):
     wrapper.close(('::1', 853))
 
 
-def test_tinydtls_wrapper__handle_message(caplog, mocker):
-    mocker.patch('aiodnsprox.config.Config.get', return_value={
-        'client_identity': 'Client_identifier',
-        'psk': 'secretPSK',
+def test_tinydtls_wrapper__handle_message(caplog, mocker, config):
+    config.add_config({
+        'dtls_credentials': {
+            'client_identity': 'Client_identifier',
+            'psk': 'secretPSK',
+        }
     })
     mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._read')
     mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._write')
@@ -62,10 +65,12 @@ def test_tinydtls_wrapper__handle_message(caplog, mocker):
         in caplog.text
 
 
-def test_tinydtls_wrapper__write(caplog, mocker):
-    mocker.patch('aiodnsprox.config.Config.get', return_value={
-        'client_identity': 'Client_identifier',
-        'psk': 'secretPSK',
+def test_tinydtls_wrapper__write(caplog, mocker, config):
+    config.add_config({
+        'dtls_credentials': {
+            'client_identity': 'Client_identifier',
+            'psk': 'secretPSK',
+        }
     })
     mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._read')
     mocker.patch('aiodnsprox.dtls.TinyDTLSWrapper._write')
@@ -92,11 +97,13 @@ def test_tinydtls_wrapper__write(caplog, mocker):
 
 
 @pytest.mark.asyncio
-async def test_dtls_proxy(dns_server, monkeypatch):     # noqa: C901, F811
+async def test_dtls_proxy(dns_server, config):     # noqa: C901, F811
     proxy_bind = ('::1', 2304)
-    monkeypatch.setattr(config.Config(), 'get', lambda key, defaults: {
-        'client_identity': 'Client_identifier',
-        'psk': 'secretPSK',
+    config.add_config({
+        'dtls_credentials': {
+            'client_identity': 'Client_identifier',
+            'psk': 'secretPSK',
+        }
     })
 
     class ClientProtocol(asyncio.DatagramProtocol):
