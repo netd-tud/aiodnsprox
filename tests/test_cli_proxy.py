@@ -80,9 +80,13 @@ async def test_sync_main__success(monkeypatch, mocker, servers, config, argv,
         'dtls': 5853,
         'udp': 5353,
     })
-    await proxy.main()
-    assert len(config['transports']) == exp_transports
-    assert config.get('dtls_credentials') == exp_credentials
-    assert len(servers) == exp_transports
-    if '-c' in argv:
-        assert config['test'] == 'foobar'
+    if '-d' in argv and '-C' not in argv:
+        with pytest.raises(RuntimeError):
+            await proxy.main()
+    else:
+        await proxy.main()
+        assert len(config['transports']) == exp_transports
+        assert config.get('dtls_credentials') == exp_credentials
+        assert len(servers) == exp_transports
+        if '-c' in argv:
+            assert config['test'] == 'foobar'

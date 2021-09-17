@@ -56,8 +56,7 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
     def __init__(self, transport):
         super().__init__(transport)
         # pylint: disable=c-extension-no-member
-        config = Config()
-        credentials = config.get('dtls_credentials', {})
+        credentials = Config()['dtls_credentials']
         client_identity = credentials['client_identity'].encode()
         psk = credentials['psk'].encode()
         self._dtls = dtls.DTLS(
@@ -184,6 +183,13 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
             self._dtls = None
 
     def _create_server_protocol(self, *args, **kwargs):
+        try:
+            config = Config()
+            _ = config['dtls_credentials']['client_identity']
+            _ = config['dtls_credentials']['psk']
+        except KeyError as exc:
+            raise RuntimeError(f"DTLS credential option {exc} not found") \
+                from exc
         return self.DNSOverDTLSServer(self, *args, **kwargs)
 
     async def create_server(self, loop, *args, local_addr=None, **kwargs):

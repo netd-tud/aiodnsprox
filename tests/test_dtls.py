@@ -172,6 +172,19 @@ async def test_dtls_proxy(dns_server, config):     # noqa: C901, F811
 
 
 @pytest.mark.asyncio
+async def test_dtls_factory_create_server_wo_config(dns_server):
+    proxy_bind = ('::1', 2304)
+    factory = dtls.DNSOverDTLSServerFactory(dns_server['host'],
+                                            dns_server['port'])
+    loop = asyncio.get_running_loop()
+    with pytest.raises(RuntimeError):
+        await factory.create_server(
+            loop,
+            local_addr=proxy_bind
+        )
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     'local_addr', [None, ('localhost', None)]
 )
