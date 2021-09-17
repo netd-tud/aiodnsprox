@@ -12,12 +12,14 @@ import argparse
 import asyncio
 
 from aiodnsprox.config import Config
+from aiodnsprox import coap
 from aiodnsprox import dns_upstream
 from aiodnsprox import dtls
 from aiodnsprox import udp
 
 
 FACTORIES = {
+    'coap': coap.DNSOverCoAPServerFactory,
     'dtls': dtls.DNSOverDTLSServerFactory,
     'udp': udp.DNSOverUDPServerFactory,
 }
@@ -27,6 +29,7 @@ servers = []
 class HostPortAction(argparse.Action):          # pylint: disable=R0903
     DEFAULT_HOST = 'localhost'
     DEFAULT_PORTS = {
+        'coap': None,
         'dtls': dtls.DNSOverDTLSServerFactory.DODTLS_PORT,
         'udp': udp.DNSOverUDPServerFactory.DNS_PORT,
     }
@@ -92,7 +95,7 @@ class UpstreamAction(HostPortAction):           # pylint: disable=R0903
 
 def build_argparser():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("-c", "--config-file",
+    parser.add_argument("-C", "--config-file",
                         type=argparse.FileType('r', encoding='utf-8'),
                         help="Config YAML file")
     group = parser.add_argument_group('Transports')
@@ -102,7 +105,10 @@ def build_argparser():
     group.add_argument("-d", "--dtls", nargs='*', action=HostPortAction,
                        default=None, metavar='host [port]',
                        help="Start DNS-over-DTLS proxy")
-    parser.add_argument("-C", "--dtls-credentials", nargs=2,
+    group.add_argument("-c", "--coap", nargs='*', action=HostPortAction,
+                       default=None, metavar='host [port]',
+                       help="Start DNS-over-CoAP proxy")
+    parser.add_argument("--dtls-credentials", nargs=2,
                         action=DTLSCredentialsAction, default=None,
                         metavar='client_id psk',
                         help="DTLS credentials")
