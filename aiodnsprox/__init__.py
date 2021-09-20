@@ -5,4 +5,4 @@
 #
 # Distributed under terms of the MIT license.
 
-__version__ = 'v0.0.0a'
+__version__ = 'v0.0.1a'
