@@ -154,16 +154,17 @@ async def main():
     config = get_config(args)
 
     loop = asyncio.get_event_loop()
-    try:
-        for transport, args in config['transports'].items():
-            factory = get_factory(transport, config)
-            servers.append(await factory.create_server(
-                loop=loop, local_addr=(args['host'], args['port'])
-            ))
-    finally:
-        await close_servers()
+    for transport, args in config['transports'].items():
+        factory = get_factory(transport, config)
+        servers.append(await factory.create_server(
+            loop=loop, local_addr=(args['host'], args['port'])
+        ))
 
 
 def sync_main():                # pragma: no cover
     asyncio.Task(main())
-    asyncio.get_event_loop().run_forever()
+    loop = asyncio.get_event_loop()
+    try:
+        loop.run_forever()
+    finally:
+        asyncio.ensure_future(close_servers(), loop=loop)

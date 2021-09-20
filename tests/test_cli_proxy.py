@@ -110,7 +110,6 @@ async def test_sync_main__success(monkeypatch, mocker, servers, config, argv,
         await proxy.main()
         assert len(config['transports']) == exp_transports
         assert config.get('dtls_credentials') == exp_credentials
-        # all servers were closed after proxy.main() finished
-        assert not servers
+        assert len(servers) == exp_transports
         if '-C' in argv:
             assert config['test'] == 'foobar'
