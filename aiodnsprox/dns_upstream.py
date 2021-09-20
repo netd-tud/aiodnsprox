@@ -7,11 +7,14 @@
 
 import asyncio
 import abc
+import copy
 import enum
 import typing
+import time
 
 import dns.asyncquery
 import dns.entropy
+import dns.exception
 import dns.message
 
 
@@ -27,6 +30,8 @@ class DNSUpstream:
         DNSTransport.UDP_TCP_FALLBACK: dns.asyncquery.udp_with_fallback,
         DNSTransport.TCP: dns.asyncquery.tcp,
     }
+    DEFAULT_LIFETIME = 5.0
+    DEFAULT_TIMEOUT = 2.0
 
     def __init__(self, host: str, port: typing.Optional[int] = None,
                  transport: typing.Optional[DNSTransport] = DNSTransport.UDP):
@@ -39,24 +44,68 @@ class DNSUpstream:
                 raise ValueError(f"Unsupported transport {transport}")
         else:
             self._port = port
+        self._transport = transport
         self._query_func = self._QUERY_FUNC[transport]
 
     @property
     def port(self):
         return self._port
 
+    def _compute_timeout(self, start, lifetime=None):
+        # https://dnspython.readthedocs.io/en/stable/_modules/dns/resolver.html
+        # Resolver._compute_timeout()
+        if lifetime is None:
+            lifetime = self.DEFAULT_LIFETIME
+        now = time.time()
+        duration = now - start
+        if duration < 0:    # pragma: no cover
+            if duration < -1:
+                # Time going backwards is bad. Just give up.
+                raise dns.exception.Timeout(timeout=duration)
+            # Time went backwards, but only a little.  This can
+            # happen, e.g. under vmware with older linux kernels.
+            # Pretend it didn't happen.
+            now = start
+        if duration >= lifetime:
+            raise dns.exception.Timeout(timeout=duration)   # pragma: no cover
+        return min(lifetime - duration, self.DEFAULT_TIMEOUT)
+
+    @staticmethod
+    def _resp_servfail(query):
+        resp = copy.deepcopy(query)
+        resp.flags = dns.flags.QR | dns.flags.RD | dns.flags.RA
+        resp.set_rcode(dns.rcode.SERVFAIL)
+        return resp
+
     async def query(self, query: bytes,
                     timeout: typing.Optional[float] = None) -> bytes:
         qry = dns.message.from_wire(query)
+        start = time.time()
         id_ = qry.id
+        tuple_resp = self._transport in [DNSTransport.UDP_TCP_FALLBACK]
         if qry.id == 0:
             id_ = dns.entropy.random_16()
             qry.id = id_
-        resp = await self._query_func(qry, where=self._host, port=self._port,
-                                      timeout=timeout)
-        if self._query_func in [
-            self._QUERY_FUNC[DNSTransport.UDP_TCP_FALLBACK]
-        ]:
+        if self._transport in [DNSTransport.UDP]:
+            resp = None
+            lifetime = timeout
+            while resp is None:
+                timeout = self._compute_timeout(start, lifetime)
+                try:
+                    resp = await self._query_func(qry, where=self._host,
+                                                  port=self._port,
+                                                  timeout=timeout)
+                except dns.exception.DNSException:
+                    resp = self._resp_servfail(qry)
+                    break
+        else:
+            try:
+                resp = await self._query_func(qry, where=self._host,
+                                              port=self._port, timeout=timeout)
+            except (dns.exception.DNSException, ConnectionRefusedError):
+                resp = self._resp_servfail(qry)
+                tuple_resp = False
+        if tuple_resp:
             resp = resp[0]
         resp.id = id_
         return resp.to_wire()

@@ -7,6 +7,7 @@
 # Distributed under terms of the MIT license.
 
 import dns.message
+import dns.rcode
 import pytest
 
 from aiodnsprox import dns_upstream
@@ -44,16 +45,22 @@ def test_upstream_init(port, transport, exp_port):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    'id, transport', [
-        (0, dns_upstream.DNSTransport.UDP),
-        (41905, dns_upstream.DNSTransport.UDP),
-        (0, dns_upstream.DNSTransport.UDP_TCP_FALLBACK),
-        (41905, dns_upstream.DNSTransport.UDP_TCP_FALLBACK),
-        (0, dns_upstream.DNSTransport.TCP),
-        (41905, dns_upstream.DNSTransport.TCP),
+    'id, transport, timeout', [
+        (0, dns_upstream.DNSTransport.UDP, None),
+        (41905, dns_upstream.DNSTransport.UDP, None),
+        (0, dns_upstream.DNSTransport.UDP_TCP_FALLBACK, None),
+        (41905, dns_upstream.DNSTransport.UDP_TCP_FALLBACK, None),
+        (0, dns_upstream.DNSTransport.TCP, None),
+        (41905, dns_upstream.DNSTransport.TCP, None),
+        (0, dns_upstream.DNSTransport.UDP, 6.0),
+        (41905, dns_upstream.DNSTransport.UDP, 6.0),
+        (0, dns_upstream.DNSTransport.UDP_TCP_FALLBACK, 6.0),
+        (41905, dns_upstream.DNSTransport.UDP_TCP_FALLBACK, 6.0),
+        (0, dns_upstream.DNSTransport.TCP, 6.0),
+        (41905, dns_upstream.DNSTransport.TCP, 6.0),
     ]
 )
-async def test_upstream_query(dns_server, id, transport):   # noqa: F811
+async def test_upstream_query(dns_server, id, transport, timeout):  # noqa: F811, E501
     upstream = dns_upstream.DNSUpstream(
         host=dns_server['host'],
         port=dns_server['port'],
@@ -62,7 +69,7 @@ async def test_upstream_query(dns_server, id, transport):   # noqa: F811
     query = dns.message.make_query(dns_server['req_hostname'],
                                    dns_server['resp_rtype'].__name__)
     query.id = id
-    response_bytes = await upstream.query(query.to_wire())
+    response_bytes = await upstream.query(query.to_wire(), timeout=timeout)
     response = dns.message.from_wire(response_bytes)
     found_answer = False
     for rset in response.answer:
@@ -71,3 +78,23 @@ async def test_upstream_query(dns_server, id, transport):   # noqa: F811
                 found_answer = True
                 assert rda.address == dns_server['resp_address']
     assert found_answer
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    'transport', [
+        (dns_upstream.DNSTransport.UDP),
+        (dns_upstream.DNSTransport.UDP_TCP_FALLBACK),
+        (dns_upstream.DNSTransport.TCP),
+    ]
+)
+async def test_upstream_query_timeout(transport):
+    upstream = dns_upstream.DNSUpstream(
+        host='::1',
+        port=13417,
+        transport=transport
+    )
+    query = dns.message.make_query('example.org', 'AAAA')
+    response_bytes = await upstream.query(query.to_wire(), timeout=0.1)
+    response = dns.message.from_wire(response_bytes)
+    assert response.rcode() == dns.rcode.SERVFAIL
