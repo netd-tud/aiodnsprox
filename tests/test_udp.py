@@ -69,8 +69,8 @@ async def test_udp_proxy(dns_server):   # noqa: C901, F811
         finally:
             client_transport.close()
     finally:
-        server.close()
-        server.close()  # call second time to check idempotency
+        await server.close()
+        await server.close()    # call second time to check idempotency
 
 
 @pytest.mark.asyncio

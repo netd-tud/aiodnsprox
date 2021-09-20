@@ -37,7 +37,7 @@ class DNSOverUDPServerFactory(BaseServerFactory):
         def connection_lost(self, exc):     # pylint: disable=no-self-use
             pass                            # pragma: no cover
 
-        def close(self):
+        async def close(self):
             if self.transport is not None:
                 self.transport.close()
                 self.transport = None

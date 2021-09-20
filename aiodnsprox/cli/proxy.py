@@ -142,28 +142,28 @@ def get_factory(transport, config):
     )
 
 
+async def close_servers():
+    for server in list(servers):
+        await server.close()
+        servers.remove(server)
+
+
 async def main():
     parser = build_argparser()
     args = parser.parse_args()
     config = get_config(args)
 
     loop = asyncio.get_event_loop()
-    for transport, args in config['transports'].items():
-        factory = get_factory(transport, config)
-        servers.append(await factory.create_server(
-            loop=loop, local_addr=(args['host'], args['port'])
-        ))
-
-
-def close_servers():
-    for server in list(servers):
-        server.close()
-        servers.remove(server)
+    try:
+        for transport, args in config['transports'].items():
+            factory = get_factory(transport, config)
+            servers.append(await factory.create_server(
+                loop=loop, local_addr=(args['host'], args['port'])
+            ))
+    finally:
+        await close_servers()
 
 
 def sync_main():                # pragma: no cover
     asyncio.Task(main())
-    try:
-        asyncio.get_event_loop().run_forever()
-    finally:
-        close_servers()
+    asyncio.get_event_loop().run_forever()

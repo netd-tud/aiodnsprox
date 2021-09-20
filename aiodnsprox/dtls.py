@@ -171,7 +171,7 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
         def _send_response_to_requester(self, response, requester):
             self._dtls.write(response, requester)
 
-        def close(self):
+        async def close(self):
             if self.transport is not None:
                 if self._dtls is not None:  # pragma: no cover
                     for session in self._dtls.sessions():

@@ -87,10 +87,14 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
             return await self._render_with_payload(request)
 
     class ClosableContext(aiocoap.Context, DNSServer):
-        def close(self):
+        async def close(self):
             ri_type = type(self.request_interfaces)
             if self.request_interfaces:
-                self.shutdown()
+                try:
+                    await self.shutdown()
+                except AttributeError:  # pragma: no cover
+                    # apparently one should not call shutdown twice ;-)
+                    pass
                 self.request_interfaces = ri_type()
 
     class CredentialStore:

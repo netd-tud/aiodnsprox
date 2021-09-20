@@ -12,5 +12,5 @@ import abc
 class DNSServer(abc.ABC):
     # pylint: disable=too-few-public-methods
     @abc.abstractmethod
-    def close(self):
+    async def close(self):
         raise NotImplementedError

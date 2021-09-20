@@ -127,8 +127,8 @@ async def test_coap_proxy(dns_server, config):
         assert coap_response.code == \
             aiocoap.numbers.codes.Code.BAD_REQUEST
     finally:
-        server.close()
-        server.close()  # call second time to check idempotency
+        await server.close()
+        await server.close()    # call second time to check idempotency
 
 
 @pytest.mark.asyncio

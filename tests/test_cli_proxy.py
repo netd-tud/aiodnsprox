@@ -16,9 +16,9 @@ from .fixtures import config
 
 
 @pytest.fixture
-def servers():
+async def servers():
     yield proxy.servers
-    proxy.close_servers()
+    await proxy.close_servers()
 
 
 @pytest.mark.asyncio
@@ -110,6 +110,7 @@ async def test_sync_main__success(monkeypatch, mocker, servers, config, argv,
         await proxy.main()
         assert len(config['transports']) == exp_transports
         assert config.get('dtls_credentials') == exp_credentials
-        assert len(servers) == exp_transports
+        # all servers were closed after proxy.main() finished
+        assert not servers
         if '-C' in argv:
             assert config['test'] == 'foobar'
