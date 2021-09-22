@@ -5,6 +5,8 @@
 #
 # Distributed under terms of the MIT license.
 
+"""Implementation of the proxying side of the DNS proxy."""
+
 import asyncio
 import abc
 import copy
@@ -19,12 +21,33 @@ import dns.message
 
 
 class DNSTransport(enum.Enum):
+    """Type to identify the server proxied via :py:class:`DNSUpstream`.
+
+    - :py:attr:`TCP` for DNS over TCP
+    - :py:attr:`UDP` for DNS over UDP
+    - :py:attr:`UDP_TCP_FALLBACK` for DNS over UDP with
+      a fallback to DNS over TCP in case the DNS over UDP response is truncated
+    """
     UDP = 0
     UDP_TCP_FALLBACK = 1
     TCP = 2
 
 
 class DNSUpstream:
+    """Implementation of the DNS client towards the proxied DNS server
+
+    :param host: Host of the proxied DNS server
+    :type host: str
+    :param port: (Optional) port of the proxied DNS server. If no port is
+                 provided, the default of the selected ``transport``
+                 will be used (e.g. 53 for :py:attr:`DNSTransport.TCP` or
+                 :py:attr:`DNSTransport.UDP`).
+    :type port: int
+    :param transport: (Optional) transport used to communicate with the proxied
+                      DNS server. If no transport is provided,
+                      :py:attr:`DNSTransport.UDP` will be used.
+    :type transport: DNSTransport
+    """
     _QUERY_FUNC = {
         DNSTransport.UDP: dns.asyncquery.udp,
         DNSTransport.UDP_TCP_FALLBACK: dns.asyncquery.udp_with_fallback,
@@ -49,6 +72,10 @@ class DNSUpstream:
 
     @property
     def port(self):
+        """Port of the proxied DNS server
+
+        :type: int
+        """
         return self._port
 
     def _compute_timeout(self, start, lifetime=None):
@@ -79,6 +106,16 @@ class DNSUpstream:
 
     async def query(self, query: bytes,
                     timeout: typing.Optional[float] = None) -> bytes:
+        """Query proxied DNS server.
+
+        :param query: DNS query in the on-the-wire format
+        :type query: bytes
+        :param timeout: (Optional) timeout for the DNS query operation. If not
+                        provided and the transport to the server is
+                        :py:attr:`DNSTransport.UDP`,
+                        :py:attr:`DNSUpstream.DEFAULT_LIFETIME` will be used.
+        :type timeout: float
+        """
         qry = dns.message.from_wire(query)
         start = time.time()
         id_ = qry.id
@@ -112,6 +149,24 @@ class DNSUpstream:
 
 
 class DNSUpstreamServerMixin(abc.ABC):
+    """Mixin for the serving side of the proxy for easy access towards the
+    proxied side.
+
+    :param host: Host of the proxied DNS server
+    :type host: str
+    :param port: (Optional) port of the proxied DNS server. If no port is
+                 provided, the default of the selected ``transport``
+                 will be used (e.g. 53 for :py:attr:`DNSTransport.TCP` or
+                 :py:attr:`DNSTransport.UDP`).
+    :type port: int
+    :param transport: (Optional) transport used to communicate with the proxied
+                      DNS server. If no transport is provided,
+                      :py:attr:`DNSTransport.UDP` will be used.
+    :param timeout: (Optional) timeout for queries towards the proxied DNS
+                    server
+    :type timeout: float
+    """
+
     # pylint: disable=too-few-public-methods
     def __init__(self, host, port: typing.Optional[int] = None,
                  transport: typing.Optional[DNSTransport] = DNSTransport.UDP,
