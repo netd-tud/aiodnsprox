@@ -43,13 +43,13 @@ class Config(metaclass=Singleton):
     def get(self, key: str, default=None) -> typing.Mapping:
         return self._sections.get(key, default)
 
-    def add_config(self, config: typing.Mapping) -> None:
+    def add_config(self, config: typing.Mapping) -> typing.NoReturn:
         self._sections.update(config)
 
-    def add_yaml_config(self, yaml_file) -> None:
+    def add_yaml_config(self, yaml_file) -> typing.NoReturn:
         self.add_config(yaml.load(yaml_file, yaml.loader.FullLoader))
 
-    def add_args_config(self, args) -> None:
+    def add_args_config(self, args) -> typing.NoReturn:
         self.add_config({k: vars(v)
                          if isinstance(v, argparse.Namespace) else v
                          for k, v in vars(args).items() if v is not None})

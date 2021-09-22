@@ -19,7 +19,7 @@ class BaseDNSServer(abc.ABC):
     """An abstract DNS server."""
     # pylint: disable=too-few-public-methods
     @abc.abstractmethod
-    async def close(self):
+    async def close(self) -> typing.NoReturn:
         """Closes the server.
         """
         raise NotImplementedError

@@ -182,7 +182,7 @@ class DNSUpstreamServerMixin(abc.ABC):
         resp = await self._dns_upstream.query(query, timeout=self._timeout)
         self.send_response_to_requester(resp, requester)
 
-    def dns_query_received(self, query: bytes, requester) -> None:
+    def dns_query_received(self, query: bytes, requester) -> typing.NoReturn:
         """The serving end of the proxy notifies that it received a DNS query
         and sends it to the proxied DNS server. When a response is received
         asynchronously, :py:meth:`send_response_to_requester` is called to
@@ -200,7 +200,7 @@ class DNSUpstreamServerMixin(abc.ABC):
 
     @abc.abstractmethod
     def send_response_to_requester(self, response: bytes,
-                                   requester) -> None:
+                                   requester) -> typing.NoReturn:
         """Called when proxied DNS server responded to a DNS query send by
         :py:meth:`dns_query_received`.
 

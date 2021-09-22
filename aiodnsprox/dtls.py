@@ -33,7 +33,7 @@ class BaseDTLSWrapper(abc.ABC):
         self.transport = transport
 
     @abc.abstractmethod
-    def is_connected(self, addr) -> bool:
+    def is_connected(self, addr: typing.Any) -> bool:
         """Check if a session with ``addr`` was established.
 
         :param addr: A remote endpoint (implementation-specific)
@@ -52,7 +52,7 @@ class BaseDTLSWrapper(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def connect(self, addr) -> None:
+    def connect(self, addr: typing.Any) -> typing.NoReturn:
         """Establish a session with ``addr``.
 
         :param addr: An (implementation-specific) remote endpoint
@@ -60,7 +60,7 @@ class BaseDTLSWrapper(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def close(self, addr) -> None:
+    def close(self, addr: typing.Any) -> typing.NoReturn:
         """Closes a session with ``addr``.
 
         :param addr: An (implementation-specific) remote endpoint
@@ -68,7 +68,7 @@ class BaseDTLSWrapper(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def handle_message(self, msg: bytes, addr) -> \
+    def handle_message(self, msg: bytes, addr: typing.Any) -> \
             typing.Tuple[bytes, typing.Any, bool]:
         """Handles a DTLS message that came over the datagram transport.
 
@@ -89,7 +89,7 @@ class BaseDTLSWrapper(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def write(self, msg: bytes, addr) -> None:
+    def write(self, msg: bytes, addr: typing.Any) -> typing.NoReturn:
         """Send a ``msg`` encrypted to ``addr``
 
         :param msg: The message to encrypt via DTLS.
