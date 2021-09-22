@@ -42,6 +42,8 @@ setup(
     name=PACKAGE,
     version=get_version(PACKAGE),
     description=DESCRIPTION,
+    long_description=open('README.rst').read(),
+    long_description_content_type="text/x-rst",
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
     url=URL,
