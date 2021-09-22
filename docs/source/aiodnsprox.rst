@@ -9,9 +9,6 @@ Subpackages
 
    aiodnsprox.cli
 
-Submodules
-----------
-
 aiodnsprox.coap module
 ----------------------
 
@@ -56,14 +53,6 @@ aiodnsprox.udp module
 ---------------------
 
 .. automodule:: aiodnsprox.udp
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: aiodnsprox
    :members:
    :undoc-members:
    :show-inheritance:

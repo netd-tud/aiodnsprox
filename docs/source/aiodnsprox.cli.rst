@@ -1,21 +1,11 @@
-aiodnsprox.cli package
-======================
+CLI interface
+=============
 
-Submodules
-----------
-
-aiodnsprox.cli.proxy module
----------------------------
+Implementation of the ``aiodns-proxy`` Command
+----------------------------------------------
 
 .. automodule:: aiodnsprox.cli.proxy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: aiodnsprox.cli
-   :members:
-   :undoc-members:
-   :show-inheritance:

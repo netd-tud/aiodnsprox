@@ -13,7 +13,7 @@
 import os
 import sys
 
-import sphinx_bootstrap_theme
+import sphinx_readable_theme
 
 sys.path.insert(0, os.path.abspath(os.path.join('..', '..')))
 
@@ -48,8 +48,8 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'bootstrap'
-html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+html_theme = 'readable'
+html_theme_path = [sphinx_readable_theme.get_html_theme_path()]
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
