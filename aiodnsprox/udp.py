@@ -5,16 +5,15 @@
 #
 # Distributed under terms of the MIT license.
 
-from .dns_server import DNSServer
+from .dns_server import BaseServerFactory, BaseDNSServer
 from .dns_upstream import DNSUpstreamServerMixin
-from .server_factory import BaseServerFactory
 
 
 class DNSOverUDPServerFactory(BaseServerFactory):
     # pylint: disable=too-few-public-methods
     DNS_PORT = 53
 
-    class DNSOverUDPServer(DNSServer, DNSUpstreamServerMixin):
+    class DNSOverUDPServer(BaseDNSServer, DNSUpstreamServerMixin):
         def __init__(self, factory):
             super().__init__(host=factory.upstream_host,
                              port=factory.upstream_port,

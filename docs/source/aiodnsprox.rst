@@ -52,14 +52,6 @@ aiodnsprox.dtls module
    :undoc-members:
    :show-inheritance:
 
-aiodnsprox.server\_factory module
----------------------------------
-
-.. automodule:: aiodnsprox.server_factory
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 aiodnsprox.udp module
 ---------------------
 

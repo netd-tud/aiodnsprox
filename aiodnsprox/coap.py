@@ -13,9 +13,8 @@ import aiocoap.resource
 import aiocoap.transports.tinydtls_server
 
 from .config import Config
-from .dns_server import DNSServer
+from .dns_server import BaseServerFactory, BaseDNSServer
 from .dns_upstream import DNSUpstreamServerMixin
-from .server_factory import BaseServerFactory
 
 
 CONTENT_FORMAT_DNS_MESSAGE = 65053
@@ -86,7 +85,7 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
         async def render_post(self, request):
             return await self._render_with_payload(request)
 
-    class ClosableContext(aiocoap.Context, DNSServer):
+    class ClosableContext(aiocoap.Context, BaseDNSServer):
         async def close(self):
             ri_type = type(self.request_interfaces)
             if self.request_interfaces:

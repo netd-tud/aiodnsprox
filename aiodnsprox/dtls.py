@@ -13,8 +13,8 @@ import typing
 from DTLSSocket import dtls
 
 from .config import Config
+from .dns_server import BaseServerFactory, BaseDNSServer
 from .dns_upstream import DNSUpstreamServerMixin
-from .server_factory import BaseServerFactory
 
 
 logger = logging.getLogger()
@@ -140,7 +140,7 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
     DODTLS_PORT = 853
     dtls_class = TinyDTLSWrapper
 
-    class DNSOverDTLSServer(DNSUpstreamServerMixin):
+    class DNSOverDTLSServer(BaseDNSServer, DNSUpstreamServerMixin):
         def __init__(self, factory):
             super().__init__(host=factory.upstream_host,
                              port=factory.upstream_port,
