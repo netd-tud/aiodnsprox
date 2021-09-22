@@ -5,4 +5,6 @@
 #
 # Distributed under terms of the MIT license.
 
+# pylint: disable=missing-module-docstring
+
 __version__ = 'v0.0.2a'
