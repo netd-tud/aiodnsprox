@@ -182,12 +182,34 @@ class DNSUpstreamServerMixin(abc.ABC):
         resp = await self._dns_upstream.query(query, timeout=self._timeout)
         self.send_response_to_requester(resp, requester)
 
-    def dns_query_received(self, query, requester) -> None:
+    def dns_query_received(self, query: bytes, requester) -> None:
+        """The serving end of the proxy notifies that it received a DNS query
+        and sends it to the proxied DNS server. When a response is received
+        asynchronously, :py:meth:`send_response_to_requester` is called to
+        notify the serving end about the received response.
+
+        :param query: The DNS query in on-the-wire format to send to the
+                      proxied DNS server.
+        :type query: bytes
+        :param requester: Identifier for the endpoint that originally requested
+                          the query.
+        """
         loop = asyncio.get_event_loop()
         coroutine = self._get_query_response(query, requester)
         loop.create_task(coroutine)
 
     @abc.abstractmethod
     def send_response_to_requester(self, response: bytes,
-                                   requester: typing.Tuple) -> None:
+                                   requester) -> None:
+        """Called when proxied DNS server responded to a DNS query send by
+        :py:meth:`dns_query_received`.
+
+        :param response: The DNS response in on-the-wire format received from
+                         the proxied DNS server.
+        :param requester: Identifier for the endpoint that originally requested
+                          the query. This will have the same value as the
+                          ``requester`` parameter of
+                          :py:meth:`dns_query_received` for the ``query`` that
+                          ``response`` is the response to.
+        """
         raise NotImplementedError
