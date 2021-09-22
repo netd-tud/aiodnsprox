@@ -1,4 +1,4 @@
 dnspython>=2.1
-DTLSSocket>=0.1.12
-PyYAML>=5.4.1
+DTLSSocket>=0.1
+PyYAML>=5.4
 aiocoap[linkheader,tinydtls,oscore] @ git+https://gitlab.com/aiocoap/aiocoap.git@dtls-server
