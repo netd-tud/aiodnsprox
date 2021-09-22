@@ -37,10 +37,10 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
 
         async def _dns_response(self, query):
             self._pending_responses[query] = asyncio.Future()
-            self._dns_query_received(query, query)
+            self.dns_query_received(query, query)
             return await self._pending_responses[query]
 
-        def _send_response_to_requester(self, response, query):
+        def send_response_to_requester(self, response, query):
             # pylint: disable=arguments-renamed
             assert query in self._pending_responses
             self._pending_responses[query].set_result(response)

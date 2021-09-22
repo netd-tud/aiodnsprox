@@ -22,14 +22,14 @@ class DNSOverUDPServerFactory(BaseServerFactory):
                              timeout=factory.upstream_timeout)
             self.transport = None
 
-        def _send_response_to_requester(self, response, requester):
+        def send_response_to_requester(self, response, requester):
             self.transport.sendto(response, requester)
 
         def connection_made(self, transport):
             self.transport = transport
 
         def datagram_received(self, data, addr):
-            self._dns_query_received(data, addr)
+            self.dns_query_received(data, addr)
 
         def error_received(self, exc):      # pylint: disable=no-self-use
             raise exc                       # pragma: no cover

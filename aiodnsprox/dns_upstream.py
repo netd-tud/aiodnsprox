@@ -180,14 +180,14 @@ class DNSUpstreamServerMixin(abc.ABC):
 
     async def _get_query_response(self, query, requester):
         resp = await self._dns_upstream.query(query, timeout=self._timeout)
-        self._send_response_to_requester(resp, requester)
+        self.send_response_to_requester(resp, requester)
 
-    def _dns_query_received(self, query, requester) -> None:
+    def dns_query_received(self, query, requester) -> None:
         loop = asyncio.get_event_loop()
         coroutine = self._get_query_response(query, requester)
         loop.create_task(coroutine)
 
     @abc.abstractmethod
-    def _send_response_to_requester(self, response: bytes,
-                                    requester: typing.Tuple) -> None:
+    def send_response_to_requester(self, response: bytes,
+                                   requester: typing.Tuple) -> None:
         raise NotImplementedError

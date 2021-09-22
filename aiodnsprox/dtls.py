@@ -162,13 +162,13 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
             data, addr, _ = self._dtls.handle_message(data, addr)
             if data is None:
                 return
-            self._dns_query_received(data, addr)
+            self.dns_query_received(data, addr)
 
         def error_received(self, exc):      # pylint: disable=no-self-use
             self._dtls = None               # pragma: no cover
             raise exc                       # pragma: no cover
 
-        def _send_response_to_requester(self, response, requester):
+        def send_response_to_requester(self, response, requester):
             self._dtls.write(response, requester)
 
         async def close(self):
