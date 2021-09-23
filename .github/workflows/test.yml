@@ -26,9 +26,14 @@ jobs:
         python-version: [3.7,3.8,3.9]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
       with:
         ref: ${{ github.event.inputs.ref }}
+    # Required for Upload doc step
+    - name: Setup git config
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -44,9 +49,20 @@ jobs:
         pyenv="py$(echo "${{ matrix.python-version }}" | tr -d '.')"
         tox -e flake8,pylint,pyre,${pyenv}-test
     - name: Build doc
+      if: matrix.python-version == 3.9
       run: |
         tox -e build-doc
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v1.2.2
       with:
         flags: ${{ matrix.python-version }}
+    - name: Upload doc
+      if: matrix.python-version == 3.9
+      run: |
+        git fetch origin gh_pages
+        git checkout gh_pages
+        cp -r docs/build/html/* docs/
+        rm -rf docs/build
+        git add docs/
+        git commit --author="Github Actions Bot <>" -m "Update docs" && \
+            git push origin gh_pages || exit 0
