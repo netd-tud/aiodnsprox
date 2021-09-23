@@ -213,6 +213,9 @@
 
         <span class="n">aiocoap</span><span class="o">.</span><span class="n">transports</span><span class="o">.</span><span class="n">tinydtls_server</span><span class="o">.</span><span class="n">securitystore</span> <span class="o">=</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">_CredentialStore</span><span class="p">()</span>
+        <span class="c1"># pylint: disable=protected-access</span>
+        <span class="n">aiocoap</span><span class="o">.</span><span class="n">transports</span><span class="o">.</span><span class="n">tinydtls_server</span><span class="o">.</span><span class="n">_SEND_SLEEP_WORKAROUND</span> <span class="o">=</span> \
+            <span class="n">Config</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dtls&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;server_hello_done_delay&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClosableContext</span><span class="o">.</span><span class="n">create_server_context</span><span class="p">(</span><span class="n">site</span><span class="p">,</span>
                                                                 <span class="n">local_addr</span><span class="p">)</span></div></div>
 </pre></div>
