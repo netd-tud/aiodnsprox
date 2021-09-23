@@ -38,12 +38,12 @@ Dependencies
 ------------
 aiodnsprox works on `Python`_ 3.7 or newer.
 
-The following packages are required (see `requirements.txt <./requirements.txt>`_):
-To parse configuration files `PyYAML` 5.4 or newer is used.
+The following packages are required (see `requirements.txt`_):
+To parse configuration files `PyYAML`_ 5.4 or newer is used.
 For proxying upstream DNS services and message parsing, `dnspython`_ 2.1 or
 newer is used.
-For serving DTLS messages, the `tinydtls`_-based `DTLSSocket`
-0.1 or newer is used.
+For serving DTLS messages, the `tinydtls`_-based `DTLSSocket`_ 0.1 or newer is
+used.
 For serving CoAP, an `experimental branch <https://gitlab.com/aiocoap/aiocoap/-/tree/dtls-server>`_
 of `aiocoap`_ with ``linkheader``, ``tinydtls``, and ``oscore`` support is used.
 The branch is based on `aiocoap`_ 0.4.1.
@@ -87,6 +87,8 @@ whole test suite is via the `tox`_ tool. Just run
 .. _`RFC 8094`: https://datatracker.ietf.org/doc/html/rfc8094
 .. _`draft-lenders-dns-over-coap`: https://datatracker.ietf.org/doc/html/draft-lenders-dns-over-coap
 .. _`Python`: https://docs.python.org
+.. _`requirements.txt`: https://github.com/anr-bmbf-pivot/aiodnsprox/blob/main/requirements.txt
+.. _`PyYAML`: https://pyyaml.org
 .. _`dnspython`: https://www.dnspython.org
 .. _`tinydtls`: https://projects.eclipse.org/projects/iot.tinydtls
 .. _`DTLSSocket`: https://git.fslab.de/jkonra2m/tinydtls-cython
