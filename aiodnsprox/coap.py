@@ -168,5 +168,8 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
 
         aiocoap.transports.tinydtls_server.securitystore = \
             self._CredentialStore()
+        # pylint: disable=protected-access
+        aiocoap.transports.tinydtls_server._SEND_SLEEP_WORKAROUND = \
+            Config().get('dtls', {}).get('server_hello_done_delay', 0.0)
         return await self.ClosableContext.create_server_context(site,
                                                                 local_addr)
