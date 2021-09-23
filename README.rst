@@ -64,6 +64,25 @@ For more information on the provided arguments, see
 
   aiodns-proxy -h
 
+Development
+===========
+
+Code contributions to aiodnsprox can be made in our `Github repository`_.
+Development there follows the `PEP8`_ recommendations and general best practices
+as best as possible.
+
+Bugs and feature requests can be made in the `issue tracker`_ over at Github.
+
+Our `documentation`_ is built with `sphinx`_.
+
+For testing we try to achieve as much coverage as possible with our tests found
+in the `tests`_ directory and utilize `pytest`_. The easiest way to run the
+whole test suite is via the `tox`_ tool. Just run
+
+.. code:: bash
+
+  tox
+
 .. _`asyncio`: https://docs.python.org/3/library/asyncio.html
 .. _`RFC 8094`: https://datatracker.ietf.org/doc/html/rfc8094
 .. _`draft-lenders-dns-over-coap`: https://datatracker.ietf.org/doc/html/draft-lenders-dns-over-coap
@@ -73,3 +92,11 @@ For more information on the provided arguments, see
 .. _`DTLSSocket`: https://git.fslab.de/jkonra2m/tinydtls-cython
 .. _`aiocoap`: https://aiocoap.readthedocs.io
 .. _`OpenNIC`: https://www.opennic.org
+.. _`Github repository`: https://github.com/anr-bmbf-pivot/aiodnsprox
+.. _`PEP8`: https://www.python.org/dev/peps/pep-0008/
+.. _`issue tracker`: https://github.com/anr-bmbf-pivot/aiodnsprox/issues
+.. _`documentation`: https://anr-bmbf-pivot.github.io/aiodnsprox
+.. _`sphinx`: https://www.sphinx-doc.org
+.. _`tests`: https://github.com/anr-bmbf-pivot/aiodnsprox/tree/main/tests
+.. _`pytest`: https://pytest.org
+.. _`tox`: https://tox.readthedocs.io
