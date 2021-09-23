@@ -1,0 +1,939 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>aiodnsprox package &#8212; aiodnsprox  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/readable.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CLI interface" href="aiodnsprox.cli.html" />
+    <link rel="prev" title="API documentation" href="modules.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="aiodnsprox.cli.html" title="CLI interface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="API documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">aiodnsprox  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">API documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">aiodnsprox package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="aiodnsprox-package">
+<h1>aiodnsprox package<a class="headerlink" href="#aiodnsprox-package" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="aiodnsprox.cli.html">CLI interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.cli.html#module-aiodnsprox.cli.proxy">Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-aiodnsprox.coap">
+<span id="aiodnsprox-coap-module"></span><h2>aiodnsprox.coap module<a class="headerlink" href="#module-aiodnsprox.coap" title="Permalink to this headline">¶</a></h2>
+<p>DNS over CoAP serving side of the proxy.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.coap.</span></span><span class="sig-name descname"><span class="pre">DNSOverCoAPServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dns_upstream</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><span class="pre">aiodnsprox.dns_upstream.DNSUpstream</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiodnsprox.dns_server.BaseServerFactory" title="aiodnsprox.dns_server.BaseServerFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_server.BaseServerFactory</span></code></a></p>
+<p>Factory to create DNS over CoAP servers</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ClosableContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serversite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loggername</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_credentials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory.ClosableContext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">aiocoap.protocol.Context</span></code>, <a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_server.BaseDNSServer</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">aiocoap.Context</span></code> that also serves as an extension of
+<a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">dns_server.BaseDNSServer</span></code></a> so it can be returned by
+<a class="reference internal" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.create_server" title="aiodnsprox.coap.DNSOverCoAPServerFactory.create_server"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory.create_server()</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext.close">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory.ClosableContext.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the server.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">DNSQueryResource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory.DNSQueryResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">aiocoap.resource.Resource</span></code>, <a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin" title="aiodnsprox.dns_upstream.DNSUpstreamServerMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_upstream.DNSUpstreamServerMixin</span></code></a></p>
+<p>The DNS over CoAP resource of the DNS over CoAP server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>factory</strong> (<a class="reference internal" href="#aiodnsprox.coap.DNSOverCoAPServerFactory" title="aiodnsprox.coap.DNSOverCoAPServerFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory</span></code></a>) – The factory that created the DNS over CoAP server.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_fetch">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">render_fetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory.DNSQueryResource.render_fetch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">aiocoap.resource.Resource</span></code> method to serve a FETCH
+request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – The FETCH request</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The response for the FETCH request.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_get">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">render_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory.DNSQueryResource.render_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_get" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">aiocoap.resource.Resource</span></code> method to serve a GET
+request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – The GET request</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The response for the GET request.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_post">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">render_post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory.DNSQueryResource.render_post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_post" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">aiocoap.resource.Resource</span></code> method to serve a POST
+request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – The POST request</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The response for the POST request.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.send_response_to_requester">
+<span class="sig-name descname"><span class="pre">send_response_to_requester</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory.DNSQueryResource.send_response_to_requester"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.send_response_to_requester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when proxied DNS server responded to a DNS query send by
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">dns_query_received()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> – The DNS response in on-the-wire format received from
+the proxied DNS server.</p></li>
+<li><p><strong>requester</strong> – Identifier for the endpoint that originally requested
+the query. This will have the same value as the
+<code class="docutils literal notranslate"><span class="pre">requester</span></code> parameter of
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">dns_query_received()</span></code> for the <code class="docutils literal notranslate"><span class="pre">query</span></code> that
+<code class="docutils literal notranslate"><span class="pre">response</span></code> is the response to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory.create_server">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">create_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory.create_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.create_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an <code class="docutils literal notranslate"><span class="pre">aiocoap</span></code> server context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loop</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.AbstractEventLoop</span></code>) – the asyncio event loop the server should run in</p></li>
+<li><p><strong>local_addr</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Tuple[str,</span> <span class="pre">int]</span></code>) – A tuple for the created server to bind to. The first
+element is the host part, the second element the
+port.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An <a class="reference internal" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext" title="aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClosableContext</span></code></a> object representing an
+<code class="docutils literal notranslate"><span class="pre">aiocoap</span></code> server context.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext" title="aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClosableContext</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="aiodnsprox.coap.NotAcceptable">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.coap.</span></span><span class="sig-name descname"><span class="pre">NotAcceptable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#NotAcceptable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.NotAcceptable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">aiocoap.error.ConstructionRenderableError</span></code></p>
+<p>Exception to represent a 4.06 Not Acceptable CoAP error response</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.coap.NotAcceptable.code">
+<span class="sig-name descname"><span class="pre">code</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Response</span> <span class="pre">Code</span> <span class="pre">134</span> <span class="pre">&quot;4.06</span> <span class="pre">Not</span> <span class="pre">Acceptable&quot;&gt;</span></em><a class="headerlink" href="#aiodnsprox.coap.NotAcceptable.code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code assigned to messages built from it</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aiodnsprox.config">
+<span id="aiodnsprox-config-module"></span><h2>aiodnsprox.config module<a class="headerlink" href="#module-aiodnsprox.config" title="Permalink to this headline">¶</a></h2>
+<p>Proxy configuration</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.config.Config">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.config.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Singleton Config mapping class to represent both config file and CLI
+argument congfiguration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.config.Config.add_args_config">
+<span class="sig-name descname"><span class="pre">add_args_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/config.html#Config.add_args_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.config.Config.add_args_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds configuration from CLI arguments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Namespace</span></code>) – parsed CLI arguments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.config.Config.add_config">
+<span class="sig-name descname"><span class="pre">add_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Mapping</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/config.html#Config.add_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.config.Config.add_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds configuration from a mapping</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Mapping</span></code>.) – A mapping that contains the new configuration sections.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.config.Config.add_yaml_config">
+<span class="sig-name descname"><span class="pre">add_yaml_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_file</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/config.html#Config.add_yaml_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.config.Config.add_yaml_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds configuration from a YAML file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>yaml</strong> (<em>A file-like object.</em>) – A file-like object to a YAML file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.config.Config.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Mapping</span></span></span><a class="reference internal" href="_modules/aiodnsprox/config.html#Config.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.config.Config.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get configuration section.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Name of the configuration section.</p></li>
+<li><p><strong>default</strong> – (Optional) default if section does not exist.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aiodnsprox.dns_server">
+<span id="aiodnsprox-dns-server-module"></span><h2>aiodnsprox.dns_server module<a class="headerlink" href="#module-aiodnsprox.dns_server" title="Permalink to this headline">¶</a></h2>
+<p>Base definitions for the serving side of the DNS proxy</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dns_server.BaseDNSServer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dns_server.</span></span><span class="sig-name descname"><span class="pre">BaseDNSServer</span></span><a class="reference internal" href="_modules/aiodnsprox/dns_server.html#BaseDNSServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_server.BaseDNSServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>An abstract DNS server.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dns_server.BaseDNSServer.close">
+<em class="property"><span class="pre">abstract</span> <span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dns_server.html#BaseDNSServer.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_server.BaseDNSServer.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the server.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dns_server.BaseServerFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dns_server.</span></span><span class="sig-name descname"><span class="pre">BaseServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dns_upstream</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><span class="pre">aiodnsprox.dns_upstream.DNSUpstream</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dns_server.html#BaseServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_server.BaseServerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract <a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDNSServer</span></code></a> factory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dns_upstream</strong> – The proxied DNS server for
+<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin" title="aiodnsprox.dns_upstream.DNSUpstreamServerMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">dns_upstream.DNSUpstreamServerMixin</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dns_server.BaseServerFactory.create_server">
+<em class="property"><span class="pre">abstract</span> <span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">create_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">asyncio.events.AbstractEventLoop</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_addr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><span class="pre">aiodnsprox.dns_server.BaseDNSServer</span></a></span></span><a class="reference internal" href="_modules/aiodnsprox/dns_server.html#BaseServerFactory.create_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_server.BaseServerFactory.create_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDNSServer</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loop</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.AbstractEventLoop</span></code>) – the asyncio event loop the server should run in</p></li>
+<li><p><strong>local_addr</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Tuple[str,</span> <span class="pre">int]</span></code>) – A tuple for the created server to bind to. The first
+element is the host part, the second element the
+port. If <code class="docutils literal notranslate"><span class="pre">local_addr</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> or any of its
+elements are <code class="docutils literal notranslate"><span class="pre">local_addr</span></code> are <code class="docutils literal notranslate"><span class="pre">None</span></code>, a sensible
+default is selected by the implementation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An object based on the <a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDNSServer</span></code></a> class.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDNSServer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aiodnsprox.dns_upstream">
+<span id="aiodnsprox-dns-upstream-module"></span><h2>aiodnsprox.dns_upstream module<a class="headerlink" href="#module-aiodnsprox.dns_upstream" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of the proxying side of the DNS proxy.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSTransport">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dns_upstream.</span></span><span class="sig-name descname"><span class="pre">DNSTransport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dns_upstream.html#DNSTransport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSTransport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Type to identify the server proxied via <a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSUpstream</span></code></a>.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.TCP" title="aiodnsprox.dns_upstream.DNSTransport.TCP"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TCP</span></code></a> for DNS over TCP</p></li>
+<li><p><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.UDP" title="aiodnsprox.dns_upstream.DNSTransport.UDP"><code class="xref py py-attr docutils literal notranslate"><span class="pre">UDP</span></code></a> for DNS over UDP</p></li>
+<li><p><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.UDP_TCP_FALLBACK" title="aiodnsprox.dns_upstream.DNSTransport.UDP_TCP_FALLBACK"><code class="xref py py-attr docutils literal notranslate"><span class="pre">UDP_TCP_FALLBACK</span></code></a> for DNS over UDP with
+a fallback to DNS over TCP in case the DNS over UDP response is truncated</p></li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSTransport.TCP">
+<span class="sig-name descname"><span class="pre">TCP</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSTransport.TCP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSTransport.UDP">
+<span class="sig-name descname"><span class="pre">UDP</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSTransport.UDP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSTransport.UDP_TCP_FALLBACK">
+<span class="sig-name descname"><span class="pre">UDP_TCP_FALLBACK</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSTransport.UDP_TCP_FALLBACK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSUpstream">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dns_upstream.</span></span><span class="sig-name descname"><span class="pre">DNSUpstream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transport</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport" title="aiodnsprox.dns_upstream.DNSTransport"><span class="pre">aiodnsprox.dns_upstream.DNSTransport</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">DNSTransport.UDP</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dns_upstream.html#DNSUpstream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSUpstream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Implementation of the DNS client towards the proxied DNS server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>str</em>) – Host of the proxied DNS server</p></li>
+<li><p><strong>port</strong> (<em>int</em>) – (Optional) port of the proxied DNS server. If no port is
+provided, the default of the selected <code class="docutils literal notranslate"><span class="pre">transport</span></code>
+will be used (e.g. 53 for <a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.TCP" title="aiodnsprox.dns_upstream.DNSTransport.TCP"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DNSTransport.TCP</span></code></a> or
+<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.UDP" title="aiodnsprox.dns_upstream.DNSTransport.UDP"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DNSTransport.UDP</span></code></a>).</p></li>
+<li><p><strong>transport</strong> (<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport" title="aiodnsprox.dns_upstream.DNSTransport"><em>DNSTransport</em></a>) – (Optional) transport used to communicate with the proxied
+DNS server. If no transport is provided,
+<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.UDP" title="aiodnsprox.dns_upstream.DNSTransport.UDP"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DNSTransport.UDP</span></code></a> will be used.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSUpstream.DEFAULT_LIFETIME">
+<span class="sig-name descname"><span class="pre">DEFAULT_LIFETIME</span></span><em class="property"> <span class="pre">=</span> <span class="pre">5.0</span></em><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSUpstream.DEFAULT_LIFETIME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSUpstream.DEFAULT_TIMEOUT">
+<span class="sig-name descname"><span class="pre">DEFAULT_TIMEOUT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2.0</span></em><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSUpstream.DEFAULT_TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSUpstream.port">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">port</span></span><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSUpstream.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Port of the proxied DNS server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSUpstream.query">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dns_upstream.html#DNSUpstream.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSUpstream.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query proxied DNS server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>bytes</em>) – DNS query in the on-the-wire format</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – (Optional) timeout for the DNS query operation. If not
+provided and the transport to the server is
+<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.UDP" title="aiodnsprox.dns_upstream.DNSTransport.UDP"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DNSTransport.UDP</span></code></a>,
+<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream.DEFAULT_LIFETIME" title="aiodnsprox.dns_upstream.DNSUpstream.DEFAULT_LIFETIME"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DNSUpstream.DEFAULT_LIFETIME</span></code></a> will be used.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSUpstreamServerMixin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dns_upstream.</span></span><span class="sig-name descname"><span class="pre">DNSUpstreamServerMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dns_upstream</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><span class="pre">aiodnsprox.dns_upstream.DNSUpstream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dns_upstream.html#DNSUpstreamServerMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Mixin for the serving side of the proxy for easy access towards the
+proxied side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dns_upstream</strong> (<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSUpstream</span></code></a>) – The proxied DNS server.</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – (Optional) timeout for queries towards <code class="docutils literal notranslate"><span class="pre">dns_upstream</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received">
+<span class="sig-name descname"><span class="pre">dns_query_received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requester</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dns_upstream.html#DNSUpstreamServerMixin.dns_query_received"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received" title="Permalink to this definition">¶</a></dt>
+<dd><p>The serving end of the proxy notifies that it received a DNS query
+and sends it to the proxied DNS server. When a response is received
+asynchronously, <a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester" title="aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester"><code class="xref py py-meth docutils literal notranslate"><span class="pre">send_response_to_requester()</span></code></a> is called to
+notify the serving end about the received response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>bytes</em>) – The DNS query in on-the-wire format to send to the
+proxied DNS server.</p></li>
+<li><p><strong>requester</strong> – Identifier for the endpoint that originally requested
+the query.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">send_response_to_requester</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requester</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dns_upstream.html#DNSUpstreamServerMixin.send_response_to_requester"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when proxied DNS server responded to a DNS query send by
+<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received" title="aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dns_query_received()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> – The DNS response in on-the-wire format received from
+the proxied DNS server.</p></li>
+<li><p><strong>requester</strong> – Identifier for the endpoint that originally requested
+the query. This will have the same value as the
+<code class="docutils literal notranslate"><span class="pre">requester</span></code> parameter of
+<a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received" title="aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dns_query_received()</span></code></a> for the <code class="docutils literal notranslate"><span class="pre">query</span></code> that
+<code class="docutils literal notranslate"><span class="pre">response</span></code> is the response to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aiodnsprox.dtls">
+<span id="aiodnsprox-dtls-module"></span><h2>aiodnsprox.dtls module<a class="headerlink" href="#module-aiodnsprox.dtls" title="Permalink to this headline">¶</a></h2>
+<p>DNS over DTLS serving side of the proxy.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.BaseDTLSWrapper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dtls.</span></span><span class="sig-name descname"><span class="pre">BaseDTLSWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transport</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">asyncio.transports.DatagramTransport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#BaseDTLSWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.BaseDTLSWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>An abstract wrapper for a DTLS implementation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>transport</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.DatagramTransport</span></code>) – The datagram transport the datagrams should be encrypted
+and decrypted for.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.BaseDTLSWrapper.close">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#BaseDTLSWrapper.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.BaseDTLSWrapper.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes a session with <code class="docutils literal notranslate"><span class="pre">addr</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr</strong> – An (implementation-specific) remote endpoint</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.BaseDTLSWrapper.connect">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#BaseDTLSWrapper.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.BaseDTLSWrapper.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Establish a session with <code class="docutils literal notranslate"><span class="pre">addr</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr</strong> – An (implementation-specific) remote endpoint</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.BaseDTLSWrapper.handle_message">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">handle_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#BaseDTLSWrapper.handle_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.BaseDTLSWrapper.handle_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a DTLS message that came over the datagram transport.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<em>bytes</em>) – An incoming DTLS message.</p></li>
+<li><p><strong>addr</strong> – The remote endpoint as served by the datagram transport.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>A 3-tuple, containing</p>
+<ol class="arabic simple">
+<li><p>The unencrypted message,</p></li>
+<li><p>The (implementation-specific) remote endpoint the
+message was received from, an</p></li>
+<li><p>A boolean, indicating if the last message established a
+session with the remote endpoint.</p></li>
+</ol>
+<p>If <code class="docutils literal notranslate"><span class="pre">msg</span></code> was a control message, the first and second
+elements will be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.BaseDTLSWrapper.is_connected">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">is_connected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#BaseDTLSWrapper.is_connected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.BaseDTLSWrapper.is_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a session with <code class="docutils literal notranslate"><span class="pre">addr</span></code> was established.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr</strong> – A remote endpoint (implementation-specific)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code>, when a session with <code class="docutils literal notranslate"><span class="pre">addr</span></code> is established,
+<code class="docutils literal notranslate"><span class="pre">False</span></code> if not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.BaseDTLSWrapper.sessions">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">sessions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#BaseDTLSWrapper.sessions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.BaseDTLSWrapper.sessions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all currently established sessions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A sequence of (implementation-specific) remote endpoints with
+which a session is established.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.BaseDTLSWrapper.write">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#BaseDTLSWrapper.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.BaseDTLSWrapper.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a <code class="docutils literal notranslate"><span class="pre">msg</span></code> encrypted to <code class="docutils literal notranslate"><span class="pre">addr</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<em>bytes</em>) – The message to encrypt via DTLS.</p></li>
+<li><p><strong>addr</strong> – An (implementation-specific) remote endpoint to send the
+encrypted message to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dtls.</span></span><span class="sig-name descname"><span class="pre">DNSOverDTLSServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dns_upstream</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><span class="pre">aiodnsprox.dns_upstream.DNSUpstream</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiodnsprox.dns_server.BaseServerFactory" title="aiodnsprox.dns_server.BaseServerFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_server.BaseServerFactory</span></code></a></p>
+<p>Factory to create DNS over DLTS servers</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">DNSOverDTLSServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory.DNSOverDTLSServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_server.BaseDNSServer</span></code></a>, <a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin" title="aiodnsprox.dns_upstream.DNSUpstreamServerMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_upstream.DNSUpstreamServerMixin</span></code></a></p>
+<p>DNS over DTLS server implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>factory</strong> (<a class="reference internal" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory" title="aiodnsprox.dtls.DNSOverDTLSServerFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverDTLSServerFactory</span></code></a>) – The factory that created the DNS over DTLS server.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.close">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory.DNSOverDTLSServer.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_lost">
+<span class="sig-name descname"><span class="pre">connection_lost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_lost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_lost" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_lost">connection_lost()</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_made">
+<span class="sig-name descname"><span class="pre">connection_made</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_made"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_made" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_made">connection_made()</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.datagram_received">
+<span class="sig-name descname"><span class="pre">datagram_received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory.DNSOverDTLSServer.datagram_received"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.datagram_received" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.datagram_received">datagram_received()</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received">
+<span class="sig-name descname"><span class="pre">error_received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.error_received">error_received()</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.send_response_to_requester">
+<span class="sig-name descname"><span class="pre">send_response_to_requester</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requester</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory.DNSOverDTLSServer.send_response_to_requester"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.send_response_to_requester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when proxied DNS server responded to a DNS query send by
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">dns_query_received()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> – The DNS response in on-the-wire format received from
+the proxied DNS server.</p></li>
+<li><p><strong>requester</strong> – Identifier for the endpoint that originally requested
+the query. This will have the same value as the
+<code class="docutils literal notranslate"><span class="pre">requester</span></code> parameter of
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">dns_query_received()</span></code> for the <code class="docutils literal notranslate"><span class="pre">query</span></code> that
+<code class="docutils literal notranslate"><span class="pre">response</span></code> is the response to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.DODTLS_PORT">
+<span class="sig-name descname"><span class="pre">DODTLS_PORT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">853</span></em><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DODTLS_PORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.create_server">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">create_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#DNSOverDTLSServerFactory.create_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.create_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an <a class="reference internal" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer" title="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverDTLSServer</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loop</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.AbstractEventLoop</span></code>) – the asyncio event loop the server should run in</p></li>
+<li><p><strong>local_addr</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Tuple[str,</span> <span class="pre">int]</span></code>) – A tuple for the created server to bind to. The first
+element is the host part, the second element the
+port.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An <a class="reference internal" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer" title="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverDTLSServer</span></code></a> object representing an
+DNS over DTLS server.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer" title="aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverDTLSServer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.DNSOverDTLSServerFactory.dtls_class">
+<span class="sig-name descname"><span class="pre">dtls_class</span></span><a class="headerlink" href="#aiodnsprox.dtls.DNSOverDTLSServerFactory.dtls_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#aiodnsprox.dtls.TinyDTLSWrapper" title="aiodnsprox.dtls.TinyDTLSWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dtls.TinyDTLSWrapper</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.TinyDTLSWrapper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dtls.</span></span><span class="sig-name descname"><span class="pre">TinyDTLSWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#TinyDTLSWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.TinyDTLSWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiodnsprox.dtls.BaseDTLSWrapper" title="aiodnsprox.dtls.BaseDTLSWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dtls.BaseDTLSWrapper</span></code></a></p>
+<p>A wrapper for
+<a class="reference external" href="https://projects.eclipse.org/projects/iot.tinydtls">tinydtls</a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.TinyDTLSWrapper.EVENT_CONNECTED">
+<span class="sig-name descname"><span class="pre">EVENT_CONNECTED</span></span><em class="property"> <span class="pre">=</span> <span class="pre">478</span></em><a class="headerlink" href="#aiodnsprox.dtls.TinyDTLSWrapper.EVENT_CONNECTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.TinyDTLSWrapper.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#TinyDTLSWrapper.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.TinyDTLSWrapper.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes a session with <code class="docutils literal notranslate"><span class="pre">addr</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr</strong> – An (implementation-specific) remote endpoint</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.TinyDTLSWrapper.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#TinyDTLSWrapper.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.TinyDTLSWrapper.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Establish a session with <code class="docutils literal notranslate"><span class="pre">addr</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr</strong> – An (implementation-specific) remote endpoint</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.TinyDTLSWrapper.handle_message">
+<span class="sig-name descname"><span class="pre">handle_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#TinyDTLSWrapper.handle_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.TinyDTLSWrapper.handle_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a DTLS message that came over the datagram transport.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<em>bytes</em>) – An incoming DTLS message.</p></li>
+<li><p><strong>addr</strong> – The remote endpoint as served by the datagram transport.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>A 3-tuple, containing</p>
+<ol class="arabic simple">
+<li><p>The unencrypted message,</p></li>
+<li><p>The (implementation-specific) remote endpoint the
+message was received from, an</p></li>
+<li><p>A boolean, indicating if the last message established a
+session with the remote endpoint.</p></li>
+</ol>
+<p>If <code class="docutils literal notranslate"><span class="pre">msg</span></code> was a control message, the first and second
+elements will be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.TinyDTLSWrapper.is_connected">
+<span class="sig-name descname"><span class="pre">is_connected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#TinyDTLSWrapper.is_connected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.TinyDTLSWrapper.is_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a session with <code class="docutils literal notranslate"><span class="pre">addr</span></code> was established.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr</strong> – A remote endpoint (implementation-specific)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code>, when a session with <code class="docutils literal notranslate"><span class="pre">addr</span></code> is established,
+<code class="docutils literal notranslate"><span class="pre">False</span></code> if not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.TinyDTLSWrapper.sessions">
+<span class="sig-name descname"><span class="pre">sessions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#TinyDTLSWrapper.sessions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.TinyDTLSWrapper.sessions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all currently established sessions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A sequence of (implementation-specific) remote endpoints with
+which a session is established.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.dtls.TinyDTLSWrapper.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#TinyDTLSWrapper.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.TinyDTLSWrapper.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a <code class="docutils literal notranslate"><span class="pre">msg</span></code> encrypted to <code class="docutils literal notranslate"><span class="pre">addr</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<em>bytes</em>) – The message to encrypt via DTLS.</p></li>
+<li><p><strong>addr</strong> – An (implementation-specific) remote endpoint to send the
+encrypted message to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aiodnsprox.udp">
+<span id="aiodnsprox-udp-module"></span><h2>aiodnsprox.udp module<a class="headerlink" href="#module-aiodnsprox.udp" title="Permalink to this headline">¶</a></h2>
+<p>DNS over UDP serving side of the proxy.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.udp.</span></span><span class="sig-name descname"><span class="pre">DNSOverUDPServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dns_upstream</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><span class="pre">aiodnsprox.dns_upstream.DNSUpstream</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiodnsprox.dns_server.BaseServerFactory" title="aiodnsprox.dns_server.BaseServerFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_server.BaseServerFactory</span></code></a></p>
+<p>Factory to create DNS over UDP servers</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">DNSOverUDPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory.DNSOverUDPServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer" title="aiodnsprox.dns_server.BaseDNSServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_server.BaseDNSServer</span></code></a>, <a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstreamServerMixin" title="aiodnsprox.dns_upstream.DNSUpstreamServerMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_upstream.DNSUpstreamServerMixin</span></code></a></p>
+<p>DNS over UDP server implementation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>factory</strong> (<a class="reference internal" href="#aiodnsprox.udp.DNSOverUDPServerFactory" title="aiodnsprox.udp.DNSOverUDPServerFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverUDPServerFactory</span></code></a>) – The factory that created the DNS over DTLS server.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.close">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory.DNSOverUDPServer.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost">
+<span class="sig-name descname"><span class="pre">connection_lost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_lost">connection_lost()</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_made">
+<span class="sig-name descname"><span class="pre">connection_made</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory.DNSOverUDPServer.connection_made"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_made" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_made">connection_made()</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received">
+<span class="sig-name descname"><span class="pre">datagram_received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.datagram_received">datagram_received()</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.error_received">
+<span class="sig-name descname"><span class="pre">error_received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory.DNSOverUDPServer.error_received"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.error_received" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference external" href="https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.error_received">error_received()</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.send_response_to_requester">
+<span class="sig-name descname"><span class="pre">send_response_to_requester</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requester</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory.DNSOverUDPServer.send_response_to_requester"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.send_response_to_requester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when proxied DNS server responded to a DNS query send by
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">dns_query_received()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> – The DNS response in on-the-wire format received from
+the proxied DNS server.</p></li>
+<li><p><strong>requester</strong> – Identifier for the endpoint that originally requested
+the query. This will have the same value as the
+<code class="docutils literal notranslate"><span class="pre">requester</span></code> parameter of
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">dns_query_received()</span></code> for the <code class="docutils literal notranslate"><span class="pre">query</span></code> that
+<code class="docutils literal notranslate"><span class="pre">response</span></code> is the response to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.DNS_PORT">
+<span class="sig-name descname"><span class="pre">DNS_PORT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">53</span></em><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNS_PORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory.create_server">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">create_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory.create_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory.create_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an <a class="reference internal" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer" title="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverUDPServer</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loop</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.AbstractEventLoop</span></code>) – the asyncio event loop the server should run in</p></li>
+<li><p><strong>local_addr</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Tuple[str,</span> <span class="pre">int]</span></code>) – A tuple for the created server to bind to. The first
+element is the host part, the second element the
+port.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An <a class="reference internal" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer" title="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverUDPServer</span></code></a> object representing an
+DNS over DTLS server.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer" title="aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNSOverUDPServer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">aiodnsprox package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#module-aiodnsprox.coap">aiodnsprox.coap module</a></li>
+<li><a class="reference internal" href="#module-aiodnsprox.config">aiodnsprox.config module</a></li>
+<li><a class="reference internal" href="#module-aiodnsprox.dns_server">aiodnsprox.dns_server module</a></li>
+<li><a class="reference internal" href="#module-aiodnsprox.dns_upstream">aiodnsprox.dns_upstream module</a></li>
+<li><a class="reference internal" href="#module-aiodnsprox.dtls">aiodnsprox.dtls module</a></li>
+<li><a class="reference internal" href="#module-aiodnsprox.udp">aiodnsprox.udp module</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation index</a><ul>
+  <li><a href="modules.html">API documentation</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">API documentation</a></li>
+      <li>Next: <a href="aiodnsprox.cli.html" title="next chapter">CLI interface</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/aiodnsprox.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2021, Martine S. Lenders.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.
+  </div>
+  
+  </body>
+</html>

@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>aiodnsprox—A DNS proxy based on Python’s asyncio &#8212; aiodnsprox  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/readable.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API documentation" href="modules.html" />
+    <link rel="prev" title="Welcome to aiodnsprox’s documentation!" href="index.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="API documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to aiodnsprox’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">aiodnsprox  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">aiodnsprox—A DNS proxy based on Python’s asyncio</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="aiodnsproxa-dns-proxy-based-on-python-s-asyncio">
+<h1>aiodnsprox—A DNS proxy based on Python’s asyncio<a class="headerlink" href="#aiodnsproxa-dns-proxy-based-on-python-s-asyncio" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://github.com/anr-bmbf-pivot/aiodnsprox/actions/workflows/test.yml"><img alt="Test aiodnsprox" src="https://github.com/anr-bmbf-pivot/aiodnsprox/actions/workflows/test.yml/badge.svg?event=schedule" /></a>
+<p>aiodnsprox is a DNS proxy based on Python’s <a class="reference external" href="https://docs.python.org/3/library/asyncio.html">asyncio</a>. It supports a variety
+of different DNS transports on both the serving side and the proxied side. On
+the proxied side, classic DNS protocols are supported, such as</p>
+<ul class="simple">
+<li><p>DNS over UDP (<a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc1035#section-4.2.1">RFC 1035, section 4.2.1</a>) and</p></li>
+<li><p>DNS over TCP (<a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc1035#section-4.2.2">RFC 1035, section 4.2.2</a>).</p></li>
+</ul>
+<p>On the serving side, DNS over UDP is supported as well but in addition the
+following are supported:</p>
+<ul class="simple">
+<li><p>DNS over DTLS (<a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8094">RFC 8094</a>)</p></li>
+<li><p>DNS over CoAP (DoC, <a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-lenders-dns-over-coap">draft-lenders-dns-over-coap</a>), supporting both
+unencrypted transfer and CoAP over DTLS.</p></li>
+</ul>
+<p>Since aiodnsprox currently is using an experimental feature branch of <a class="reference external" href="https://aiocoap.readthedocs.io">aiocoap</a>
+that provides CoAP over DTLS server support, aiodnsprox is to be considered in
+an early <strong>alpha state</strong>.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Currently, aiodnsprox is not provided via PyPI, but you can install it using the
+Git link</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/anr-bmbf-pivot/aiodnsprox/
+</pre></div>
+</div>
+<section id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>aiodnsprox works on <a class="reference external" href="https://docs.python.org">Python</a> 3.7 or newer.</p>
+<p>The following packages are required (see <a class="reference external" href="https://github.com/anr-bmbf-pivot/aiodnsprox/blob/main/requirements.txt">requirements.txt</a>):
+To parse configuration files <a class="reference external" href="https://pyyaml.org">PyYAML</a> 5.4 or newer is used.
+For proxying upstream DNS services and message parsing, <a class="reference external" href="https://www.dnspython.org">dnspython</a> 2.1 or
+newer is used.
+For serving DTLS messages, the <a class="reference external" href="https://projects.eclipse.org/projects/iot.tinydtls">tinydtls</a>-based <a class="reference external" href="https://git.fslab.de/jkonra2m/tinydtls-cython">DTLSSocket</a> 0.1 or newer is
+used.
+For serving CoAP, an <a class="reference external" href="https://gitlab.com/aiocoap/aiocoap/-/tree/dtls-server">experimental branch</a>
+of <a class="reference external" href="https://aiocoap.readthedocs.io">aiocoap</a> with <code class="docutils literal notranslate"><span class="pre">linkheader</span></code>, <code class="docutils literal notranslate"><span class="pre">tinydtls</span></code>, and <code class="docutils literal notranslate"><span class="pre">oscore</span></code> support is used.
+The branch is based on <a class="reference external" href="https://aiocoap.readthedocs.io">aiocoap</a> 0.4.1.</p>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>To start e.g. a DNS over UDP proxy towards a public DNS over UDP server of
+<a class="reference external" href="https://www.opennic.org">OpenNIC</a>, use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiodns-proxy -u -U <span class="m">185</span>.120.22.15
+</pre></div>
+</div>
+<p>For more information on the provided arguments, see</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiodns-proxy -h
+</pre></div>
+</div>
+</section>
+<section id="development">
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<p>Code contributions to aiodnsprox can be made in our <a class="reference external" href="https://github.com/anr-bmbf-pivot/aiodnsprox">Github repository</a>.
+Development there follows the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> recommendations and general best practices
+as best as possible.</p>
+<p>Bugs and feature requests can be made in the <a class="reference external" href="https://github.com/anr-bmbf-pivot/aiodnsprox/issues">issue tracker</a> over at Github.</p>
+<p>Our <a class="reference external" href="https://anr-bmbf-pivot.github.io/aiodnsprox">documentation</a> is built with <a class="reference external" href="https://www.sphinx-doc.org">sphinx</a>.</p>
+<p>For testing we try to achieve as much coverage as possible with our tests found
+in the <a class="reference external" href="https://github.com/anr-bmbf-pivot/aiodnsprox/tree/main/tests">tests</a> directory and utilize <a class="reference external" href="https://pytest.org">pytest</a>. The easiest way to run the
+whole test suite is via the <a class="reference external" href="https://tox.readthedocs.io">tox</a> tool. Just run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">aiodnsprox—A DNS proxy based on Python’s asyncio</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#development">Development</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation index</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to aiodnsprox’s documentation!</a></li>
+      <li>Next: <a href="modules.html" title="next chapter">API documentation</a></li>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/about.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2021, Martine S. Lenders.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.
+  </div>
+  
+  </body>
+</html>
