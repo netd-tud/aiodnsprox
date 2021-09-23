@@ -37,10 +37,7 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
         :type factory: :py:class:`DNSOverCoAPServerFactory`
         """
         def __init__(self, factory):
-            super().__init__(host=factory.upstream_host,
-                             port=factory.upstream_port,
-                             transport=factory.upstream_transport,
-                             timeout=factory.upstream_timeout)
+            super().__init__(dns_upstream=factory.dns_upstream)
             self._pending_responses = {}
 
         async def _dns_response(self, query):

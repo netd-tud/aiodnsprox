@@ -14,6 +14,7 @@ import pytest
 
 from DTLSSocket import dtls as tinydtls
 
+from aiodnsprox import dns_upstream
 from aiodnsprox import dtls
 
 from .fixtures import dns_server, config    # noqa: F401
@@ -141,8 +142,8 @@ async def test_dtls_proxy(dns_server, config):     # noqa: C901, F811
         def connection_lost(self, exc):
             self.on_connection_lost.set_result(self.result)
 
-    factory = dtls.DNSOverDTLSServerFactory(dns_server['host'],
-                                            dns_server['port'])
+    upstream = dns_upstream.DNSUpstream(dns_server['host'], dns_server['port'])
+    factory = dtls.DNSOverDTLSServerFactory(upstream)
     loop = asyncio.get_running_loop()
     server = await factory.create_server(
         loop,
@@ -174,8 +175,8 @@ async def test_dtls_proxy(dns_server, config):     # noqa: C901, F811
 @pytest.mark.asyncio
 async def test_dtls_factory_create_server_wo_config(dns_server):
     proxy_bind = ('::1', 2304)
-    factory = dtls.DNSOverDTLSServerFactory(dns_server['host'],
-                                            dns_server['port'])
+    upstream = dns_upstream.DNSUpstream(dns_server['host'], dns_server['port'])
+    factory = dtls.DNSOverDTLSServerFactory(upstream)
     loop = asyncio.get_running_loop()
     with pytest.raises(RuntimeError):
         await factory.create_server(
@@ -193,7 +194,8 @@ async def test_dtls_factory_create_server(local_addr, mocker):
     future = asyncio.Future()
     future.set_result((0, 0))
     loop.create_datagram_endpoint.return_value = future
-    factory = dtls.DNSOverDTLSServerFactory("localhost", 53)
+    upstream = dns_upstream.DNSUpstream("localhost", 53)
+    factory = dtls.DNSOverDTLSServerFactory(upstream)
     server = await factory.create_server(loop, local_addr=local_addr)
     loop.create_datagram_endpoint.assert_called_once()
     del server

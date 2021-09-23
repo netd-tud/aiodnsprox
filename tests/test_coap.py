@@ -13,6 +13,7 @@ import dns.message
 import pytest
 
 from aiodnsprox import coap
+from aiodnsprox import dns_upstream
 
 from .fixtures import dns_server, config
 
@@ -81,8 +82,8 @@ async def test_coap_proxy(dns_server, config):
         }
     })
 
-    factory = coap.DNSOverCoAPServerFactory(dns_server['host'],
-                                            dns_server['port'])
+    upstream = dns_upstream.DNSUpstream(dns_server['host'], dns_server['port'])
+    factory = coap.DNSOverCoAPServerFactory(upstream)
     loop = asyncio.get_running_loop()
     server = await factory.create_server(
         loop,
@@ -134,8 +135,8 @@ async def test_coap_proxy(dns_server, config):
 @pytest.mark.asyncio
 async def test_coap_factory_create_server_wo_config(dns_server):
     proxy_bind = ('::1', 2304)
-    factory = coap.DNSOverCoAPServerFactory(dns_server['host'],
-                                            dns_server['port'])
+    upstream = dns_upstream.DNSUpstream(dns_server['host'], dns_server['port'])
+    factory = coap.DNSOverCoAPServerFactory(upstream)
     loop = asyncio.get_running_loop()
     with pytest.raises(RuntimeError):
         await factory.create_server(
@@ -161,7 +162,8 @@ async def test_coap_factory_create_server(local_addr, mocker, config):
     fut.set_result(0)
     coap.DNSOverCoAPServerFactory.ClosableContext.create_server_context \
         .return_value = fut
-    factory = coap.DNSOverCoAPServerFactory("localhost", 53)
+    upstream = dns_upstream.DNSUpstream("localhost", 53)
+    factory = coap.DNSOverCoAPServerFactory(upstream)
     server = await factory.create_server(loop, local_addr=local_addr)
     coap.DNSOverCoAPServerFactory.ClosableContext.create_server_context\
         .assert_called_once()

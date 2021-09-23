@@ -12,6 +12,7 @@ import socket
 import dns.message
 import pytest
 
+from aiodnsprox import dns_upstream
 from aiodnsprox import udp
 
 from .fixtures import dns_server        # noqa: F401
@@ -43,8 +44,8 @@ async def test_udp_proxy(dns_server):   # noqa: C901, F811
         def connection_lost(self, exc):
             self.on_connection_lost.set_result(self.result)
 
-    factory = udp.DNSOverUDPServerFactory(dns_server['host'],
-                                          dns_server['port'])
+    upstream = dns_upstream.DNSUpstream(dns_server['host'], dns_server['port'])
+    factory = udp.DNSOverUDPServerFactory(upstream)
     loop = asyncio.get_running_loop()
     server = await factory.create_server(
         loop,
@@ -82,7 +83,8 @@ async def test_udp_factory_create_server(local_addr, mocker):
     future = asyncio.Future()
     future.set_result((0, 0))
     loop.create_datagram_endpoint.return_value = future
-    factory = udp.DNSOverUDPServerFactory("localhost", 53)
+    upstream = dns_upstream.DNSUpstream("localhost", 53)
+    factory = udp.DNSOverUDPServerFactory(upstream)
     server = await factory.create_server(loop, local_addr=local_addr)
     loop.create_datagram_endpoint.assert_called_once()
     del server

@@ -149,22 +149,19 @@ def get_config(args):
     return config
 
 
-def get_factory(transport, config):
+def get_factory(upstream, transport):
     """Get server factory for transport.
 
+    :param upstream: The proxied DNS server.
+    :type upstream: :py:class:`aiodnsprox.dns_upstream.DNSUpstream`
     :param transport: One of the following strings:
 
         - ``"udp"``: Gets a DNS over UDP server factory.
         - ``"dtls"``: Gets a DNS over DTLS server factory.
         - ``"coap"``: Gets a DNS over CoAP server factory.
     :type transport: str
-    :param config: Configuration. Must contain a ``"upstream_dns"`` section.
-    :type config: :py:class:`aiodnsprox.config.Config`
     """
-    upstream = config['upstream_dns']
-    return FACTORIES[transport](
-        **{f'upstream_{k}': v for k, v in upstream.items()}
-    )
+    return FACTORIES[transport](upstream)
 
 
 async def close_servers():
@@ -184,8 +181,9 @@ async def main():
     config = get_config(args)
 
     loop = asyncio.get_event_loop()
+    upstream = dns_upstream.DNSUpstream(**config['upstream_dns'])
     for transport, args in config['transports'].items():
-        factory = get_factory(transport, config)
+        factory = get_factory(upstream, transport)
         servers.append(await factory.create_server(
             loop=loop, local_addr=(args['host'], args['port'])
         ))

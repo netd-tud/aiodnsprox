@@ -200,10 +200,7 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
         :type factory: :py:class:`DNSOverDTLSServerFactory`
         """
         def __init__(self, factory):
-            super().__init__(host=factory.upstream_host,
-                             port=factory.upstream_port,
-                             transport=factory.upstream_transport,
-                             timeout=factory.upstream_timeout)
+            super().__init__(dns_upstream=factory.dns_upstream)
             self.factory = factory
             self.transport = None
             self._dtls = None

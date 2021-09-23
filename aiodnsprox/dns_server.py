@@ -12,7 +12,7 @@ import abc
 import asyncio
 import typing
 
-from .dns_upstream import DNSTransport
+from .dns_upstream import DNSUpstream
 
 
 class BaseDNSServer(abc.ABC):
@@ -28,29 +28,13 @@ class BaseDNSServer(abc.ABC):
 class BaseServerFactory(abc.ABC):
     """Abstract :py:class:`BaseDNSServer` factory.
 
-    :param upstream_host: Host of the proxied DNS server for
-                          :py:class:`.dns_upstream.DNSUpstreamServerMixin`.
-    :type upstream_host: str
-    :param upstream_port: Port of the proxied DNS server for
-                          :py:class:`.dns_upstream.DNSUpstreamServerMixin`.
-    :type upstream_port: int
-    :param upstream_transport: Transport used to communicate with proxied DNS server
-                               for :py:class:`.dns_upstream.DNSUpstreamServerMixin`.
-    :type upstream_transport: :py:class:`.dns_upstream.DNSTransport`
-    :param upstream_timeout: Timeout for queries towards the proxied DNS server
-                             for :py:class:`.dns_upstream.DNSUpstreamServerMixin`.
-    :type upstream_timeout: float
+    :param dns_upstream: The proxied DNS server for
+                         :py:class:`.dns_upstream.DNSUpstreamServerMixin`.
+    :type upstream_host: :py:class:`.dns_upstream.DNSUpstream`
     """     # noqa: E501
     # pylint: disable=too-few-public-methods
-    def __init__(self, upstream_host: str,
-                 upstream_port: typing.Optional[int] = None,
-                 upstream_transport: typing.Optional[DNSTransport] =
-                 DNSTransport.UDP,
-                 upstream_timeout: typing.Optional[float] = None):
-        self.upstream_host = upstream_host
-        self.upstream_port = upstream_port
-        self.upstream_transport = upstream_transport
-        self.upstream_timeout = upstream_timeout
+    def __init__(self, dns_upstream: DNSUpstream):
+        self.dns_upstream = dns_upstream
 
     @abc.abstractmethod
     async def create_server(

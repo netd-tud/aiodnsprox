@@ -152,30 +152,16 @@ class DNSUpstreamServerMixin(abc.ABC):
     """Mixin for the serving side of the proxy for easy access towards the
     proxied side.
 
-    :param host: Host of the proxied DNS server
-    :type host: str
-    :param port: (Optional) port of the proxied DNS server. If no port is
-                 provided, the default of the selected ``transport``
-                 will be used (e.g. 53 for :py:attr:`DNSTransport.TCP` or
-                 :py:attr:`DNSTransport.UDP`).
-    :type port: int
-    :param transport: (Optional) transport used to communicate with the proxied
-                      DNS server. If no transport is provided,
-                      :py:attr:`DNSTransport.UDP` will be used.
-    :param timeout: (Optional) timeout for queries towards the proxied DNS
-                    server
+    :param dns_upstream: The proxied DNS server.
+    :type dns_upstream: :py:class:`DNSUpstream`
+    :param timeout: (Optional) timeout for queries towards ``dns_upstream``.
     :type timeout: float
     """
 
     # pylint: disable=too-few-public-methods
-    def __init__(self, host, port: typing.Optional[int] = None,
-                 transport: typing.Optional[DNSTransport] = DNSTransport.UDP,
+    def __init__(self, dns_upstream: DNSUpstream,
                  timeout: typing.Optional[float] = None):
-        self._dns_upstream = DNSUpstream(
-            host=host,
-            port=port,
-            transport=transport
-        )
+        self._dns_upstream = dns_upstream
         self._timeout = timeout
 
     async def _get_query_response(self, query, requester):
