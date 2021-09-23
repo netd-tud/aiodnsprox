@@ -6,7 +6,7 @@
 #
 # Distributed under terms of the MIT license.
 
-"""A datagram-based DNS-over-X proxy"""
+"""A datagram-based DNS-over-X proxy."""
 
 import argparse
 import asyncio
@@ -27,6 +27,8 @@ servers = []
 
 
 class HostPortAction(argparse.Action):          # pylint: disable=R0903
+    """Argument parser Action class to parse a (host, port) pair into a
+    dictionary."""
     DEFAULT_HOST = 'localhost'
     DEFAULT_PORTS = {
         'coap': None,
@@ -56,6 +58,8 @@ class HostPortAction(argparse.Action):          # pylint: disable=R0903
 
 
 class DTLSCredentialsAction(argparse.Action):   # pylint: disable=R0903
+    """Argument parser Action class to parse PSK DTLS credentials into a
+    dictionary."""
     def __call__(self, parser, namespace, values, option_string,
                  *args, **kwargs):
         setattr(namespace, self.dest, {
@@ -65,6 +69,8 @@ class DTLSCredentialsAction(argparse.Action):   # pylint: disable=R0903
 
 
 class UpstreamAction(HostPortAction):           # pylint: disable=R0903
+    """Argument parser Action class to parse upstream parameters into a
+    dictionary."""
     TRANSPORTS = {
         'tcp': dns_upstream.DNSTransport.TCP,
         'udp': dns_upstream.DNSTransport.UDP,
@@ -94,6 +100,7 @@ class UpstreamAction(HostPortAction):           # pylint: disable=R0903
 
 
 def build_argparser():
+    """Build argument parser for the proxy CLI command."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("-C", "--config-file",
                         type=argparse.FileType('r', encoding='utf-8'),
@@ -122,6 +129,13 @@ def build_argparser():
 
 
 def get_config(args):
+    """Get :py:class:`aiodnsprox.config.Config` object from CLI arguments and
+    configuration file as provided in the CLI arguments (CLI arguments take
+    precedence over file configuration).
+
+    :param args: Parsed CLI arguments.
+    :type args: :py:class:`argparse.Namespace`
+    """
     config = Config()
     if args.config_file:
         config.add_yaml_config(args.config_file)
@@ -136,6 +150,17 @@ def get_config(args):
 
 
 def get_factory(transport, config):
+    """Get server factory for transport.
+
+    :param transport: One of the following strings:
+
+        - ``"udp"``: Gets a DNS over UDP server factory.
+        - ``"dtls"``: Gets a DNS over DTLS server factory.
+        - ``"coap"``: Gets a DNS over CoAP server factory.
+    :type transport: str
+    :param config: Configuration. Must contain a ``"upstream_dns"`` section.
+    :type config: :py:class:`aiodnsprox.config.Config`
+    """
     upstream = config['upstream_dns']
     return FACTORIES[transport](
         **{f'upstream_{k}': v for k, v in upstream.items()}
@@ -143,12 +168,17 @@ def get_factory(transport, config):
 
 
 async def close_servers():
+    """Close all servers that got started by :py:func:`main`."""
     for server in list(servers):
         await server.close()
         servers.remove(server)
 
 
 async def main():
+    """Asynchronous entry point.
+
+    Parses CLI parameters and creates a config from it. Starts all serving DNS
+    servers and sets up the upstream cliend towards the proxied DNS server."""
     parser = build_argparser()
     args = parser.parse_args()
     config = get_config(args)
@@ -162,6 +192,7 @@ async def main():
 
 
 def sync_main():                # pragma: no cover
+    """Synchronous entry point."""
     asyncio.Task(main())
     loop = asyncio.get_event_loop()
     try:
