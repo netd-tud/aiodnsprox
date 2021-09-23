@@ -10,6 +10,7 @@
 import abc
 import asyncio
 import logging
+import time
 import typing
 
 from DTLSSocket import dtls
@@ -105,6 +106,8 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
     `tinydtls <https://projects.eclipse.org/projects/iot.tinydtls>`_.
     """
     EVENT_CONNECTED = 0x1de
+    _CT_HANDSHAKE = 22
+    _HT_SERVER_HELLO_DONE = 14
 
     def __init__(self, transport):
         super().__init__(transport)
@@ -130,6 +133,13 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
         return len(data)
 
     def _write(self, addr, data):
+        if len(data) > 13 and data[0] == self._CT_HANDSHAKE and \
+           data[13] == self._HT_SERVER_HELLO_DONE:
+            delay = Config().get('dtls', {}).get('server_hello_done_delay')
+
+            if delay:
+                # Delay Server Hello Done for a bit
+                time.sleep(delay)
         self.transport.sendto(data, addr + (0, 0))
         return len(data)
 
