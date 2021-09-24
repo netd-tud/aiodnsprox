@@ -54,8 +54,8 @@
 
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">enum</span>
+<span class="kn">import</span> <span class="nn">socket</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
@@ -144,8 +144,7 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_resp_servfail</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-        <span class="n">resp</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">QR</span> <span class="o">|</span> <span class="n">dns</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">RD</span> <span class="o">|</span> <span class="n">dns</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">RA</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">recursion_available</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">resp</span><span class="o">.</span><span class="n">set_rcode</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">rcode</span><span class="o">.</span><span class="n">SERVFAIL</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">resp</span>
 
@@ -191,6 +190,68 @@
             <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">resp</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_</span>
         <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">to_wire</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="MockDNSUpstream"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream">[docs]</a><span class="k">class</span> <span class="nc">MockDNSUpstream</span><span class="p">(</span><span class="n">DNSUpstream</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mocks an upstream by statically responding with a preconfigured set of</span>
+<span class="sd">    records.</span>
+
+<span class="sd">    :param IN: Records for the RDATA class IN. A mapping that maps the name of</span>
+<span class="sd">               the record to its data. Currently supported are ``A`` and</span>
+<span class="sd">               ``AAAA`` records.</span>
+<span class="sd">    :type IN: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_AF</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span>
+        <span class="s1">&#39;AAAA&#39;</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET6</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">IN</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># pylint: disable=invalid-name,unused-argument,super-init-not-called</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">IN</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">IN</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_pton</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_AF</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                        <span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s2"> not a valid </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> record.&quot;</span>
+                        <span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">bytes</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">socket</span><span class="o">.</span><span class="n">inet_ntop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_AF</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s2"> not a valid </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> record.&quot;</span>
+                        <span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;IN[</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">] of invalid type &#39;</span>
+                                    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MockDNSUpstream.query"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+                    <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+        <span class="n">qry</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">from_wire</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">qry</span><span class="p">,</span> <span class="n">recursion_available</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">questions</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">QUESTION</span><span class="p">]</span>
+        <span class="n">answers</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">ANSWER</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">questions</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">question</span><span class="o">.</span><span class="n">rdclass</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">rdataclass</span><span class="o">.</span><span class="n">IN</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;A&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span> <span class="ow">and</span> <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">rdatatype</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="s1">&#39;AAAA&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span> <span class="ow">and</span> \
+                     <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">rdatatype</span><span class="o">.</span><span class="n">AAAA</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="s1">&#39;AAAA&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">answers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">rrset</span><span class="o">.</span><span class="n">from_rdata_list</span><span class="p">(</span><span class="n">question</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="p">[</span>
+                    <span class="n">dns</span><span class="o">.</span><span class="n">rdata</span><span class="o">.</span><span class="n">GenericRdata</span><span class="p">(</span><span class="n">question</span><span class="o">.</span><span class="n">rdclass</span><span class="p">,</span> <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span><span class="p">,</span>
+                                           <span class="n">data</span><span class="p">)</span>
+                <span class="p">]))</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">to_wire</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="DNSUpstreamServerMixin"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin">[docs]</a><span class="k">class</span> <span class="nc">DNSUpstreamServerMixin</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
