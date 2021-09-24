@@ -98,7 +98,10 @@ def test_tinydtls_wrapper__write(caplog, mocker, config):
 
 
 @pytest.mark.asyncio
-async def test_dtls_proxy(dns_server, config):     # noqa: C901, F811
+@pytest.mark.parametrize(
+    'done_delay', [None, 0.0, 0.012]
+)
+async def test_dtls_proxy(dns_server, config, done_delay):  # noqa: C901, F811
     proxy_bind = ('::1', 2304)
     config.add_config({
         'dtls_credentials': {
@@ -106,6 +109,11 @@ async def test_dtls_proxy(dns_server, config):     # noqa: C901, F811
             'psk': 'secretPSK',
         }
     })
+
+    if done_delay is not None:
+        config.add_config({
+            'dtls': {'server_hello_done_delay': done_delay},
+        })
 
     class ClientProtocol(asyncio.DatagramProtocol):
         def __init__(self, loop, on_connection_lost):
