@@ -10,6 +10,7 @@
 import asyncio
 import abc
 import enum
+import socket
 import typing
 import time
 
@@ -144,6 +145,68 @@ class DNSUpstream:
             resp = resp[0]
         resp.id = id_
         return resp.to_wire()
+
+
+class MockDNSUpstream(DNSUpstream):
+    """Mocks an upstream by statically responding with a preconfigured set of
+    records.
+
+    :param IN: Records for the RDATA class IN. A mapping that maps the name of
+               the record to its data. Currently supported are ``A`` and
+               ``AAAA`` records.
+    :type IN: dict
+    """
+    _AF = {
+        'A': socket.AF_INET,
+        'AAAA': socket.AF_INET6,
+    }
+
+    def __init__(self, *args, IN=None, **kwargs):
+        # pylint: disable=invalid-name,unused-argument,super-init-not-called
+        self._IN = {}
+        if isinstance(IN, dict):
+            for key in IN:
+                if isinstance(IN[key], str):
+                    try:
+                        self._IN[key] = socket.inet_pton(
+                            self._AF[key], IN[key]
+                        )
+                    except OSError as exc:
+                        raise ValueError(
+                            f"{IN[key]} not a valid {key} record."
+                        ) from exc
+                elif isinstance(IN[key], bytes):
+                    try:
+                        socket.inet_ntop(self._AF[key], IN[key])
+                    except ValueError as exc:
+                        raise ValueError(
+                            f"{IN[key]} not a valid {key} record."
+                        ) from exc
+                    self._IN[key] = IN[key]
+                else:
+                    raise TypeError(f'IN[{key}] of invalid type '
+                                    f'{type(IN[key])}')
+
+    async def query(self, query: bytes,
+                    timeout: typing.Optional[float] = None) -> bytes:
+        qry = dns.message.from_wire(query)
+        resp = dns.message.make_response(qry, recursion_available=True)
+        questions = resp.sections[dns.message.QUESTION]
+        answers = resp.sections[dns.message.ANSWER]
+        for question in questions:
+            data = None
+            if question.rdclass == dns.rdataclass.IN:
+                if 'A' in self._IN and question.rdtype == dns.rdatatype.A:
+                    data = self._IN['A']
+                elif 'AAAA' in self._IN and \
+                     question.rdtype == dns.rdatatype.AAAA:
+                    data = self._IN['AAAA']
+            if data is not None:
+                answers.append(dns.rrset.from_rdata_list(question.name, 300, [
+                    dns.rdata.GenericRdata(question.rdclass, question.rdtype,
+                                           data)
+                ]))
+        return resp.to_wire(dns.message)
 
 
 class DNSUpstreamServerMixin(abc.ABC):

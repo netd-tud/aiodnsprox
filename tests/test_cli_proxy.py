@@ -51,52 +51,66 @@ async def test_sync_main__value_error(monkeypatch, servers, config, argv):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    'argv, exp_transports, exp_credentials',
+    'argv, mock_upstream, exp_transports, exp_credentials',
     [
-        ([sys.argv[0], '-U', '9.9.9.9', '-u'], 1, None),
-        ([sys.argv[0], '-U', '9.9.9.9', '-u', 'localhost'], 1, None),
-        ([sys.argv[0], '-U', '9.9.9.9', '-u', 'localhost', '5353'], 1, None),
-        ([sys.argv[0], '-U', '9.9.9.9', '53', '-u'], 1, None),
-        ([sys.argv[0], '-U', 'tcp', '9.9.9.9', '53', '-u'], 1, None),
-        ([sys.argv[0], '-U', '9.9.9.9', '-u', '-d'], 0, None),
-        ([sys.argv[0], '-U', '9.9.9.9', '-u', '-c'], 0, None),
+        ([sys.argv[0], '-U', '9.9.9.9', '-u'], False, 1, None),
+        ([sys.argv[0], '-U', '9.9.9.9', '-u', 'localhost'], False, 1, None),
+        ([sys.argv[0], '-U', '9.9.9.9', '-u', 'localhost', '5353'], False, 1,
+         None),
+        ([sys.argv[0], '-U', '9.9.9.9', '53', '-u'], False, 1, None),
+        ([sys.argv[0], '-U', 'tcp', '9.9.9.9', '53', '-u'], False, 1, None),
+        ([sys.argv[0], '-U', '9.9.9.9', '-u', '-d'], False, 0, None),
+        ([sys.argv[0], '-U', '9.9.9.9', '-u', '-c'], False, 0, None),
         (
             [sys.argv[0], '-U', '9.9.9.9', '-u', '-d',
-             '--dtls-credentials', 'client_identifier', 'secretPSK'], 2,
+             '--dtls-credentials', 'client_identifier', 'secretPSK'], False, 2,
             {
                 'client_identity': 'client_identifier',
                 'psk': 'secretPSK',
             }),
         (
             [sys.argv[0], '-U', '9.9.9.9', '-u', '-d', '-c',
-             '--dtls-credentials', 'client_identifier', 'secretPSK'], 3,
+             '--dtls-credentials', 'client_identifier', 'secretPSK'], False, 3,
             {
                 'client_identity': 'client_identifier',
                 'psk': 'secretPSK',
             }),
-        ([sys.argv[0], '-U', '9.9.9.9', '-u', '-C', 'test.yaml'], 1, None),
+        ([sys.argv[0], '-U', '9.9.9.9', '-u', '-C', 'test.yaml'], False, 1,
+          None),
         (
             [sys.argv[0], '-U', '9.9.9.9', '-u', '-d',
-             '--dtls-credentials', 'client_identifier', 'secretPSK'], 2,
+             '--dtls-credentials', 'client_identifier', 'secretPSK'], False, 2,
             {
                 'client_identity': 'client_identifier',
                 'psk': 'secretPSK',
             }),
         (
             [sys.argv[0], '-U', '9.9.9.9', '-u', '-c',
-             '--dtls-credentials', 'client_identifier', 'secretPSK'], 2,
+             '--dtls-credentials', 'client_identifier', 'secretPSK'], False, 2,
             {
                 'client_identity': 'client_identifier',
                 'psk': 'secretPSK',
             }),
+        ([sys.argv[0], '-U', '9.9.9.9', '-u', '-C', 'test.yaml'], True, 1,
+         None),
+        ([sys.argv[0], '-U', '9.9.9.9', '-u', '-C', 'test.yaml'], True, 1,
+         None),
     ]
 )
 async def test_sync_main__success(monkeypatch, mocker, servers, config, argv,
+                                  mock_upstream,
                                   exp_transports, exp_credentials):
     monkeypatch.setattr(sys, 'argv', argv)
+    assert not mock_upstream or '-C' in argv
     if '-C' in argv:
-        mocker.patch('argparse.open',
-                     mocker.mock_open(read_data="test: foobar"))
+        if mock_upstream:
+            mocker.patch('argparse.open',
+                         mocker.mock_open(read_data="""
+test: foobar
+mock_dns_upstream: {}"""))
+        else:
+            mocker.patch('argparse.open',
+                         mocker.mock_open(read_data="test: foobar"))
     # override default ports so we can run tests as non-root
     monkeypatch.setattr(proxy.HostPortAction, 'DEFAULT_PORTS', {
         'dtls': 5853,
