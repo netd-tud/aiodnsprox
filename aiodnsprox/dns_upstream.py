@@ -9,7 +9,6 @@
 
 import asyncio
 import abc
-import copy
 import enum
 import typing
 import time
@@ -99,8 +98,7 @@ class DNSUpstream:
 
     @staticmethod
     def _resp_servfail(query):
-        resp = copy.deepcopy(query)
-        resp.flags = dns.flags.QR | dns.flags.RD | dns.flags.RA
+        resp = dns.message.make_response(query, recursion_available=True)
         resp.set_rcode(dns.rcode.SERVFAIL)
         return resp
 
