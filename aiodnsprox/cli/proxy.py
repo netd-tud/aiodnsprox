@@ -181,7 +181,10 @@ async def main():
     config = get_config(args)
 
     loop = asyncio.get_event_loop()
-    upstream = dns_upstream.DNSUpstream(**config['upstream_dns'])
+    if 'mock_dns_upstream' in config:
+        upstream = dns_upstream.MockDNSUpstream(**config['mock_dns_upstream'])
+    else:
+        upstream = dns_upstream.DNSUpstream(**config['upstream_dns'])
     for transport, args in config['transports'].items():
         factory = get_factory(upstream, transport)
         servers.append(await factory.create_server(
