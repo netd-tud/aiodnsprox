@@ -127,3 +127,15 @@ mock_dns_upstream: {}"""))
         assert len(servers) == exp_transports
         if '-C' in argv:
             assert config['test'] == 'foobar'
+
+
+@pytest.mark.asyncio
+async def test_sync_main__success_pre_config(monkeypatch, config):
+    monkeypatch.setattr(sys, 'argv', [sys.argv[0], '-U', '9.9.9.9', '-u'])
+    monkeypatch.setattr(proxy.HostPortAction, 'DEFAULT_PORTS', {
+        'dtls': 5853,
+        'udp': 5353,
+        'coap': None,
+    })
+    await proxy.main(config={'test': 'foobar'})
+    assert config['test'] == 'foobar'
