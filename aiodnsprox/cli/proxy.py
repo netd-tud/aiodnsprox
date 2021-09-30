@@ -145,7 +145,7 @@ def get_config(args, pre_config: typing.Optional[typing.Mapping] = None):
         args.config_file.close()
     del args.config_file
     config.add_args_config(args)
-    if 'upstream_dns' not in config:
+    if 'upstream_dns' not in config and 'mock_dns_upstream' not in config:
         raise RuntimeError("No upstream DNS server provided")
     if 'transports' not in config:
         raise RuntimeError("No proxy config provided")
