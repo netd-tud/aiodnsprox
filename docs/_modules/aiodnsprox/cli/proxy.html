@@ -55,6 +55,7 @@
 
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">aiodnsprox.config</span> <span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span> <span class="nn">aiodnsprox</span> <span class="kn">import</span> <span class="n">coap</span>
@@ -173,7 +174,7 @@
     <span class="k">return</span> <span class="n">parser</span></div>
 
 
-<div class="viewcode-block" id="get_config"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.get_config">[docs]</a><span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="get_config"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.get_config">[docs]</a><span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">pre_config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get :py:class:`aiodnsprox.config.Config` object from CLI arguments and</span>
 <span class="sd">    configuration file as provided in the CLI arguments (CLI arguments take</span>
 <span class="sd">    precedence over file configuration).</span>
@@ -182,6 +183,8 @@
 <span class="sd">    :type args: :py:class:`argparse.Namespace`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">pre_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">pre_config</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">:</span>
         <span class="n">config</span><span class="o">.</span><span class="n">add_yaml_config</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">)</span>
         <span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -216,14 +219,14 @@
         <span class="n">servers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">server</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.main">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.main">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Asynchronous entry point.</span>
 
 <span class="sd">    Parses CLI parameters and creates a config from it. Starts all serving DNS</span>
 <span class="sd">    servers and sets up the upstream cliend towards the proxied DNS server.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">build_argparser</span><span class="p">()</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">pre_config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 
     <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
     <span class="k">if</span> <span class="s1">&#39;mock_dns_upstream&#39;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
