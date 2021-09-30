@@ -10,6 +10,7 @@
 
 import argparse
 import asyncio
+import typing
 
 from aiodnsprox.config import Config
 from aiodnsprox import coap
@@ -128,7 +129,7 @@ def build_argparser():
     return parser
 
 
-def get_config(args):
+def get_config(args, pre_config: typing.Optional[typing.Mapping] = None):
     """Get :py:class:`aiodnsprox.config.Config` object from CLI arguments and
     configuration file as provided in the CLI arguments (CLI arguments take
     precedence over file configuration).
@@ -137,6 +138,8 @@ def get_config(args):
     :type args: :py:class:`argparse.Namespace`
     """
     config = Config()
+    if pre_config is not None:
+        config.add_config(pre_config)
     if args.config_file:
         config.add_yaml_config(args.config_file)
         args.config_file.close()
@@ -171,14 +174,14 @@ async def close_servers():
         servers.remove(server)
 
 
-async def main():
+async def main(config=None):
     """Asynchronous entry point.
 
     Parses CLI parameters and creates a config from it. Starts all serving DNS
     servers and sets up the upstream cliend towards the proxied DNS server."""
     parser = build_argparser()
     args = parser.parse_args()
-    config = get_config(args)
+    config = get_config(args, pre_config=config)
 
     loop = asyncio.get_event_loop()
     if 'mock_dns_upstream' in config:
