@@ -190,7 +190,7 @@
         <span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">del</span> <span class="n">args</span><span class="o">.</span><span class="n">config_file</span>
     <span class="n">config</span><span class="o">.</span><span class="n">add_args_config</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;upstream_dns&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;upstream_dns&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span> <span class="ow">and</span> <span class="s1">&#39;mock_dns_upstream&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No upstream DNS server provided&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="s1">&#39;transports&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No proxy config provided&quot;</span><span class="p">)</span>
