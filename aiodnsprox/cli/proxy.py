@@ -10,6 +10,7 @@
 
 import argparse
 import asyncio
+import logging
 import typing
 
 from aiodnsprox.config import Config
@@ -25,6 +26,26 @@ FACTORIES = {
     'udp': udp.DNSOverUDPServerFactory,
 }
 servers = []
+
+
+def loglevel(value):
+    """Type function to set the log level via command-line.
+
+    :param value: either a name for a log level or their numeric representation
+                  (as string).
+    :type: str
+    :returns: The (integer) log level.
+    """
+    if value.isdigit():
+        level = int(value)
+        if logging.getLevelName(level).startswith("Level "):
+            raise ValueError(f"Invalid log level \"{value}\"")
+    else:
+        level = logging.getLevelName(value.upper())
+        if isinstance(level, str):
+            raise ValueError(f"Invalid log level \"{value}\"")
+    logging.basicConfig(level=level)
+    return level
 
 
 class HostPortAction(argparse.Action):          # pylint: disable=R0903
@@ -103,6 +124,9 @@ class UpstreamAction(HostPortAction):           # pylint: disable=R0903
 def build_argparser():
     """Build argument parser for the proxy CLI command."""
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("-v", "--verbosity",
+                        type=loglevel, default='WARNING',
+                        help="Sets the log level")
     parser.add_argument("-C", "--config-file",
                         type=argparse.FileType('r', encoding='utf-8'),
                         help="Config YAML file")

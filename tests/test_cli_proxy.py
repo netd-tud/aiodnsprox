@@ -6,6 +6,7 @@
 #
 # Distributed under terms of the MIT license.
 
+import logging
 import sys
 
 import pytest
@@ -19,6 +20,26 @@ from .fixtures import config
 async def servers():
     yield proxy.servers
     await proxy.close_servers()
+
+
+def test_loglevel():
+    assert proxy.loglevel(str(logging.CRITICAL)) == logging.CRITICAL
+    assert proxy.loglevel(str(logging.ERROR)) == logging.ERROR
+    assert proxy.loglevel(str(logging.WARNING)) == logging.WARNING
+    assert proxy.loglevel(str(logging.INFO)) == logging.INFO
+    assert proxy.loglevel(str(logging.DEBUG)) == logging.DEBUG
+    assert proxy.loglevel(str(logging.NOTSET)) == logging.NOTSET
+    assert proxy.loglevel("CRITICAL") == logging.CRITICAL
+    assert proxy.loglevel("critical") == logging.CRITICAL
+    assert proxy.loglevel("ERROR") == logging.ERROR
+    assert proxy.loglevel("WARNING") == logging.WARNING
+    assert proxy.loglevel("INFO") == logging.INFO
+    assert proxy.loglevel("DEBUG") == logging.DEBUG
+    assert proxy.loglevel("NOTSET") == logging.NOTSET
+    with pytest.raises(ValueError):
+        proxy.loglevel("foobar")
+    with pytest.raises(ValueError):
+        proxy.loglevel("1236312576465")
 
 
 @pytest.mark.asyncio
