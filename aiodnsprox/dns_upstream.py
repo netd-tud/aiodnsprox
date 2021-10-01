@@ -10,6 +10,7 @@
 import asyncio
 import abc
 import enum
+import logging
 import socket
 import typing
 import time
@@ -218,6 +219,7 @@ class DNSUpstreamServerMixin(abc.ABC):
     :param timeout: (Optional) timeout for queries towards ``dns_upstream``.
     :type timeout: float
     """
+    logger = logging.getLogger(".".join([__module__, __name__]))
 
     # pylint: disable=too-few-public-methods
     def __init__(self, dns_upstream: DNSUpstream,
@@ -226,7 +228,15 @@ class DNSUpstreamServerMixin(abc.ABC):
         self._timeout = timeout
 
     async def _get_query_response(self, query, requester):
+        self.logger.debug("Received query from %s:\n  %s",
+                          requester,
+                          str(dns.message.from_wire(query))
+                          .replace('\n', '\n  '))
         resp = await self._dns_upstream.query(query, timeout=self._timeout)
+        self.logger.debug("Sending response to %s:\n  %s",
+                          requester,
+                          str(dns.message.from_wire(resp))
+                          .replace('\n', '\n  '))
         self.send_response_to_requester(resp, requester)
 
     def dns_query_received(self, query: bytes, requester) -> typing.NoReturn:
