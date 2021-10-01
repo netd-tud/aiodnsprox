@@ -196,7 +196,6 @@ async def test_mock_upstream_query_a_and_aaa():
     query.find_rrset(query.question, dns.name.from_text('v6.example.org'),
                      dns.rdataclass.IN, dns.rdatatype.AAAA, create=True,
                      force_unique=True)
-    print(query)
     response = dns.message.from_wire(await upstream.query(query.to_wire()))
     for rset in response.answer:
         for rda in rset:
