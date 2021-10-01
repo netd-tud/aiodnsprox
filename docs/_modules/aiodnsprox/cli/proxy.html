@@ -55,6 +55,7 @@
 
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">aiodnsprox.config</span> <span class="kn">import</span> <span class="n">Config</span>
@@ -70,6 +71,26 @@
     <span class="s1">&#39;udp&#39;</span><span class="p">:</span> <span class="n">udp</span><span class="o">.</span><span class="n">DNSOverUDPServerFactory</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">servers</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<div class="viewcode-block" id="loglevel"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.loglevel">[docs]</a><span class="k">def</span> <span class="nf">loglevel</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Type function to set the log level via command-line.</span>
+
+<span class="sd">    :param value: either a name for a log level or their numeric representation</span>
+<span class="sd">                  (as string).</span>
+<span class="sd">    :type: str</span>
+<span class="sd">    :returns: The (integer) log level.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">level</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Level &quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid log level </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid log level </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">level</span></div>
 
 
 <div class="viewcode-block" id="HostPortAction"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.HostPortAction">[docs]</a><span class="k">class</span> <span class="nc">HostPortAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>          <span class="c1"># pylint: disable=R0903</span>
@@ -148,6 +169,9 @@
 <div class="viewcode-block" id="build_argparser"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.build_argparser">[docs]</a><span class="k">def</span> <span class="nf">build_argparser</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Build argument parser for the proxy CLI command.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--verbosity&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">loglevel</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;WARNING&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Sets the log level&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-C&quot;</span><span class="p">,</span> <span class="s2">&quot;--config-file&quot;</span><span class="p">,</span>
                         <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Config YAML file&quot;</span><span class="p">)</span>
