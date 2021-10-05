@@ -108,6 +108,14 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
     EVENT_CONNECTED = 0x1de
     _CT_HANDSHAKE = 22
     _HT_SERVER_HELLO_DONE = 14
+    LOG_LEVEL = {
+        # pylint: disable=c-extension-no-member
+        logging.DEBUG: dtls.DTLS_LOG_DEBUG,
+        logging.INFO: dtls.DTLS_LOG_INFO,
+        logging.WARNING: dtls.DTLS_LOG_WARN,
+        logging.ERROR: dtls.DTLS_LOG_CRIT,
+        logging.CRITICAL: dtls.DTLS_LOG_EMERG,
+    }
 
     def __init__(self, transport):
         super().__init__(transport)
@@ -117,8 +125,9 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
         psk = credentials['psk'].encode()
         self._dtls = dtls.DTLS(
             read=self._read, write=self._write, event=self._event,
-            pskId=client_identity, pskStore={client_identity: psk}
+            pskId=client_identity, pskStore={client_identity: psk},
         )
+        dtls.setLogLevel(self.LOG_LEVEL[logger.level])
         self._active_sessions = {}
         self._app_data = None
         self._last_event = None
