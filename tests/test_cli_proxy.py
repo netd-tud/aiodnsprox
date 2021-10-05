@@ -76,7 +76,7 @@ async def test_sync_main__value_error(monkeypatch, servers, config, argv):
     [
         ([sys.argv[0], '-U', '9.9.9.9', '-u'], False, 1, None),
         ([sys.argv[0], '-U', '9.9.9.9', '-u', 'localhost'], False, 1, None),
-        ([sys.argv[0], '-U', '9.9.9.9', '-u', 'localhost', '5353'], False, 1,
+        ([sys.argv[0], '-U', '9.9.9.9', '-u', 'localhost', '5300'], False, 1,
          None),
         ([sys.argv[0], '-U', '9.9.9.9', '53', '-u'], False, 1, None),
         ([sys.argv[0], '-U', 'tcp', '9.9.9.9', '53', '-u'], False, 1, None),
@@ -135,7 +135,7 @@ mock_dns_upstream: {}"""))
     # override default ports so we can run tests as non-root
     monkeypatch.setattr(proxy.HostPortAction, 'DEFAULT_PORTS', {
         'dtls': 5853,
-        'udp': 5353,
+        'udp': 5300,
         'coap': None,
     })
     if ('-c' in argv or '-d' in argv) and '--dtls-credentials' not in argv:
@@ -155,7 +155,7 @@ async def test_sync_main__success_pre_config(monkeypatch, config):
     monkeypatch.setattr(sys, 'argv', [sys.argv[0], '-U', '9.9.9.9', '-u'])
     monkeypatch.setattr(proxy.HostPortAction, 'DEFAULT_PORTS', {
         'dtls': 5853,
-        'udp': 5353,
+        'udp': 5300,
         'coap': None,
     })
     await proxy.main(config={'test': 'foobar'})
