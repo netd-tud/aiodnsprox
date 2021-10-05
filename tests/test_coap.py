@@ -159,7 +159,7 @@ async def test_coap_factory_create_server(local_addr, mocker, config):
     loop = mocker.MagicMock()
     mocker.patch('aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext')
     fut = asyncio.Future()
-    fut.set_result(0)
+    fut.set_result(mocker.MagicMock())
     coap.DNSOverCoAPServerFactory.ClosableContext.create_server_context \
         .return_value = fut
     upstream = dns_upstream.DNSUpstream("localhost", 53)
