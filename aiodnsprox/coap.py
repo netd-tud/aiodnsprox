@@ -7,6 +7,7 @@
 
 """DNS over CoAP serving side of the proxy."""
 
+import os
 import asyncio
 import base64
 
@@ -123,26 +124,6 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
                     pass
                 self.request_interfaces = ri_type()
 
-    class _CredentialStore:
-        # hacking our own SecretStore, so that config is observed
-        def __init__(self):
-            try:
-                credentials = Config()['dtls_credentials']
-                client_identity = credentials['client_identity'].encode()
-                self._dict = {client_identity: credentials['psk'].encode()}
-            except KeyError as exc:
-                raise RuntimeError(f"DTLS credential option {exc} not found") \
-                    from exc
-
-        def __contains__(self, key):
-            return key in self._dict    # pragma: no cover
-
-        def __getitem__(self, key):
-            return self._dict[key]
-
-        def keys(self):     # pylint: disable=missing-function-docstring
-            return self._dict.keys()
-
     async def create_server(self, loop, *args, local_addr=None, **kwargs):
         """Creates an ``aiocoap`` server context.
 
@@ -166,10 +147,22 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
         )
         site.add_resource(['dns-query'], self.DNSQueryResource(self))
 
-        aiocoap.transports.tinydtls_server.securitystore = \
-            self._CredentialStore()
+        try:
+            client_identity = Config()['dtls_credentials']['client_identity']
+            psk = Config()['dtls_credentials']['psk']
+        except KeyError as exc:
+            raise RuntimeError(f"DTLS credential option {exc} not found") \
+                    from exc
+
+        os.environ['AIOCOAP_DTLSSERVER_ENABLED'] = '1'
+
         # pylint: disable=protected-access
         aiocoap.transports.tinydtls_server._SEND_SLEEP_WORKAROUND = \
             Config().get('dtls', {}).get('server_hello_done_delay', 0.0)
-        return await self.ClosableContext.create_server_context(site,
-                                                                local_addr)
+        ctx = await self.ClosableContext.create_server_context(site,
+                                                               local_addr)
+        ctx.server_credentials.load_from_dict({":client": {"dtls": {
+            "client-identity": {"ascii": client_identity},
+            "psk": {"ascii": psk},
+            }}})
+        return ctx
