@@ -153,6 +153,14 @@
     <span class="n">EVENT_CONNECTED</span> <span class="o">=</span> <span class="mh">0x1de</span>
     <span class="n">_CT_HANDSHAKE</span> <span class="o">=</span> <span class="mi">22</span>
     <span class="n">_HT_SERVER_HELLO_DONE</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># pylint: disable=c-extension-no-member</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DTLS_LOG_DEBUG</span><span class="p">,</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DTLS_LOG_INFO</span><span class="p">,</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DTLS_LOG_WARN</span><span class="p">,</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DTLS_LOG_CRIT</span><span class="p">,</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DTLS_LOG_EMERG</span><span class="p">,</span>
+    <span class="p">}</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transport</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">transport</span><span class="p">)</span>
@@ -162,8 +170,9 @@
         <span class="n">psk</span> <span class="o">=</span> <span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;psk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dtls</span> <span class="o">=</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DTLS</span><span class="p">(</span>
             <span class="n">read</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_read</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_write</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_event</span><span class="p">,</span>
-            <span class="n">pskId</span><span class="o">=</span><span class="n">client_identity</span><span class="p">,</span> <span class="n">pskStore</span><span class="o">=</span><span class="p">{</span><span class="n">client_identity</span><span class="p">:</span> <span class="n">psk</span><span class="p">}</span>
+            <span class="n">pskId</span><span class="o">=</span><span class="n">client_identity</span><span class="p">,</span> <span class="n">pskStore</span><span class="o">=</span><span class="p">{</span><span class="n">client_identity</span><span class="p">:</span> <span class="n">psk</span><span class="p">},</span>
         <span class="p">)</span>
+        <span class="n">dtls</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">[</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_active_sessions</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_app_data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_event</span> <span class="o">=</span> <span class="kc">None</span>

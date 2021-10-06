@@ -52,6 +52,7 @@
 
 <span class="sd">&quot;&quot;&quot;DNS over CoAP serving side of the proxy.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 
@@ -168,26 +169,6 @@
                     <span class="k">pass</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">request_interfaces</span> <span class="o">=</span> <span class="n">ri_type</span><span class="p">()</span></div></div>
 
-    <span class="k">class</span> <span class="nc">_CredentialStore</span><span class="p">:</span>
-        <span class="c1"># hacking our own SecretStore, so that config is observed</span>
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">credentials</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s1">&#39;dtls_credentials&#39;</span><span class="p">]</span>
-                <span class="n">client_identity</span> <span class="o">=</span> <span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;client_identity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">client_identity</span><span class="p">:</span> <span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;psk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">()}</span>
-            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DTLS credential option </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span> \
-                    <span class="kn">from</span> <span class="nn">exc</span>
-
-        <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span>    <span class="c1"># pragma: no cover</span>
-
-        <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-
-        <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>     <span class="c1"># pylint: disable=missing-function-docstring</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-
 <div class="viewcode-block" id="DNSOverCoAPServerFactory.create_server"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.create_server">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates an ``aiocoap`` server context.</span>
 
@@ -211,13 +192,25 @@
         <span class="p">)</span>
         <span class="n">site</span><span class="o">.</span><span class="n">add_resource</span><span class="p">([</span><span class="s1">&#39;dns-query&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNSQueryResource</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-        <span class="n">aiocoap</span><span class="o">.</span><span class="n">transports</span><span class="o">.</span><span class="n">tinydtls_server</span><span class="o">.</span><span class="n">securitystore</span> <span class="o">=</span> \
-            <span class="bp">self</span><span class="o">.</span><span class="n">_CredentialStore</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">client_identity</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s1">&#39;dtls_credentials&#39;</span><span class="p">][</span><span class="s1">&#39;client_identity&#39;</span><span class="p">]</span>
+            <span class="n">psk</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s1">&#39;dtls_credentials&#39;</span><span class="p">][</span><span class="s1">&#39;psk&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DTLS credential option </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span> \
+                    <span class="kn">from</span> <span class="nn">exc</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;AIOCOAP_DTLSSERVER_ENABLED&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="n">aiocoap</span><span class="o">.</span><span class="n">transports</span><span class="o">.</span><span class="n">tinydtls_server</span><span class="o">.</span><span class="n">_SEND_SLEEP_WORKAROUND</span> <span class="o">=</span> \
             <span class="n">Config</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dtls&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;server_hello_done_delay&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClosableContext</span><span class="o">.</span><span class="n">create_server_context</span><span class="p">(</span><span class="n">site</span><span class="p">,</span>
-                                                                <span class="n">local_addr</span><span class="p">)</span></div></div>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClosableContext</span><span class="o">.</span><span class="n">create_server_context</span><span class="p">(</span><span class="n">site</span><span class="p">,</span>
+                                                               <span class="n">local_addr</span><span class="p">)</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">server_credentials</span><span class="o">.</span><span class="n">load_from_dict</span><span class="p">({</span><span class="s2">&quot;:client&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dtls&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;client-identity&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ascii&quot;</span><span class="p">:</span> <span class="n">client_identity</span><span class="p">},</span>
+            <span class="s2">&quot;psk&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ascii&quot;</span><span class="p">:</span> <span class="n">psk</span><span class="p">},</span>
+            <span class="p">}}})</span>
+        <span class="k">return</span> <span class="n">ctx</span></div></div>
 </pre></div>
 
             <div class="clearer"></div>
