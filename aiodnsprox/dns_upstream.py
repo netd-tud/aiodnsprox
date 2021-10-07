@@ -173,8 +173,9 @@ class MockDNSUpstream(DNSUpstream):
         "A": socket.AF_INET,
         "AAAA": socket.AF_INET6,
     }
+    logger = logging.getLogger(".".join([__module__, __name__]))
 
-    def __init__(self, *args, IN=None, **kwargs):
+    def __init__(self, *args, IN=None, response_delay=None, **kwargs):
         # pylint: disable=invalid-name,unused-argument,super-init-not-called
         self._IN = {}
         if isinstance(IN, dict):
@@ -196,12 +197,30 @@ class MockDNSUpstream(DNSUpstream):
                     self._IN[key] = IN[key]
                 else:
                     raise TypeError(f"IN[{key}] of invalid type " f"{type(IN[key])}")
+        self._query_count = 0
+        if isinstance(response_delay, dict):
+            self.delay_queries = int(response_delay.get("queries"))
+            self.delay_time = float(response_delay.get("time"))
+        else:
+            self.delay_queries = None
+            self.delay_time = None
 
     async def query(
         self, query: bytes, timeout: typing.Optional[float] = None
     ) -> bytes:
         qry = dns.message.from_wire(query)
         resp = dns.message.make_response(qry, recursion_available=True)
+        if self.delay_queries is not None and self.delay_time is not None:
+            if self._query_count < self.delay_queries:
+                self._query_count += 1
+            else:
+                self._query_count = 0
+                self.logger.debug(
+                    "Delaying response by %.03f s\n  %s",
+                    self.delay_time,
+                    str(resp).replace("\n", "\n  "),
+                )
+                await asyncio.sleep(self.delay_time)
         questions = resp.sections[dns.message.QUESTION]
         answers = resp.sections[dns.message.ANSWER]
         for question in questions:
