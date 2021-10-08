@@ -25,6 +25,8 @@ FACTORIES = {
     "dtls": dtls.DNSOverDTLSServerFactory,
     "udp": udp.DNSOverUDPServerFactory,
 }
+LOG_DATEFMT = "%b %d %H:%M:%S.%f"
+LOG_FORMAT = "%(asctime)s %(levelname)s %(name)s: %(message)s"
 servers = []
 
 
@@ -44,7 +46,9 @@ def loglevel(value):
         level = logging.getLevelName(value.upper())
         if isinstance(level, str):
             raise ValueError(f'Invalid log level "{value}"')
-    logging.basicConfig(level=level)
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+    logging.basicConfig(level=level, datefmt=LOG_DATEFMT, format=LOG_FORMAT)
     return level
 
 
@@ -259,6 +263,10 @@ async def main(config=None):
 def sync_main():  # pragma: no cover
     """Synchronous entry point."""
     asyncio.Task(main())
+    logging.basicConfig(
+        datefmt=LOG_DATEFMT,
+        format=LOG_FORMAT,
+    )
     loop = asyncio.get_event_loop()
     try:
         loop.run_forever()
