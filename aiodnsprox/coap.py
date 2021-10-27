@@ -12,6 +12,7 @@ import asyncio
 import base64
 
 import aiocoap
+import aiocoap.credentials
 import aiocoap.resource
 import aiocoap.transports.tinydtls_server
 from aiocoap.numbers import NOT_ACCEPTABLE
@@ -181,15 +182,40 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
         aiocoap.transports.tinydtls_server._SEND_SLEEP_WORKAROUND = config.get(
             "dtls", {}
         ).get("server_hello_done_delay", 0.0)
-        ctx = await self.ClosableContext.create_server_context(site, local_addr)
-        ctx.server_credentials.load_from_dict(
-            {
-                ":client": {
-                    "dtls": {
-                        "client-identity": {"ascii": client_identity},
-                        "psk": {"ascii": psk},
+        credentials = aiocoap.credentials.CredentialsMap()
+        if "oscore_credentials" in config:
+            try:
+                credentials.load_from_dict(
+                    {
+                        client_id: {
+                            "oscore": {
+                                "contextfile": config["oscore_credentials"][client_id][
+                                    "keydir"
+                                ]
+                            }
+                        }
+                        for client_id in config["oscore_credentials"].keys()
                     }
+                )
+                from aiocoap.oscore_sitewrapper import OscoreSiteWrapper
+
+                site = OscoreSiteWrapper(site, credentials)
+            except KeyError as exc:
+                raise RuntimeError(f"OSCORE credential option {exc} not found") from exc
+            ctx = await self.ClosableContext.create_server_context(
+                site, local_addr, server_credentials=credentials
+            )
+        else:
+            credentials[":client"] = {
+                "dtls": {
+                    "client-identity": {"ascii": client_identity},
+                    "psk": {"ascii": psk},
                 }
             }
-        )
+            ctx = await self.ClosableContext.create_server_context(
+                site,
+                local_addr,
+            )
+            ctx.server_credentials.load_from_dict(credentials)
+
         return ctx
