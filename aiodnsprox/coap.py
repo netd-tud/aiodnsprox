@@ -14,6 +14,7 @@ import base64
 import aiocoap
 import aiocoap.resource
 import aiocoap.transports.tinydtls_server
+from aiocoap.numbers import NOT_ACCEPTABLE
 
 from .config import Config
 from .dns_server import BaseServerFactory, BaseDNSServer
@@ -25,7 +26,7 @@ CONTENT_FORMAT_DNS_MESSAGE = 65053
 
 class NotAcceptable(aiocoap.error.ConstructionRenderableError):
     """Exception to represent a 4.06 Not Acceptable CoAP error response"""
-    code = aiocoap.numbers.codes.Code.NOT_ACCEPTABLE
+    code = NOT_ACCEPTABLE
 
 
 class DNSOverCoAPServerFactory(BaseServerFactory):
