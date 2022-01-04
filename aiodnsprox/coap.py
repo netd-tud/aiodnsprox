@@ -32,7 +32,7 @@ class NotAcceptable(aiocoap.error.ConstructionRenderableError):
 class DNSOverCoAPServerFactory(BaseServerFactory):
     """Factory to create DNS over CoAP servers"""
     # pylint: disable=too-few-public-methods
-    class DNSQueryResource(aiocoap.resource.Resource, DNSUpstreamServerMixin):
+    class DNSQueryResource(DNSUpstreamServerMixin, aiocoap.resource.Resource):
         """The DNS over CoAP resource of the DNS over CoAP server.
 
         :param factory: The factory that created the DNS over CoAP server.
