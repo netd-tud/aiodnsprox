@@ -32,25 +32,36 @@ class NotAcceptable(aiocoap.error.ConstructionRenderableError):
 class DNSOverCoAPServerFactory(BaseServerFactory):
     """Factory to create DNS over CoAP servers"""
     # pylint: disable=too-few-public-methods
-    class DNSQueryResource(DNSUpstreamServerMixin, aiocoap.resource.Resource):
+
+    class _InnerDNSUpstream(DNSUpstreamServerMixin):
+        def __init__(self, dns_upstream):
+            super().__init__(dns_upstream=dns_upstream)
+            self.dns_upstream = dns_upstream
+            self._pending_responses = {}
+
+        def send_response_to_requester(self, response, requester):
+            assert requester in self._pending_responses
+            self._pending_responses[
+                requester
+            ].set_result(response)
+
+        # pylint: disable=missing-function-docstring
+        async def dns_response(self, query):
+            self._pending_responses[query] = asyncio.Future()
+            self.dns_query_received(query, query)
+            return await self._pending_responses[query]
+
+    class DNSQueryResource(aiocoap.resource.Resource):
         """The DNS over CoAP resource of the DNS over CoAP server.
 
         :param factory: The factory that created the DNS over CoAP server.
         :type factory: :py:class:`DNSOverCoAPServerFactory`
         """
         def __init__(self, factory):
-            super().__init__(dns_upstream=factory.dns_upstream)
-            self._pending_responses = {}
-
-        async def _dns_response(self, query):
-            self._pending_responses[query] = asyncio.Future()
-            self.dns_query_received(query, query)
-            return await self._pending_responses[query]
-
-        def send_response_to_requester(self, response, query):
-            # pylint: disable=arguments-renamed
-            assert query in self._pending_responses
-            self._pending_responses[query].set_result(response)
+            super().__init__()
+            self._dns_upstream = factory._InnerDNSUpstream(
+                factory.dns_upstream
+            )
 
         @staticmethod
         def _coap_response(dns_response):
@@ -60,7 +71,7 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
             )
 
         async def _render_acceptable(self, request, query):
-            formatted_response = await self._dns_response(query)
+            formatted_response = await self._dns_upstream.dns_response(query)
             if request.opt.accept is None or \
                request.opt.accept == CONTENT_FORMAT_DNS_MESSAGE:
                 dns_response = formatted_response
