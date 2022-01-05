@@ -77,25 +77,36 @@
 <div class="viewcode-block" id="DNSOverCoAPServerFactory"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory">[docs]</a><span class="k">class</span> <span class="nc">DNSOverCoAPServerFactory</span><span class="p">(</span><span class="n">BaseServerFactory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Factory to create DNS over CoAP servers&quot;&quot;&quot;</span>
     <span class="c1"># pylint: disable=too-few-public-methods</span>
-<div class="viewcode-block" id="DNSOverCoAPServerFactory.DNSQueryResource"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource">[docs]</a>    <span class="k">class</span> <span class="nc">DNSQueryResource</span><span class="p">(</span><span class="n">aiocoap</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">,</span> <span class="n">DNSUpstreamServerMixin</span><span class="p">):</span>
+
+    <span class="k">class</span> <span class="nc">_InnerDNSUpstream</span><span class="p">(</span><span class="n">DNSUpstreamServerMixin</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dns_upstream</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dns_upstream</span><span class="o">=</span><span class="n">dns_upstream</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dns_upstream</span> <span class="o">=</span> <span class="n">dns_upstream</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">requester</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">requester</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span>
+                <span class="n">requester</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="c1"># pylint: disable=missing-function-docstring</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">dns_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span><span class="n">query</span><span class="p">]</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dns_query_received</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span><span class="n">query</span><span class="p">]</span>
+
+<div class="viewcode-block" id="DNSOverCoAPServerFactory.DNSQueryResource"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource">[docs]</a>    <span class="k">class</span> <span class="nc">DNSQueryResource</span><span class="p">(</span><span class="n">aiocoap</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The DNS over CoAP resource of the DNS over CoAP server.</span>
 
 <span class="sd">        :param factory: The factory that created the DNS over CoAP server.</span>
 <span class="sd">        :type factory: :py:class:`DNSOverCoAPServerFactory`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
-            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dns_upstream</span><span class="o">=</span><span class="n">factory</span><span class="o">.</span><span class="n">dns_upstream</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="k">async</span> <span class="k">def</span> <span class="nf">_dns_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span><span class="n">query</span><span class="p">]</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dns_query_received</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span><span class="n">query</span><span class="p">]</span>
-
-<div class="viewcode-block" id="DNSOverCoAPServerFactory.DNSQueryResource.send_response_to_requester"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.send_response_to_requester">[docs]</a>        <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-            <span class="c1"># pylint: disable=arguments-renamed</span>
-            <span class="k">assert</span> <span class="n">query</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span><span class="n">query</span><span class="p">]</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dns_upstream</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">_InnerDNSUpstream</span><span class="p">(</span>
+                <span class="n">factory</span><span class="o">.</span><span class="n">dns_upstream</span>
+            <span class="p">)</span>
 
         <span class="nd">@staticmethod</span>
         <span class="k">def</span> <span class="nf">_coap_response</span><span class="p">(</span><span class="n">dns_response</span><span class="p">):</span>
@@ -105,7 +116,7 @@
             <span class="p">)</span>
 
         <span class="k">async</span> <span class="k">def</span> <span class="nf">_render_acceptable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-            <span class="n">formatted_response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dns_response</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+            <span class="n">formatted_response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dns_upstream</span><span class="o">.</span><span class="n">dns_response</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">accept</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> \
                <span class="n">request</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">accept</span> <span class="o">==</span> <span class="n">CONTENT_FORMAT_DNS_MESSAGE</span><span class="p">:</span>
                 <span class="n">dns_response</span> <span class="o">=</span> <span class="n">formatted_response</span>
@@ -242,7 +253,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
   </div>
   
   </body>
