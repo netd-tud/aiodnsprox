@@ -62,11 +62,11 @@
 
 <div class="viewcode-block" id="BaseDNSServer"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_server.BaseDNSServer">[docs]</a><span class="k">class</span> <span class="nc">BaseDNSServer</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An abstract DNS server.&quot;&quot;&quot;</span>
+
     <span class="c1"># pylint: disable=too-few-public-methods</span>
 <div class="viewcode-block" id="BaseDNSServer.close"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_server.BaseDNSServer.close">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Closes the server.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Closes the server.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 
 
@@ -76,15 +76,19 @@
 <span class="sd">    :param dns_upstream: The proxied DNS server for</span>
 <span class="sd">                         :py:class:`.dns_upstream.DNSUpstreamServerMixin`.</span>
 <span class="sd">    :type upstream_host: :py:class:`.dns_upstream.DNSUpstream`</span>
-<span class="sd">    &quot;&quot;&quot;</span>     <span class="c1"># noqa: E501</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
     <span class="c1"># pylint: disable=too-few-public-methods</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dns_upstream</span><span class="p">:</span> <span class="n">DNSUpstream</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dns_upstream</span> <span class="o">=</span> <span class="n">dns_upstream</span>
 
 <div class="viewcode-block" id="BaseServerFactory.create_server"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_server.BaseServerFactory.create_server">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">create_server</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-        <span class="n">local_addr</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">local_addr</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseDNSServer</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Creates a :py:class:`BaseDNSServer` object.</span>
 

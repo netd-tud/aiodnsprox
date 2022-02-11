@@ -74,6 +74,7 @@
 <span class="sd">    - :py:attr:`UDP_TCP_FALLBACK` for DNS over UDP with</span>
 <span class="sd">      a fallback to DNS over TCP in case the DNS over UDP response is truncated</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">UDP</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">UDP_TCP_FALLBACK</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">TCP</span> <span class="o">=</span> <span class="mi">2</span></div>
@@ -94,6 +95,7 @@
 <span class="sd">                      :py:attr:`DNSTransport.UDP` will be used.</span>
 <span class="sd">    :type transport: DNSTransport</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">_QUERY_FUNC</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP</span><span class="p">:</span> <span class="n">dns</span><span class="o">.</span><span class="n">asyncquery</span><span class="o">.</span><span class="n">udp</span><span class="p">,</span>
         <span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP_TCP_FALLBACK</span><span class="p">:</span> <span class="n">dns</span><span class="o">.</span><span class="n">asyncquery</span><span class="o">.</span><span class="n">udp_with_fallback</span><span class="p">,</span>
@@ -102,12 +104,19 @@
     <span class="n">DEFAULT_LIFETIME</span> <span class="o">=</span> <span class="mf">5.0</span>
     <span class="n">DEFAULT_TIMEOUT</span> <span class="o">=</span> <span class="mf">2.0</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">transport</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">DNSTransport</span><span class="p">]</span> <span class="o">=</span> <span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">port</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">transport</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">DNSTransport</span><span class="p">]</span> <span class="o">=</span> <span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
         <span class="k">if</span> <span class="n">port</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">transport</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP</span><span class="p">,</span> <span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP_TCP_FALLBACK</span><span class="p">,</span>
-                             <span class="n">DNSTransport</span><span class="o">.</span><span class="n">TCP</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">transport</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP</span><span class="p">,</span>
+                <span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP_TCP_FALLBACK</span><span class="p">,</span>
+                <span class="n">DNSTransport</span><span class="o">.</span><span class="n">TCP</span><span class="p">,</span>
+            <span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="mi">53</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported transport </span><span class="si">{</span><span class="n">transport</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -131,7 +140,7 @@
             <span class="n">lifetime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_LIFETIME</span>
         <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="n">duration</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="k">if</span> <span class="n">duration</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>    <span class="c1"># pragma: no cover</span>
+        <span class="k">if</span> <span class="n">duration</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">if</span> <span class="n">duration</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># Time going backwards is bad. Just give up.</span>
                 <span class="k">raise</span> <span class="n">dns</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">Timeout</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">duration</span><span class="p">)</span>
@@ -140,7 +149,7 @@
             <span class="c1"># Pretend it didn&#39;t happen.</span>
             <span class="n">now</span> <span class="o">=</span> <span class="n">start</span>
         <span class="k">if</span> <span class="n">duration</span> <span class="o">&gt;=</span> <span class="n">lifetime</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">dns</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">Timeout</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">duration</span><span class="p">)</span>   <span class="c1"># pragma: no cover</span>
+            <span class="k">raise</span> <span class="n">dns</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">Timeout</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">duration</span><span class="p">)</span>  <span class="c1"># pragma: no cover</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">lifetime</span> <span class="o">-</span> <span class="n">duration</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_TIMEOUT</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
@@ -149,8 +158,9 @@
         <span class="n">resp</span><span class="o">.</span><span class="n">set_rcode</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">rcode</span><span class="o">.</span><span class="n">SERVFAIL</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">resp</span>
 
-<div class="viewcode-block" id="DNSUpstream.query"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
-                    <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<div class="viewcode-block" id="DNSUpstream.query"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Query proxied DNS server.</span>
 
 <span class="sd">        :param query: DNS query in the on-the-wire format</span>
@@ -174,16 +184,17 @@
             <span class="k">while</span> <span class="n">resp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_timeout</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">lifetime</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_func</span><span class="p">(</span><span class="n">qry</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span>
-                                                  <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">,</span>
-                                                  <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+                    <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_func</span><span class="p">(</span>
+                        <span class="n">qry</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span>
+                    <span class="p">)</span>
                 <span class="k">except</span> <span class="n">dns</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">DNSException</span><span class="p">:</span>
                     <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resp_servfail</span><span class="p">(</span><span class="n">qry</span><span class="p">)</span>
                     <span class="k">break</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_func</span><span class="p">(</span><span class="n">qry</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span>
-                                              <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_func</span><span class="p">(</span>
+                    <span class="n">qry</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span>
+                <span class="p">)</span>
             <span class="k">except</span> <span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">DNSException</span><span class="p">,</span> <span class="ne">ConnectionRefusedError</span><span class="p">):</span>
                 <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resp_servfail</span><span class="p">(</span><span class="n">qry</span><span class="p">)</span>
                 <span class="n">tuple_resp</span> <span class="o">=</span> <span class="kc">False</span>
@@ -202,9 +213,10 @@
 <span class="sd">               ``AAAA`` records.</span>
 <span class="sd">    :type IN: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">_AF</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span>
-        <span class="s1">&#39;AAAA&#39;</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET6</span><span class="p">,</span>
+        <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span>
+        <span class="s2">&quot;AAAA&quot;</span><span class="p">:</span> <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET6</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">IN</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -214,9 +226,7 @@
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">IN</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_pton</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">_AF</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                        <span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_pton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_AF</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
                     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s2"> not a valid </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> record.&quot;</span>
@@ -230,11 +240,11 @@
                         <span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;IN[</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">] of invalid type &#39;</span>
-                                    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IN[</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">] of invalid type &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MockDNSUpstream.query"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
-                    <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<div class="viewcode-block" id="MockDNSUpstream.query"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
         <span class="n">qry</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">from_wire</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
         <span class="n">resp</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">qry</span><span class="p">,</span> <span class="n">recursion_available</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">questions</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">QUESTION</span><span class="p">]</span>
@@ -242,16 +252,22 @@
         <span class="k">for</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">questions</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">question</span><span class="o">.</span><span class="n">rdclass</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">rdataclass</span><span class="o">.</span><span class="n">IN</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s1">&#39;A&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span> <span class="ow">and</span> <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">rdatatype</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
-                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
-                <span class="k">elif</span> <span class="s1">&#39;AAAA&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span> <span class="ow">and</span> \
-                     <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">rdatatype</span><span class="o">.</span><span class="n">AAAA</span><span class="p">:</span>
-                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="s1">&#39;AAAA&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;A&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span> <span class="ow">and</span> <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">rdatatype</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="s2">&quot;AAAA&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span> <span class="ow">and</span> <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">rdatatype</span><span class="o">.</span><span class="n">AAAA</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">[</span><span class="s2">&quot;AAAA&quot;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">answers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">rrset</span><span class="o">.</span><span class="n">from_rdata_list</span><span class="p">(</span><span class="n">question</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="p">[</span>
-                    <span class="n">dns</span><span class="o">.</span><span class="n">rdata</span><span class="o">.</span><span class="n">GenericRdata</span><span class="p">(</span><span class="n">question</span><span class="o">.</span><span class="n">rdclass</span><span class="p">,</span> <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span><span class="p">,</span>
-                                           <span class="n">data</span><span class="p">)</span>
-                <span class="p">]))</span>
+                <span class="n">answers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">dns</span><span class="o">.</span><span class="n">rrset</span><span class="o">.</span><span class="n">from_rdata_list</span><span class="p">(</span>
+                        <span class="n">question</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                        <span class="mi">300</span><span class="p">,</span>
+                        <span class="p">[</span>
+                            <span class="n">dns</span><span class="o">.</span><span class="n">rdata</span><span class="o">.</span><span class="n">GenericRdata</span><span class="p">(</span>
+                                <span class="n">question</span><span class="o">.</span><span class="n">rdclass</span><span class="p">,</span> <span class="n">question</span><span class="o">.</span><span class="n">rdtype</span><span class="p">,</span> <span class="n">data</span>
+                            <span class="p">)</span>
+                        <span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">to_wire</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="p">)</span></div></div>
 
 
@@ -264,24 +280,28 @@
 <span class="sd">    :param timeout: (Optional) timeout for queries towards ``dns_upstream``.</span>
 <span class="sd">    :type timeout: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="vm">__module__</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">]))</span>
 
     <span class="c1"># pylint: disable=too-few-public-methods</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dns_upstream</span><span class="p">:</span> <span class="n">DNSUpstream</span><span class="p">,</span>
-                 <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">dns_upstream</span><span class="p">:</span> <span class="n">DNSUpstream</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dns_upstream</span> <span class="o">=</span> <span class="n">dns_upstream</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_get_query_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">requester</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Received query from </span><span class="si">%s</span><span class="s2">:</span><span class="se">\n</span><span class="s2">  </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                          <span class="n">requester</span><span class="p">,</span>
-                          <span class="nb">str</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">from_wire</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
-                          <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  &#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Received query from </span><span class="si">%s</span><span class="s2">:</span><span class="se">\n</span><span class="s2">  </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">requester</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">from_wire</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  &quot;</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dns_upstream</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Sending response to </span><span class="si">%s</span><span class="s2">:</span><span class="se">\n</span><span class="s2">  </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                          <span class="n">requester</span><span class="p">,</span>
-                          <span class="nb">str</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">from_wire</span><span class="p">(</span><span class="n">resp</span><span class="p">))</span>
-                          <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  &#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Sending response to </span><span class="si">%s</span><span class="s2">:</span><span class="se">\n</span><span class="s2">  </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">requester</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">from_wire</span><span class="p">(</span><span class="n">resp</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  &quot;</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">send_response_to_requester</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DNSUpstreamServerMixin.dns_query_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received">[docs]</a>    <span class="k">def</span> <span class="nf">dns_query_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
@@ -301,8 +321,7 @@
         <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">coroutine</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DNSUpstreamServerMixin.send_response_to_requester"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
-                                   <span class="n">requester</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Called when proxied DNS server responded to a DNS query send by</span>
 <span class="sd">        :py:meth:`dns_query_received`.</span>
 

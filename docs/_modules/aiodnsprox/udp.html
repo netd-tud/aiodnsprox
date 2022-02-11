@@ -58,6 +58,7 @@
 
 <div class="viewcode-block" id="DNSOverUDPServerFactory"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory">[docs]</a><span class="k">class</span> <span class="nc">DNSOverUDPServerFactory</span><span class="p">(</span><span class="n">BaseServerFactory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Factory to create DNS over UDP servers&quot;&quot;&quot;</span>
+
     <span class="c1"># pylint: disable=too-few-public-methods</span>
     <span class="n">DNS_PORT</span> <span class="o">=</span> <span class="mi">53</span>
 
@@ -67,6 +68,7 @@
 <span class="sd">        :param factory: The factory that created the DNS over DTLS server.</span>
 <span class="sd">        :type factory: :py:class:`DNSOverUDPServerFactory`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
             <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dns_upstream</span><span class="o">=</span><span class="n">factory</span><span class="o">.</span><span class="n">dns_upstream</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="kc">None</span>
@@ -79,7 +81,7 @@
             <span class="sd">&quot;&quot;&quot;See `connection_made()`_</span>
 
 <span class="sd">            .. _`connection_made()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_made</span>
-<span class="sd">            &quot;&quot;&quot;</span>     <span class="c1"># noqa: E501</span>
+<span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="n">transport</span></div>
 
 <div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received">[docs]</a>        <span class="k">def</span> <span class="nf">datagram_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
@@ -87,24 +89,24 @@
             <span class="sd">&quot;&quot;&quot;See `datagram_received()`_</span>
 
 <span class="sd">            .. _`datagram_received()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.datagram_received</span>
-<span class="sd">            &quot;&quot;&quot;</span>     <span class="c1"># noqa: E501</span>
+<span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dns_query_received</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.error_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.error_received">[docs]</a>        <span class="k">def</span> <span class="nf">error_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>      <span class="c1"># pylint: disable=no-self-use</span>
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.error_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.error_received">[docs]</a>        <span class="k">def</span> <span class="nf">error_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
             <span class="c1"># pylint: disable=line-too-long</span>
             <span class="sd">&quot;&quot;&quot;See `error_received()`_</span>
 
 <span class="sd">            .. _`error_received()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.error_received</span>
-<span class="sd">            &quot;&quot;&quot;</span>     <span class="c1"># noqa: E501</span>
-            <span class="k">raise</span> <span class="n">exc</span>                       <span class="c1"># pragma: no cover</span></div>
+<span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="k">raise</span> <span class="n">exc</span>  <span class="c1"># pragma: no cover</span></div>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost">[docs]</a>        <span class="k">def</span> <span class="nf">connection_lost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>     <span class="c1"># pylint: disable=no-self-use</span>
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost">[docs]</a>        <span class="k">def</span> <span class="nf">connection_lost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
             <span class="c1"># pylint: disable=line-too-long,unnecessary-pass</span>
             <span class="sd">&quot;&quot;&quot;See `connection_lost()`_</span>
 
 <span class="sd">            .. _`connection_lost()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_lost</span>
-<span class="sd">            &quot;&quot;&quot;</span>     <span class="c1"># noqa: E501</span>
-            <span class="k">pass</span>                            <span class="c1"># pragma: no cover</span></div>
+<span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="k">pass</span>  <span class="c1"># pragma: no cover</span></div>
 
 <div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.close"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.close">[docs]</a>        <span class="k">async</span> <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -114,8 +116,7 @@
     <span class="k">def</span> <span class="nf">_create_server_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNSOverUDPServer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.create_server"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.create_server">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="DNSOverUDPServerFactory.create_server"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.create_server">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates an :py:class:`DNSOverUDPServer` object.</span>
 
 <span class="sd">        :param loop: the asyncio event loop the server should run in</span>
@@ -130,12 +131,13 @@
 <span class="sd">        :rtype: :py:class:`DNSOverUDPServer`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">local_addr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">local_addr</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNS_PORT</span><span class="p">)</span>
+            <span class="n">local_addr</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNS_PORT</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">local_addr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">local_addr</span> <span class="o">=</span> <span class="p">(</span><span class="n">local_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNS_PORT</span><span class="p">)</span>
 
         <span class="n">_</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="k">await</span> <span class="n">loop</span><span class="o">.</span><span class="n">create_datagram_endpoint</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_create_server_protocol</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_server_protocol</span><span class="p">,</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
             <span class="n">local_addr</span><span class="o">=</span><span class="n">local_addr</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>

@@ -71,11 +71,13 @@
 
 <div class="viewcode-block" id="NotAcceptable"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.NotAcceptable">[docs]</a><span class="k">class</span> <span class="nc">NotAcceptable</span><span class="p">(</span><span class="n">aiocoap</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">ConstructionRenderableError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Exception to represent a 4.06 Not Acceptable CoAP error response&quot;&quot;&quot;</span>
+
     <span class="n">code</span> <span class="o">=</span> <span class="n">NOT_ACCEPTABLE</span></div>
 
 
 <div class="viewcode-block" id="DNSOverCoAPServerFactory"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory">[docs]</a><span class="k">class</span> <span class="nc">DNSOverCoAPServerFactory</span><span class="p">(</span><span class="n">BaseServerFactory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Factory to create DNS over CoAP servers&quot;&quot;&quot;</span>
+
     <span class="c1"># pylint: disable=too-few-public-methods</span>
 
     <span class="k">class</span> <span class="nc">_InnerDNSUpstream</span><span class="p">(</span><span class="n">DNSUpstreamServerMixin</span><span class="p">):</span>
@@ -86,9 +88,7 @@
 
         <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">requester</span><span class="p">):</span>
             <span class="k">assert</span> <span class="n">requester</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span>
-                <span class="n">requester</span>
-            <span class="p">]</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span><span class="n">requester</span><span class="p">]</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
         <span class="c1"># pylint: disable=missing-function-docstring</span>
         <span class="k">async</span> <span class="k">def</span> <span class="nf">dns_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
@@ -102,23 +102,24 @@
 <span class="sd">        :param factory: The factory that created the DNS over CoAP server.</span>
 <span class="sd">        :type factory: :py:class:`DNSOverCoAPServerFactory`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
             <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_dns_upstream</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">_InnerDNSUpstream</span><span class="p">(</span>
-                <span class="n">factory</span><span class="o">.</span><span class="n">dns_upstream</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dns_upstream</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">_InnerDNSUpstream</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">dns_upstream</span><span class="p">)</span>
 
         <span class="nd">@staticmethod</span>
         <span class="k">def</span> <span class="nf">_coap_response</span><span class="p">(</span><span class="n">dns_response</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">aiocoap</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span>
                 <span class="n">content_format</span><span class="o">=</span><span class="n">CONTENT_FORMAT_DNS_MESSAGE</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
-                <span class="n">payload</span><span class="o">=</span><span class="n">dns_response</span>
+                <span class="n">payload</span><span class="o">=</span><span class="n">dns_response</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">async</span> <span class="k">def</span> <span class="nf">_render_acceptable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
             <span class="n">formatted_response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dns_upstream</span><span class="o">.</span><span class="n">dns_response</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">accept</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> \
-               <span class="n">request</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">accept</span> <span class="o">==</span> <span class="n">CONTENT_FORMAT_DNS_MESSAGE</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">request</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">accept</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">accept</span> <span class="o">==</span> <span class="n">CONTENT_FORMAT_DNS_MESSAGE</span>
+            <span class="p">):</span>
                 <span class="n">dns_response</span> <span class="o">=</span> <span class="n">formatted_response</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">NotAcceptable</span><span class="p">()</span>
@@ -148,12 +149,12 @@
 <span class="sd">            :returns: The response for the GET request.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">queries</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">uri_query</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">&#39;dns&#39;</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">:</span>
-                <span class="n">query_code</span> <span class="o">=</span> <span class="n">queries</span><span class="p">[</span><span class="s1">&#39;dns&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;dns&quot;</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">:</span>
+                <span class="n">query_code</span> <span class="o">=</span> <span class="n">queries</span><span class="p">[</span><span class="s2">&quot;dns&quot;</span><span class="p">]</span>
                 <span class="c1"># python&#39;s base64 only understands encoding with padding, so</span>
                 <span class="c1"># add &#39;=&#39; padding if needed</span>
                 <span class="n">query</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span>
-                    <span class="n">query_code</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">query_code</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
+                    <span class="n">query_code</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">query_code</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
                 <span class="p">)</span>
                 <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_render_acceptable</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">aiocoap</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">BadRequest</span><span class="p">()</span></div>
@@ -171,6 +172,7 @@
         <span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.Context` that also serves as an extension of</span>
 <span class="sd">        :py:class:`.dns_server.BaseDNSServer` so it can be returned by</span>
 <span class="sd">        :py:meth:`DNSOverCoAPServerFactory.create_server`&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="DNSOverCoAPServerFactory.ClosableContext.close"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext.close">[docs]</a>        <span class="k">async</span> <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">ri_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_interfaces</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_interfaces</span><span class="p">:</span>
@@ -196,32 +198,37 @@
 <span class="sd">        :rtype: :py:class:`ClosableContext`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">local_addr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">local_addr</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">local_addr</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">site</span> <span class="o">=</span> <span class="n">aiocoap</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Site</span><span class="p">()</span>
         <span class="n">site</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span>
-            <span class="p">[</span><span class="s1">&#39;.well-known&#39;</span><span class="p">,</span> <span class="s1">&#39;core&#39;</span><span class="p">],</span>
-            <span class="n">aiocoap</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">WKCResource</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">get_resources_as_linkheader</span><span class="p">)</span>
+            <span class="p">[</span><span class="s2">&quot;.well-known&quot;</span><span class="p">,</span> <span class="s2">&quot;core&quot;</span><span class="p">],</span>
+            <span class="n">aiocoap</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">WKCResource</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">get_resources_as_linkheader</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">site</span><span class="o">.</span><span class="n">add_resource</span><span class="p">([</span><span class="s1">&#39;dns-query&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNSQueryResource</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">site</span><span class="o">.</span><span class="n">add_resource</span><span class="p">([</span><span class="s2">&quot;dns-query&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNSQueryResource</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">client_identity</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s1">&#39;dtls_credentials&#39;</span><span class="p">][</span><span class="s1">&#39;client_identity&#39;</span><span class="p">]</span>
-            <span class="n">psk</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s1">&#39;dtls_credentials&#39;</span><span class="p">][</span><span class="s1">&#39;psk&#39;</span><span class="p">]</span>
+            <span class="n">client_identity</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s2">&quot;dtls_credentials&quot;</span><span class="p">][</span><span class="s2">&quot;client_identity&quot;</span><span class="p">]</span>
+            <span class="n">psk</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s2">&quot;dtls_credentials&quot;</span><span class="p">][</span><span class="s2">&quot;psk&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DTLS credential option </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span> \
-                    <span class="kn">from</span> <span class="nn">exc</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DTLS credential option </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
 
-        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;AIOCOAP_DTLSSERVER_ENABLED&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AIOCOAP_DTLSSERVER_ENABLED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
 
         <span class="c1"># pylint: disable=protected-access</span>
-        <span class="n">aiocoap</span><span class="o">.</span><span class="n">transports</span><span class="o">.</span><span class="n">tinydtls_server</span><span class="o">.</span><span class="n">_SEND_SLEEP_WORKAROUND</span> <span class="o">=</span> \
-            <span class="n">Config</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dtls&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;server_hello_done_delay&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClosableContext</span><span class="o">.</span><span class="n">create_server_context</span><span class="p">(</span><span class="n">site</span><span class="p">,</span>
-                                                               <span class="n">local_addr</span><span class="p">)</span>
-        <span class="n">ctx</span><span class="o">.</span><span class="n">server_credentials</span><span class="o">.</span><span class="n">load_from_dict</span><span class="p">({</span><span class="s2">&quot;:client&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dtls&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;client-identity&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ascii&quot;</span><span class="p">:</span> <span class="n">client_identity</span><span class="p">},</span>
-            <span class="s2">&quot;psk&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ascii&quot;</span><span class="p">:</span> <span class="n">psk</span><span class="p">},</span>
-            <span class="p">}}})</span>
+        <span class="n">aiocoap</span><span class="o">.</span><span class="n">transports</span><span class="o">.</span><span class="n">tinydtls_server</span><span class="o">.</span><span class="n">_SEND_SLEEP_WORKAROUND</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">Config</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dtls&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server_hello_done_delay&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClosableContext</span><span class="o">.</span><span class="n">create_server_context</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">local_addr</span><span class="p">)</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">server_credentials</span><span class="o">.</span><span class="n">load_from_dict</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;:client&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;dtls&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;client-identity&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ascii&quot;</span><span class="p">:</span> <span class="n">client_identity</span><span class="p">},</span>
+                        <span class="s2">&quot;psk&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ascii&quot;</span><span class="p">:</span> <span class="n">psk</span><span class="p">},</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">ctx</span></div></div>
 </pre></div>
 

@@ -66,9 +66,9 @@
 
 
 <span class="n">FACTORIES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;coap&#39;</span><span class="p">:</span> <span class="n">coap</span><span class="o">.</span><span class="n">DNSOverCoAPServerFactory</span><span class="p">,</span>
-    <span class="s1">&#39;dtls&#39;</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DNSOverDTLSServerFactory</span><span class="p">,</span>
-    <span class="s1">&#39;udp&#39;</span><span class="p">:</span> <span class="n">udp</span><span class="o">.</span><span class="n">DNSOverUDPServerFactory</span><span class="p">,</span>
+    <span class="s2">&quot;coap&quot;</span><span class="p">:</span> <span class="n">coap</span><span class="o">.</span><span class="n">DNSOverCoAPServerFactory</span><span class="p">,</span>
+    <span class="s2">&quot;dtls&quot;</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DNSOverDTLSServerFactory</span><span class="p">,</span>
+    <span class="s2">&quot;udp&quot;</span><span class="p">:</span> <span class="n">udp</span><span class="o">.</span><span class="n">DNSOverUDPServerFactory</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">servers</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -84,27 +84,27 @@
     <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
         <span class="n">level</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">level</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Level &quot;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid log level </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Invalid log level &quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid log level </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Invalid log level &quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">level</span></div>
 
 
-<div class="viewcode-block" id="HostPortAction"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.HostPortAction">[docs]</a><span class="k">class</span> <span class="nc">HostPortAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>          <span class="c1"># pylint: disable=R0903</span>
+<div class="viewcode-block" id="HostPortAction"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.HostPortAction">[docs]</a><span class="k">class</span> <span class="nc">HostPortAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>  <span class="c1"># pylint: disable=R0903</span>
     <span class="sd">&quot;&quot;&quot;Argument parser Action class to parse a (host, port) pair into a</span>
 <span class="sd">    dictionary.&quot;&quot;&quot;</span>
-    <span class="n">DEFAULT_HOST</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+
+    <span class="n">DEFAULT_HOST</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
     <span class="n">DEFAULT_PORTS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;coap&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="s1">&#39;dtls&#39;</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DNSOverDTLSServerFactory</span><span class="o">.</span><span class="n">DODTLS_PORT</span><span class="p">,</span>
-        <span class="s1">&#39;udp&#39;</span><span class="p">:</span> <span class="n">udp</span><span class="o">.</span><span class="n">DNSOverUDPServerFactory</span><span class="o">.</span><span class="n">DNS_PORT</span><span class="p">,</span>
+        <span class="s2">&quot;coap&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;dtls&quot;</span><span class="p">:</span> <span class="n">dtls</span><span class="o">.</span><span class="n">DNSOverDTLSServerFactory</span><span class="o">.</span><span class="n">DODTLS_PORT</span><span class="p">,</span>
+        <span class="s2">&quot;udp&quot;</span><span class="p">:</span> <span class="n">udp</span><span class="o">.</span><span class="n">DNSOverUDPServerFactory</span><span class="o">.</span><span class="n">DNS_PORT</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="p">,</span>
-                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">option_string</span><span class="si">}</span><span class="s2"> requires 2 or less arguments&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -116,36 +116,40 @@
                 <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_port</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="s1">&#39;transports&#39;</span><span class="p">):</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="s1">&#39;transports&#39;</span><span class="p">,</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">())</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="o">.</span><span class="n">transports</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="n">port</span><span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="s2">&quot;transports&quot;</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="s2">&quot;transports&quot;</span><span class="p">,</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">())</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="o">.</span><span class="n">transports</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="n">port</span><span class="p">})</span>
 
     <span class="k">def</span> <span class="nf">_default_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_PORTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="DTLSCredentialsAction"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.DTLSCredentialsAction">[docs]</a><span class="k">class</span> <span class="nc">DTLSCredentialsAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>   <span class="c1"># pylint: disable=R0903</span>
+<div class="viewcode-block" id="DTLSCredentialsAction"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.DTLSCredentialsAction">[docs]</a><span class="k">class</span> <span class="nc">DTLSCredentialsAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>  <span class="c1"># pylint: disable=R0903</span>
     <span class="sd">&quot;&quot;&quot;Argument parser Action class to parse PSK DTLS credentials into a</span>
 <span class="sd">    dictionary.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="p">,</span>
-                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s1">&#39;client_identity&#39;</span><span class="p">:</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="s1">&#39;psk&#39;</span><span class="p">:</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-        <span class="p">})</span></div>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">setattr</span><span class="p">(</span>
+            <span class="n">namespace</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;client_identity&quot;</span><span class="p">:</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s2">&quot;psk&quot;</span><span class="p">:</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="UpstreamAction"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.UpstreamAction">[docs]</a><span class="k">class</span> <span class="nc">UpstreamAction</span><span class="p">(</span><span class="n">HostPortAction</span><span class="p">):</span>           <span class="c1"># pylint: disable=R0903</span>
+<div class="viewcode-block" id="UpstreamAction"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.UpstreamAction">[docs]</a><span class="k">class</span> <span class="nc">UpstreamAction</span><span class="p">(</span><span class="n">HostPortAction</span><span class="p">):</span>  <span class="c1"># pylint: disable=R0903</span>
     <span class="sd">&quot;&quot;&quot;Argument parser Action class to parse upstream parameters into a</span>
 <span class="sd">    dictionary.&quot;&quot;&quot;</span>
+
     <span class="n">TRANSPORTS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;tcp&#39;</span><span class="p">:</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">DNSTransport</span><span class="o">.</span><span class="n">TCP</span><span class="p">,</span>
-        <span class="s1">&#39;udp&#39;</span><span class="p">:</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP</span><span class="p">,</span>
-        <span class="s1">&#39;udp+tcp&#39;</span><span class="p">:</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP_TCP_FALLBACK</span><span class="p">,</span>
+        <span class="s2">&quot;tcp&quot;</span><span class="p">:</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">DNSTransport</span><span class="o">.</span><span class="n">TCP</span><span class="p">,</span>
+        <span class="s2">&quot;udp&quot;</span><span class="p">:</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP</span><span class="p">,</span>
+        <span class="s2">&quot;udp+tcp&quot;</span><span class="p">:</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">DNSTransport</span><span class="o">.</span><span class="n">UDP_TCP_FALLBACK</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="p">,</span>
-                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">option_string</span><span class="si">}</span><span class="s2"> requires 3 or less arguments&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
@@ -159,8 +163,9 @@
                 <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">port</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="n">port</span><span class="p">,</span>
-                                       <span class="s1">&#39;transport&#39;</span><span class="p">:</span> <span class="n">transport</span><span class="p">})</span>
+        <span class="nb">setattr</span><span class="p">(</span>
+            <span class="n">namespace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="n">port</span><span class="p">,</span> <span class="s2">&quot;transport&quot;</span><span class="p">:</span> <span class="n">transport</span><span class="p">}</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_transport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">TRANSPORTS</span><span class="p">[</span><span class="n">val</span><span class="p">]</span></div>
@@ -169,32 +174,62 @@
 <div class="viewcode-block" id="build_argparser"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.build_argparser">[docs]</a><span class="k">def</span> <span class="nf">build_argparser</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Build argument parser for the proxy CLI command.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--verbosity&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="n">loglevel</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;WARNING&#39;</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Sets the log level&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-C&quot;</span><span class="p">,</span> <span class="s2">&quot;--config-file&quot;</span><span class="p">,</span>
-                        <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Config YAML file&quot;</span><span class="p">)</span>
-    <span class="n">group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;Transports&#39;</span><span class="p">)</span>
-    <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="s2">&quot;--udp&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">HostPortAction</span><span class="p">,</span>
-                       <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;host [port]&#39;</span><span class="p">,</span>
-                       <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start DNS-over-UDP proxy&quot;</span><span class="p">)</span>
-    <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--dtls&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">HostPortAction</span><span class="p">,</span>
-                       <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;host [port]&#39;</span><span class="p">,</span>
-                       <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start DNS-over-DTLS proxy&quot;</span><span class="p">)</span>
-    <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--coap&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">HostPortAction</span><span class="p">,</span>
-                       <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;host [port]&#39;</span><span class="p">,</span>
-                       <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start DNS-over-CoAP proxy&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--dtls-credentials&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                        <span class="n">action</span><span class="o">=</span><span class="n">DTLSCredentialsAction</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;client_id psk&#39;</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;DTLS credentials&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-U&quot;</span><span class="p">,</span> <span class="s2">&quot;--upstream-dns&quot;</span><span class="p">,</span>
-                        <span class="n">action</span><span class="o">=</span><span class="n">UpstreamAction</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;[{udp,tcp,udp+tcp}] host [port]&#39;</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Upstream server configuration. Required either &quot;</span>
-                             <span class="s2">&quot;as CLI argument or via config file. udp+tcp &quot;</span>
-                             <span class="s2">&quot;tries to use UDP first, then falls back to TCP.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--verbosity&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">loglevel</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Sets the log level&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--config-file&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Config YAML file&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;Transports&quot;</span><span class="p">)</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-u&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--udp&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">HostPortAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;host [port]&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start DNS-over-UDP proxy&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--dtls&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">HostPortAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;host [port]&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start DNS-over-DTLS proxy&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--coap&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">HostPortAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;host [port]&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start DNS-over-CoAP proxy&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--dtls-credentials&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">DTLSCredentialsAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;client_id psk&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;DTLS credentials&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-U&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--upstream-dns&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">UpstreamAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;[{udp,tcp,udp+tcp}] host [port]&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Upstream server configuration. Required either &quot;</span>
+        <span class="s2">&quot;as CLI argument or via config file. udp+tcp &quot;</span>
+        <span class="s2">&quot;tries to use UDP first, then falls back to TCP.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">parser</span></div>
 
 
@@ -214,9 +249,9 @@
         <span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">del</span> <span class="n">args</span><span class="o">.</span><span class="n">config_file</span>
     <span class="n">config</span><span class="o">.</span><span class="n">add_args_config</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;upstream_dns&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span> <span class="ow">and</span> <span class="s1">&#39;mock_dns_upstream&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;upstream_dns&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span> <span class="ow">and</span> <span class="s2">&quot;mock_dns_upstream&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No upstream DNS server provided&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;transports&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;transports&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No proxy config provided&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">config</span></div>
 
@@ -253,18 +288,20 @@
     <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">pre_config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 
     <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s1">&#39;mock_dns_upstream&#39;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
-        <span class="n">upstream</span> <span class="o">=</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">MockDNSUpstream</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;mock_dns_upstream&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;mock_dns_upstream&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">upstream</span> <span class="o">=</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">MockDNSUpstream</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;mock_dns_upstream&quot;</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">upstream</span> <span class="o">=</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">DNSUpstream</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;upstream_dns&#39;</span><span class="p">])</span>
-    <span class="k">for</span> <span class="n">transport</span><span class="p">,</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;transports&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">upstream</span> <span class="o">=</span> <span class="n">dns_upstream</span><span class="o">.</span><span class="n">DNSUpstream</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;upstream_dns&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">transport</span><span class="p">,</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;transports&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">factory</span> <span class="o">=</span> <span class="n">get_factory</span><span class="p">(</span><span class="n">upstream</span><span class="p">,</span> <span class="n">transport</span><span class="p">)</span>
-        <span class="n">servers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">await</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_server</span><span class="p">(</span>
-            <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">])</span>
-        <span class="p">))</span></div>
+        <span class="n">servers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="k">await</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_server</span><span class="p">(</span>
+                <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">])</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sync_main"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.sync_main">[docs]</a><span class="k">def</span> <span class="nf">sync_main</span><span class="p">():</span>                <span class="c1"># pragma: no cover</span>
+<div class="viewcode-block" id="sync_main"><a class="viewcode-back" href="../../../aiodnsprox.cli.html#aiodnsprox.cli.proxy.sync_main">[docs]</a><span class="k">def</span> <span class="nf">sync_main</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
     <span class="sd">&quot;&quot;&quot;Synchronous entry point.&quot;&quot;&quot;</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">Task</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
     <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
