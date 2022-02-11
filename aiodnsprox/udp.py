@@ -13,6 +13,7 @@ from .dns_upstream import DNSUpstreamServerMixin
 
 class DNSOverUDPServerFactory(BaseServerFactory):
     """Factory to create DNS over UDP servers"""
+
     # pylint: disable=too-few-public-methods
     DNS_PORT = 53
 
@@ -22,6 +23,7 @@ class DNSOverUDPServerFactory(BaseServerFactory):
         :param factory: The factory that created the DNS over DTLS server.
         :type factory: :py:class:`DNSOverUDPServerFactory`
         """
+
         def __init__(self, factory):
             super().__init__(dns_upstream=factory.dns_upstream)
             self.transport = None
@@ -34,7 +36,7 @@ class DNSOverUDPServerFactory(BaseServerFactory):
             """See `connection_made()`_
 
             .. _`connection_made()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_made
-            """     # noqa: E501
+            """  # noqa: E501
             self.transport = transport
 
         def datagram_received(self, data, addr):
@@ -42,24 +44,24 @@ class DNSOverUDPServerFactory(BaseServerFactory):
             """See `datagram_received()`_
 
             .. _`datagram_received()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.datagram_received
-            """     # noqa: E501
+            """  # noqa: E501
             self.dns_query_received(data, addr)
 
-        def error_received(self, exc):      # pylint: disable=no-self-use
+        def error_received(self, exc):  # pylint: disable=no-self-use
             # pylint: disable=line-too-long
             """See `error_received()`_
 
             .. _`error_received()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.error_received
-            """     # noqa: E501
-            raise exc                       # pragma: no cover
+            """  # noqa: E501
+            raise exc  # pragma: no cover
 
-        def connection_lost(self, exc):     # pylint: disable=no-self-use
+        def connection_lost(self, exc):  # pylint: disable=no-self-use
             # pylint: disable=line-too-long,unnecessary-pass
             """See `connection_lost()`_
 
             .. _`connection_lost()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_lost
-            """     # noqa: E501
-            pass                            # pragma: no cover
+            """  # noqa: E501
+            pass  # pragma: no cover
 
         async def close(self):
             if self.transport is not None:
@@ -69,8 +71,7 @@ class DNSOverUDPServerFactory(BaseServerFactory):
     def _create_server_protocol(self, *args, **kwargs):
         return self.DNSOverUDPServer(self, *args, **kwargs)
 
-    async def create_server(self, loop, *args, local_addr=None,
-                            **kwargs):
+    async def create_server(self, loop, *args, local_addr=None, **kwargs):
         """Creates an :py:class:`DNSOverUDPServer` object.
 
         :param loop: the asyncio event loop the server should run in
@@ -85,12 +86,13 @@ class DNSOverUDPServerFactory(BaseServerFactory):
         :rtype: :py:class:`DNSOverUDPServer`
         """
         if local_addr is None:
-            local_addr = ('localhost', self.DNS_PORT)
+            local_addr = ("localhost", self.DNS_PORT)
         if local_addr[1] is None:
             local_addr = (local_addr[0], self.DNS_PORT)
 
         _, protocol = await loop.create_datagram_endpoint(
-            self._create_server_protocol, *args,
+            self._create_server_protocol,
+            *args,
             local_addr=local_addr,
             **kwargs,
         )

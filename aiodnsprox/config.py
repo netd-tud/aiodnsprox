@@ -18,12 +18,12 @@ class _Singleton(type):
 
     see https://stackoverflow.com/q/6760685
     """
+
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(_Singleton, cls).__call__(*args,
-                                                                  **kwargs)
+            cls._instances[cls] = super(_Singleton, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
 
 
@@ -31,6 +31,7 @@ class Config(metaclass=_Singleton):
     """Singleton Config mapping class to represent both config file and CLI
     argument congfiguration.
     """
+
     def __init__(self):
         self._sections = {}
 
@@ -38,7 +39,7 @@ class Config(metaclass=_Singleton):
         return pprint.pformat(self._sections)
 
     def __repr__(self):
-        return f'<{type(self).__name__}: {self._sections}>'
+        return f"<{type(self).__name__}: {self._sections}>"
 
     def __len__(self):
         return len(self._sections)
@@ -80,6 +81,10 @@ class Config(metaclass=_Singleton):
         :param args: parsed CLI arguments.
         :type args: :py:class:`argparse.Namespace`
         """
-        self.add_config({k: vars(v)
-                         if isinstance(v, argparse.Namespace) else v
-                         for k, v in vars(args).items() if v is not None})
+        self.add_config(
+            {
+                k: vars(v) if isinstance(v, argparse.Namespace) else v
+                for k, v in vars(args).items()
+                if v is not None
+            }
+        )

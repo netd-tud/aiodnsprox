@@ -24,17 +24,17 @@ def get_requirements():
 
 
 def get_version(package):
-    """ Extract package version without importing file
+    """Extract package version without importing file
     Importing cause issues with coverage,
         (modules can be removed from sys.modules to prevent this)
     Importing __init__.py triggers importing rest and then requests too
 
     Inspired from pep8 setup.py
     """
-    with open(os.path.join(package, '__init__.py')) as init_fd:
+    with open(os.path.join(package, "__init__.py")) as init_fd:
         for line in init_fd:
-            if line.startswith('__version__'):
-                return eval(line.split('=')[-1])  # pylint:disable=eval-used
+            if line.startswith("__version__"):
+                return eval(line.split("=")[-1])  # pylint:disable=eval-used
     return None
 
 
@@ -42,26 +42,30 @@ setup(
     name=PACKAGE,
     version=get_version(PACKAGE),
     description=DESCRIPTION,
-    long_description=open('README.rst').read(),
+    long_description=open("README.rst").read(),
     long_description_content_type="text/x-rst",
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
     url=URL,
-    license='MIT',
+    license="MIT",
     download_url=URL,
     packages=find_packages(),
-    classifiers=['Development Status :: 2 - Pre-Alpha',
-                 'Programming Language :: Python',
-                 'Programming Language :: Python :: 3',
-                 'Programming Language :: Python :: 3.9',
-                 'Intended Audience :: End Users/Desktop',
-                 'Environment :: Console',
-                 'Topic :: Utilities', ],
+    classifiers=[
+        "Development Status :: 2 - Pre-Alpha",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Intended Audience :: End Users/Desktop",
+        "Environment :: Console",
+        "Topic :: Utilities",
+    ],
     install_requires=list(get_requirements()),
-    entry_points= {
-        'console_scripts': [
-            'aiodns-proxy = aiodnsprox.cli.proxy:sync_main',
+    entry_points={
+        "console_scripts": [
+            "aiodns-proxy = aiodnsprox.cli.proxy:sync_main",
         ],
     },
-    python_requires='>=3.7',
+    python_requires=">=3.7",
 )

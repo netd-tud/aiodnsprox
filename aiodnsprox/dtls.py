@@ -30,6 +30,7 @@ class BaseDTLSWrapper(abc.ABC):
                       and decrypted for.
     :type transport: :py:class:`asyncio.DatagramTransport`
     """
+
     def __init__(self, transport: asyncio.DatagramTransport):
         self.transport = transport
 
@@ -69,8 +70,9 @@ class BaseDTLSWrapper(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def handle_message(self, msg: bytes, addr: typing.Any) -> \
-            typing.Tuple[bytes, typing.Any, bool]:
+    def handle_message(
+        self, msg: bytes, addr: typing.Any
+    ) -> typing.Tuple[bytes, typing.Any, bool]:
         """Handles a DTLS message that came over the datagram transport.
 
         :param msg: An incoming DTLS message.
@@ -105,7 +107,8 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
     """A wrapper for
     `tinydtls <https://projects.eclipse.org/projects/iot.tinydtls>`_.
     """
-    EVENT_CONNECTED = 0x1de
+
+    EVENT_CONNECTED = 0x1DE
     _CT_HANDSHAKE = 22
     _HT_SERVER_HELLO_DONE = 14
     LOG_LEVEL = {
@@ -120,12 +123,15 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
     def __init__(self, transport):
         super().__init__(transport)
         # pylint: disable=c-extension-no-member
-        credentials = Config()['dtls_credentials']
-        client_identity = credentials['client_identity'].encode()
-        psk = credentials['psk'].encode()
+        credentials = Config()["dtls_credentials"]
+        client_identity = credentials["client_identity"].encode()
+        psk = credentials["psk"].encode()
         self._dtls = dtls.DTLS(
-            read=self._read, write=self._write, event=self._event,
-            pskId=client_identity, pskStore={client_identity: psk},
+            read=self._read,
+            write=self._write,
+            event=self._event,
+            pskId=client_identity,
+            pskStore={client_identity: psk},
         )
         dtls.setLogLevel(self.LOG_LEVEL[logger.level])
         self._active_sessions = {}
@@ -142,9 +148,12 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
         return len(data)
 
     def _write(self, addr, data):
-        if len(data) > 13 and data[0] == self._CT_HANDSHAKE and \
-           data[13] == self._HT_SERVER_HELLO_DONE:
-            delay = Config().get('dtls', {}).get('server_hello_done_delay')
+        if (
+            len(data) > 13
+            and data[0] == self._CT_HANDSHAKE
+            and data[13] == self._HT_SERVER_HELLO_DONE
+        ):
+            delay = Config().get("dtls", {}).get("server_hello_done_delay")
 
             if delay:
                 # Delay Server Hello Done for a bit
@@ -174,18 +183,15 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
         connected = False
         if isinstance(addr, tuple):
             ret = self._dtls.handleMessageAddr(addr[0], addr[1], msg)
-        elif isinstance(addr, dtls.Session):        # pylint: disable=I1101
+        elif isinstance(addr, dtls.Session):  # pylint: disable=I1101
             ret = self._dtls.handleMessage(addr, msg)
-            addr = addr.addr, addr.port, addr.flowinfo, \
-                addr.scope_id
+            addr = addr.addr, addr.port, addr.flowinfo, addr.scope_id
         else:
             raise ValueError(f"Unexpected session type {type(addr)}")
         if ret < 0:
-            logger.warning('Unable to handle incoming DTLS message from '
-                           '%s', addr)
+            logger.warning("Unable to handle incoming DTLS message from " "%s", addr)
             return None, None, connected
-        if self._last_event == self.EVENT_CONNECTED and \
-           not self.is_connected(addr):
+        if self._last_event == self.EVENT_CONNECTED and not self.is_connected(addr):
             # pylint: disable=c-extension-no-member
             self._active_sessions[addr] = dtls.Session(*addr[:4])
             connected = True
@@ -200,7 +206,7 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
     def write(self, msg, addr):
         if isinstance(addr, tuple):
             if not self.is_connected(addr):
-                logger.warning('%s does not have an active session', addr)
+                logger.warning("%s does not have an active session", addr)
                 return
             addr = self._active_sessions[addr]
         self._dtls.write(addr, msg)
@@ -208,6 +214,7 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
 
 class DNSOverDTLSServerFactory(BaseServerFactory):
     """Factory to create DNS over DLTS servers"""
+
     # pylint: disable=too-few-public-methods
     DODTLS_PORT = 853
     dtls_class = TinyDTLSWrapper
@@ -218,6 +225,7 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
         :param factory: The factory that created the DNS over DTLS server.
         :type factory: :py:class:`DNSOverDTLSServerFactory`
         """
+
         def __init__(self, factory):
             super().__init__(dns_upstream=factory.dns_upstream)
             self.factory = factory
@@ -233,7 +241,7 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
             """See `connection_made()`_
 
             .. _`connection_made()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_made
-            """     # noqa: E501
+            """  # noqa: E501
             self.transport = transport
             self._dtls = self.factory.dtls_class(self.transport)
 
@@ -242,20 +250,20 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
             """See `datagram_received()`_
 
             .. _`datagram_received()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.datagram_received
-            """     # noqa: E501
+            """  # noqa: E501
             data, addr, _ = self._dtls.handle_message(data, addr)
             if data is None:
                 return
             self.dns_query_received(data, addr)
 
-        def error_received(self, exc):      # pylint: disable=no-self-use
+        def error_received(self, exc):  # pylint: disable=no-self-use
             # pylint: disable=line-too-long
             """See `error_received()`_
 
             .. _`error_received()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.error_received
-            """     # noqa: E501
-            self._dtls = None               # pragma: no cover
-            raise exc                       # pragma: no cover
+            """  # noqa: E501
+            self._dtls = None  # pragma: no cover
+            raise exc  # pragma: no cover
 
         def send_response_to_requester(self, response, requester):
             self._dtls.write(response, requester)
@@ -268,22 +276,21 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
                 self.transport.close()
                 self.transport = None
 
-        def connection_lost(self, exc):     # pylint: disable=unused-argument
+        def connection_lost(self, exc):  # pylint: disable=unused-argument
             # pylint: disable=line-too-long
             """See `connection_lost()`_
 
             .. _`connection_lost()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_lost
-            """     # noqa: E501
+            """  # noqa: E501
             self._dtls = None
 
     def _create_server_protocol(self, *args, **kwargs):
         try:
             config = Config()
-            _ = config['dtls_credentials']['client_identity']
-            _ = config['dtls_credentials']['psk']
+            _ = config["dtls_credentials"]["client_identity"]
+            _ = config["dtls_credentials"]["psk"]
         except KeyError as exc:
-            raise RuntimeError(f"DTLS credential option {exc} not found") \
-                from exc
+            raise RuntimeError(f"DTLS credential option {exc} not found") from exc
         return self.DNSOverDTLSServer(self, *args, **kwargs)
 
     async def create_server(self, loop, *args, local_addr=None, **kwargs):
@@ -301,12 +308,14 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
         :rtype: :py:class:`DNSOverDTLSServer`
         """
         if local_addr is None:
-            local_addr = ('localhost', self.DODTLS_PORT)
+            local_addr = ("localhost", self.DODTLS_PORT)
         if local_addr[1] is None:
             local_addr = (local_addr[0], self.DODTLS_PORT)
 
         _, protocol = await loop.create_datagram_endpoint(
             self._create_server_protocol,
-            *args, local_addr=local_addr, **kwargs,
+            *args,
+            local_addr=local_addr,
+            **kwargs,
         )
         return protocol

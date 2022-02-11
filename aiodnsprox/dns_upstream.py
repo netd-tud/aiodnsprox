@@ -29,6 +29,7 @@ class DNSTransport(enum.Enum):
     - :py:attr:`UDP_TCP_FALLBACK` for DNS over UDP with
       a fallback to DNS over TCP in case the DNS over UDP response is truncated
     """
+
     UDP = 0
     UDP_TCP_FALLBACK = 1
     TCP = 2
@@ -49,6 +50,7 @@ class DNSUpstream:
                       :py:attr:`DNSTransport.UDP` will be used.
     :type transport: DNSTransport
     """
+
     _QUERY_FUNC = {
         DNSTransport.UDP: dns.asyncquery.udp,
         DNSTransport.UDP_TCP_FALLBACK: dns.asyncquery.udp_with_fallback,
@@ -57,12 +59,19 @@ class DNSUpstream:
     DEFAULT_LIFETIME = 5.0
     DEFAULT_TIMEOUT = 2.0
 
-    def __init__(self, host: str, port: typing.Optional[int] = None,
-                 transport: typing.Optional[DNSTransport] = DNSTransport.UDP):
+    def __init__(
+        self,
+        host: str,
+        port: typing.Optional[int] = None,
+        transport: typing.Optional[DNSTransport] = DNSTransport.UDP,
+    ):
         self._host = host
         if port is None:
-            if transport in [DNSTransport.UDP, DNSTransport.UDP_TCP_FALLBACK,
-                             DNSTransport.TCP]:
+            if transport in [
+                DNSTransport.UDP,
+                DNSTransport.UDP_TCP_FALLBACK,
+                DNSTransport.TCP,
+            ]:
                 self._port = 53
             else:
                 raise ValueError(f"Unsupported transport {transport}")
@@ -86,7 +95,7 @@ class DNSUpstream:
             lifetime = self.DEFAULT_LIFETIME
         now = time.time()
         duration = now - start
-        if duration < 0:    # pragma: no cover
+        if duration < 0:  # pragma: no cover
             if duration < -1:
                 # Time going backwards is bad. Just give up.
                 raise dns.exception.Timeout(timeout=duration)
@@ -95,7 +104,7 @@ class DNSUpstream:
             # Pretend it didn't happen.
             now = start
         if duration >= lifetime:
-            raise dns.exception.Timeout(timeout=duration)   # pragma: no cover
+            raise dns.exception.Timeout(timeout=duration)  # pragma: no cover
         return min(lifetime - duration, self.DEFAULT_TIMEOUT)
 
     @staticmethod
@@ -104,8 +113,9 @@ class DNSUpstream:
         resp.set_rcode(dns.rcode.SERVFAIL)
         return resp
 
-    async def query(self, query: bytes,
-                    timeout: typing.Optional[float] = None) -> bytes:
+    async def query(
+        self, query: bytes, timeout: typing.Optional[float] = None
+    ) -> bytes:
         """Query proxied DNS server.
 
         :param query: DNS query in the on-the-wire format
@@ -129,16 +139,17 @@ class DNSUpstream:
             while resp is None:
                 timeout = self._compute_timeout(start, lifetime)
                 try:
-                    resp = await self._query_func(qry, where=self._host,
-                                                  port=self._port,
-                                                  timeout=timeout)
+                    resp = await self._query_func(
+                        qry, where=self._host, port=self._port, timeout=timeout
+                    )
                 except dns.exception.DNSException:
                     resp = self._resp_servfail(qry)
                     break
         else:
             try:
-                resp = await self._query_func(qry, where=self._host,
-                                              port=self._port, timeout=timeout)
+                resp = await self._query_func(
+                    qry, where=self._host, port=self._port, timeout=timeout
+                )
             except (dns.exception.DNSException, ConnectionRefusedError):
                 resp = self._resp_servfail(qry)
                 tuple_resp = False
@@ -157,9 +168,10 @@ class MockDNSUpstream(DNSUpstream):
                ``AAAA`` records.
     :type IN: dict
     """
+
     _AF = {
-        'A': socket.AF_INET,
-        'AAAA': socket.AF_INET6,
+        "A": socket.AF_INET,
+        "AAAA": socket.AF_INET6,
     }
 
     def __init__(self, *args, IN=None, **kwargs):
@@ -169,9 +181,7 @@ class MockDNSUpstream(DNSUpstream):
             for key in IN:
                 if isinstance(IN[key], str):
                     try:
-                        self._IN[key] = socket.inet_pton(
-                            self._AF[key], IN[key]
-                        )
+                        self._IN[key] = socket.inet_pton(self._AF[key], IN[key])
                     except OSError as exc:
                         raise ValueError(
                             f"{IN[key]} not a valid {key} record."
@@ -185,11 +195,11 @@ class MockDNSUpstream(DNSUpstream):
                         ) from exc
                     self._IN[key] = IN[key]
                 else:
-                    raise TypeError(f'IN[{key}] of invalid type '
-                                    f'{type(IN[key])}')
+                    raise TypeError(f"IN[{key}] of invalid type " f"{type(IN[key])}")
 
-    async def query(self, query: bytes,
-                    timeout: typing.Optional[float] = None) -> bytes:
+    async def query(
+        self, query: bytes, timeout: typing.Optional[float] = None
+    ) -> bytes:
         qry = dns.message.from_wire(query)
         resp = dns.message.make_response(qry, recursion_available=True)
         questions = resp.sections[dns.message.QUESTION]
@@ -197,16 +207,22 @@ class MockDNSUpstream(DNSUpstream):
         for question in questions:
             data = None
             if question.rdclass == dns.rdataclass.IN:
-                if 'A' in self._IN and question.rdtype == dns.rdatatype.A:
-                    data = self._IN['A']
-                elif 'AAAA' in self._IN and \
-                     question.rdtype == dns.rdatatype.AAAA:
-                    data = self._IN['AAAA']
+                if "A" in self._IN and question.rdtype == dns.rdatatype.A:
+                    data = self._IN["A"]
+                elif "AAAA" in self._IN and question.rdtype == dns.rdatatype.AAAA:
+                    data = self._IN["AAAA"]
             if data is not None:
-                answers.append(dns.rrset.from_rdata_list(question.name, 300, [
-                    dns.rdata.GenericRdata(question.rdclass, question.rdtype,
-                                           data)
-                ]))
+                answers.append(
+                    dns.rrset.from_rdata_list(
+                        question.name,
+                        300,
+                        [
+                            dns.rdata.GenericRdata(
+                                question.rdclass, question.rdtype, data
+                            )
+                        ],
+                    )
+                )
         return resp.to_wire(dns.message)
 
 
@@ -219,24 +235,28 @@ class DNSUpstreamServerMixin(abc.ABC):
     :param timeout: (Optional) timeout for queries towards ``dns_upstream``.
     :type timeout: float
     """
+
     logger = logging.getLogger(".".join([__module__, __name__]))
 
     # pylint: disable=too-few-public-methods
-    def __init__(self, dns_upstream: DNSUpstream,
-                 timeout: typing.Optional[float] = None):
+    def __init__(
+        self, dns_upstream: DNSUpstream, timeout: typing.Optional[float] = None
+    ):
         self._dns_upstream = dns_upstream
         self._timeout = timeout
 
     async def _get_query_response(self, query, requester):
-        self.logger.debug("Received query from %s:\n  %s",
-                          requester,
-                          str(dns.message.from_wire(query))
-                          .replace('\n', '\n  '))
+        self.logger.debug(
+            "Received query from %s:\n  %s",
+            requester,
+            str(dns.message.from_wire(query)).replace("\n", "\n  "),
+        )
         resp = await self._dns_upstream.query(query, timeout=self._timeout)
-        self.logger.debug("Sending response to %s:\n  %s",
-                          requester,
-                          str(dns.message.from_wire(resp))
-                          .replace('\n', '\n  '))
+        self.logger.debug(
+            "Sending response to %s:\n  %s",
+            requester,
+            str(dns.message.from_wire(resp)).replace("\n", "\n  "),
+        )
         self.send_response_to_requester(resp, requester)
 
     def dns_query_received(self, query: bytes, requester) -> typing.NoReturn:
@@ -256,8 +276,7 @@ class DNSUpstreamServerMixin(abc.ABC):
         loop.create_task(coroutine)
 
     @abc.abstractmethod
-    def send_response_to_requester(self, response: bytes,
-                                   requester) -> typing.NoReturn:
+    def send_response_to_requester(self, response: bytes, requester) -> typing.NoReturn:
         """Called when proxied DNS server responded to a DNS query send by
         :py:meth:`dns_query_received`.
 

@@ -17,11 +17,11 @@ from .dns_upstream import DNSUpstream
 
 class BaseDNSServer(abc.ABC):
     """An abstract DNS server."""
+
     # pylint: disable=too-few-public-methods
     @abc.abstractmethod
     async def close(self) -> typing.NoReturn:
-        """Closes the server.
-        """
+        """Closes the server."""
         raise NotImplementedError
 
 
@@ -31,15 +31,19 @@ class BaseServerFactory(abc.ABC):
     :param dns_upstream: The proxied DNS server for
                          :py:class:`.dns_upstream.DNSUpstreamServerMixin`.
     :type upstream_host: :py:class:`.dns_upstream.DNSUpstream`
-    """     # noqa: E501
+    """  # noqa: E501
+
     # pylint: disable=too-few-public-methods
     def __init__(self, dns_upstream: DNSUpstream):
         self.dns_upstream = dns_upstream
 
     @abc.abstractmethod
     async def create_server(
-        self, loop: asyncio.AbstractEventLoop, *args,
-        local_addr: typing.Tuple[str, int] = None, **kwargs
+        self,
+        loop: asyncio.AbstractEventLoop,
+        *args,
+        local_addr: typing.Tuple[str, int] = None,
+        **kwargs
     ) -> BaseDNSServer:
         """Creates a :py:class:`BaseDNSServer` object.
 

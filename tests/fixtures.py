@@ -13,33 +13,43 @@ import pytest
 
 from aiodnsprox.config import Config
 
-TEST_HOSTNAME = 'example.org'
-TEST_ADDRESS = '2001:db8::1'
+TEST_HOSTNAME = "example.org"
+TEST_ADDRESS = "2001:db8::1"
 
 
 @pytest.fixture
 def config():
     conf = Config()
-    conf._sections.clear()      # pylint: disable=protected-access
+    conf._sections.clear()  # pylint: disable=protected-access
     yield conf
-    conf._sections.clear()      # pylint: disable=protected-access
+    conf._sections.clear()  # pylint: disable=protected-access
 
 
 @pytest.fixture
 def dns_server():
-    port = random.randint(1 << 2, 0xff) << 8 | 53
+    port = random.randint(1 << 2, 0xFF) << 8 | 53
     proc = subprocess.Popen(
-        ['dnsmasq', '-k', '-p', str(port),
-         f'--host-record={TEST_HOSTNAME},{TEST_ADDRESS}']
+        [
+            "dnsmasq",
+            "-k",
+            "-p",
+            str(port),
+            f"--host-record={TEST_HOSTNAME},{TEST_ADDRESS}",
+        ]
     )
     while True:
         try:
-            subprocess.check_call(f'ss -ulpn | grep -q {port}', shell=True)
+            subprocess.check_call(f"ss -ulpn | grep -q {port}", shell=True)
         except subprocess.CalledProcessError:
             continue
         else:
             break
-    yield {'host': '::1', 'port': port, 'req_hostname': TEST_HOSTNAME,
-           'resp_rtype': AAAA, 'resp_address': TEST_ADDRESS}
+    yield {
+        "host": "::1",
+        "port": port,
+        "req_hostname": TEST_HOSTNAME,
+        "resp_rtype": AAAA,
+        "resp_address": TEST_ADDRESS,
+    }
     proc.kill()
     proc.wait()
