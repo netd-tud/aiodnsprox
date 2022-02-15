@@ -7,9 +7,12 @@
 
 """DNS over CoAP serving side of the proxy."""
 
-import os
 import asyncio
 import base64
+import os
+import socket
+import sys
+import struct
 
 import aiocoap
 import aiocoap.credentials
@@ -218,4 +221,22 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
             )
             ctx.server_credentials.load_from_dict(credentials)
 
+        if config.get("do_not_auto_flow_label", False):
+            if not sys.platform.startswith("linux"):
+                raise RuntimeError(
+                    f"{sys.platform} not supported for do_not_auto_flow_label"
+                )
+            for iface in ctx.request_interfaces:
+                if hasattr(iface, "token_interface") and hasattr(
+                    iface.token_interface, "message_interface"
+                ):
+                    mman = iface.token_interface.message_interface
+                    sock = None
+                    if hasattr(mman, "transport"):
+                        sock = mman.transport.get_extra_info("socket")
+                    elif hasattr(mman, "_pool") and hasattr(mman._pool, "_transport"):
+                        sock = mman._pool._transport.get_extra_info("socket")
+                    if sock is not None:
+                        disable = struct.pack("i", 0)
+                        sock.setsockopt(socket.IPPROTO_IPV6, 70, disable)
         return ctx

@@ -171,6 +171,12 @@ def build_argparser():
         help="Start DNS-over-CoAP proxy",
     )
     parser.add_argument(
+        "-f",
+        "--do-not-auto-flow-label",
+        action="store_true",
+        help="Turn of auto-flow-labeling for sockets",
+    )
+    parser.add_argument(
         "--dtls-credentials",
         nargs=2,
         action=DTLSCredentialsAction,

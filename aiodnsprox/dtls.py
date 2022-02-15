@@ -10,6 +10,9 @@
 import abc
 import asyncio
 import logging
+import socket
+import struct
+import sys
 import time
 import typing
 
@@ -312,10 +315,19 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
         if local_addr[1] is None:
             local_addr = (local_addr[0], self.DODTLS_PORT)
 
-        _, protocol = await loop.create_datagram_endpoint(
+        transport, protocol = await loop.create_datagram_endpoint(
             self._create_server_protocol,
             *args,
             local_addr=local_addr,
             **kwargs,
         )
+        if Config().get("do_not_auto_flow_label", False):
+            if not sys.platform.startswith("linux"):
+                raise RuntimeError(
+                    f"{sys.platform} not supported for do_not_auto_flow_label"
+                )
+            sock = transport.get_extra_info("socket")
+            if sock is not None:
+                disable = struct.pack("i", 0)
+                sock.setsockopt(socket.IPPROTO_IPV6, 70, disable)
         return protocol
