@@ -197,6 +197,7 @@
 <span class="sd">                  ``aiocoap`` server context.</span>
 <span class="sd">        :rtype: :py:class:`ClosableContext`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">local_addr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">local_addr</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">site</span> <span class="o">=</span> <span class="n">aiocoap</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Site</span><span class="p">()</span>
@@ -204,20 +205,27 @@
             <span class="p">[</span><span class="s2">&quot;.well-known&quot;</span><span class="p">,</span> <span class="s2">&quot;core&quot;</span><span class="p">],</span>
             <span class="n">aiocoap</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">WKCResource</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">get_resources_as_linkheader</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">site</span><span class="o">.</span><span class="n">add_resource</span><span class="p">([</span><span class="s2">&quot;dns-query&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNSQueryResource</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;transports&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coap&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;dns&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">site</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNSQueryResource</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">client_identity</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s2">&quot;dtls_credentials&quot;</span><span class="p">][</span><span class="s2">&quot;client_identity&quot;</span><span class="p">]</span>
-            <span class="n">psk</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()[</span><span class="s2">&quot;dtls_credentials&quot;</span><span class="p">][</span><span class="s2">&quot;psk&quot;</span><span class="p">]</span>
+            <span class="n">client_identity</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;dtls_credentials&quot;</span><span class="p">][</span><span class="s2">&quot;client_identity&quot;</span><span class="p">]</span>
+            <span class="n">psk</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;dtls_credentials&quot;</span><span class="p">][</span><span class="s2">&quot;psk&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DTLS credential option </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
 
         <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AIOCOAP_DTLSSERVER_ENABLED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
 
         <span class="c1"># pylint: disable=protected-access</span>
-        <span class="n">aiocoap</span><span class="o">.</span><span class="n">transports</span><span class="o">.</span><span class="n">tinydtls_server</span><span class="o">.</span><span class="n">_SEND_SLEEP_WORKAROUND</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">Config</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dtls&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server_hello_done_delay&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="n">aiocoap</span><span class="o">.</span><span class="n">transports</span><span class="o">.</span><span class="n">tinydtls_server</span><span class="o">.</span><span class="n">_SEND_SLEEP_WORKAROUND</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;dtls&quot;</span><span class="p">,</span> <span class="p">{}</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server_hello_done_delay&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClosableContext</span><span class="o">.</span><span class="n">create_server_context</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">local_addr</span><span class="p">)</span>
         <span class="n">ctx</span><span class="o">.</span><span class="n">server_credentials</span><span class="o">.</span><span class="n">load_from_dict</span><span class="p">(</span>
             <span class="p">{</span>
