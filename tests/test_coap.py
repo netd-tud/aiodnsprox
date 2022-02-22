@@ -89,7 +89,8 @@ async def _test_dns_query(client, dns_server, uri, method, query):
 
 
 @pytest.mark.asyncio
-async def test_coap_proxy(dns_server, config):
+@pytest.mark.parametrize("path", [None, "/foobar"])
+async def test_coap_proxy(dns_server, config, path):
     proxy_bind = ("::1", None)
     config.add_config(
         {
@@ -99,6 +100,10 @@ async def test_coap_proxy(dns_server, config):
             }
         }
     )
+    if path is None:
+        path = "/dns-query"
+    else:
+        config.add_config({"transports": {"coap": {"path": path}}})
 
     upstream = dns_upstream.DNSUpstream(dns_server["host"], dns_server["port"])
     factory = coap.DNSOverCoAPServerFactory(upstream)
@@ -113,48 +118,48 @@ async def test_coap_proxy(dns_server, config):
         await _test_dns_query(
             client,
             dns_server,
-            f"coap://[{proxy_bind[0]}]/dns-query",
+            f"coap://[{proxy_bind[0]}]{path}",
             aiocoap.FETCH,
             query,
         )
         await _test_dns_query(
             client,
             dns_server,
-            f"coaps://[{proxy_bind[0]}]/dns-query",
+            f"coaps://[{proxy_bind[0]}]{path}",
             aiocoap.FETCH,
             query,
         )
         await _test_dns_query(
             client,
             dns_server,
-            f"coap://[{proxy_bind[0]}]/dns-query",
+            f"coap://[{proxy_bind[0]}]{path}",
             aiocoap.GET,
             query,
         )
         await _test_dns_query(
             client,
             dns_server,
-            f"coaps://[{proxy_bind[0]}]/dns-query",
+            f"coaps://[{proxy_bind[0]}]{path}",
             aiocoap.GET,
             query,
         )
         await _test_dns_query(
             client,
             dns_server,
-            f"coap://[{proxy_bind[0]}]/dns-query",
+            f"coap://[{proxy_bind[0]}]{path}",
             aiocoap.POST,
             query,
         )
         await _test_dns_query(
             client,
             dns_server,
-            f"coaps://[{proxy_bind[0]}]/dns-query",
+            f"coaps://[{proxy_bind[0]}]{path}",
             aiocoap.POST,
             query,
         )
         coap_response = await _send_query_safe(
             client,
-            f"coaps://[{proxy_bind[0]}]/dns-query",
+            f"coaps://[{proxy_bind[0]}]{path}",
             aiocoap.FETCH,
             query,
             content_format=0,
@@ -164,7 +169,7 @@ async def test_coap_proxy(dns_server, config):
         )
         coap_response = await _send_query_safe(
             client,
-            f"coaps://[{proxy_bind[0]}]/dns-query",
+            f"coaps://[{proxy_bind[0]}]{path}",
             aiocoap.FETCH,
             query,
             accept=0,
@@ -172,7 +177,7 @@ async def test_coap_proxy(dns_server, config):
         assert coap_response.code == aiocoap.numbers.codes.Code.NOT_ACCEPTABLE
         coap_response = await _send_query_safe(
             client,
-            f"coaps://[{proxy_bind[0]}]/dns-query",
+            f"coaps://[{proxy_bind[0]}]{path}",
             aiocoap.GET,
             query,
             dns_var="foobar",
