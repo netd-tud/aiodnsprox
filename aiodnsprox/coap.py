@@ -152,6 +152,7 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
                   ``aiocoap`` server context.
         :rtype: :py:class:`ClosableContext`
         """
+        config = Config()
         if local_addr is None:
             local_addr = ("localhost", None)
         site = aiocoap.resource.Site()
@@ -159,20 +160,27 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
             [".well-known", "core"],
             aiocoap.resource.WKCResource(site.get_resources_as_linkheader),
         )
-        site.add_resource(["dns-query"], self.DNSQueryResource(self))
+        path = (
+            config.get("transports", {})
+            .get("coap", {})
+            .get("path", "dns-query")
+            .strip("/")
+            .split("/")
+        )
+        site.add_resource(path, self.DNSQueryResource(self))
 
         try:
-            client_identity = Config()["dtls_credentials"]["client_identity"]
-            psk = Config()["dtls_credentials"]["psk"]
+            client_identity = config["dtls_credentials"]["client_identity"]
+            psk = config["dtls_credentials"]["psk"]
         except KeyError as exc:
             raise RuntimeError(f"DTLS credential option {exc} not found") from exc
 
         os.environ["AIOCOAP_DTLSSERVER_ENABLED"] = "1"
 
         # pylint: disable=protected-access
-        aiocoap.transports.tinydtls_server._SEND_SLEEP_WORKAROUND = (
-            Config().get("dtls", {}).get("server_hello_done_delay", 0.0)
-        )
+        aiocoap.transports.tinydtls_server._SEND_SLEEP_WORKAROUND = config.get(
+            "dtls", {}
+        ).get("server_hello_done_delay", 0.0)
         ctx = await self.ClosableContext.create_server_context(site, local_addr)
         ctx.server_credentials.load_from_dict(
             {
