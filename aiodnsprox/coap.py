@@ -163,7 +163,7 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
         path = (
             config.get("transports", {})
             .get("coap", {})
-            .get("path", "dns-query")
+            .get("path", "dns")
             .strip("/")
             .split("/")
         )

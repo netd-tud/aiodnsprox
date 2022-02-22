@@ -101,7 +101,7 @@ async def test_coap_proxy(dns_server, config, path):
         }
     )
     if path is None:
-        path = "/dns-query"
+        path = "/dns"
     else:
         config.add_config({"transports": {"coap": {"path": path}}})
 
