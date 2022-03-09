@@ -67,11 +67,14 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
             self._dns_upstream = factory._InnerDNSUpstream(factory.dns_upstream)
 
         @staticmethod
-        def _coap_response(dns_response):
-            return aiocoap.Message(
+        def _coap_response(coap_request, dns_response):
+            coap_response = aiocoap.Message(
                 content_format=CONTENT_FORMAT_DNS_MESSAGE,  # noqa: E501
                 payload=dns_response,
             )
+            if Config().get("transports", {}).get("coap", {}).get("use_etag", False):
+                aiocoap.resource.hashing_etag(coap_request, coap_response)
+            return coap_response
 
         async def _render_acceptable(self, request, query):
             formatted_response = await self._dns_upstream.dns_response(query)
@@ -82,7 +85,7 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
                 dns_response = formatted_response
             else:
                 raise NotAcceptable()
-            return self._coap_response(dns_response)
+            return self._coap_response(request, dns_response)
 
         async def _render_with_payload(self, request):
             if request.opt.content_format == CONTENT_FORMAT_DNS_MESSAGE:
