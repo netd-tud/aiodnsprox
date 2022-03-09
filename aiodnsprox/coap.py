@@ -19,6 +19,7 @@ import aiocoap.credentials
 import aiocoap.resource
 import aiocoap.transports.tinydtls_server
 from aiocoap.numbers import NOT_ACCEPTABLE
+import dns.message
 
 from .config import Config
 from .dns_server import BaseServerFactory, BaseDNSServer
@@ -68,11 +69,40 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
 
         @staticmethod
         def _coap_response(coap_request, dns_response):
-            coap_response = aiocoap.Message(
-                content_format=CONTENT_FORMAT_DNS_MESSAGE,  # noqa: E501
-                payload=dns_response,
-            )
-            if Config().get("transports", {}).get("coap", {}).get("use_etag", False):
+            coap_config = Config().get("transports", {}).get("coap", {})
+            max_age_config = coap_config.get("max_age", None)
+            if max_age_config is not None:
+                resp = dns.message.from_wire(dns_response, one_rr_per_rrset=True)
+                min_ttl = float("inf")
+                for i, section in enumerate(resp.sections):
+                    if i == dns.message.QUESTION:
+                        continue
+                    for record in section:
+                        if record.ttl > 0 and record.ttl < min_ttl:
+                            min_ttl = record.ttl
+                if max_age_config == "eolttls":
+                    for i, section in enumerate(resp.sections):
+                        if i == dns.message.QUESTION:
+                            continue
+                        for record in section:
+                            if record.ttl > 0:
+                                record.ttl -= min_ttl
+                    coap_response = aiocoap.Message(
+                        content_format=CONTENT_FORMAT_DNS_MESSAGE,  # noqa: E501
+                        payload=resp.to_wire(),
+                    )
+                else:
+                    coap_response = aiocoap.Message(
+                        content_format=CONTENT_FORMAT_DNS_MESSAGE,  # noqa: E501
+                        payload=dns_response,
+                    )
+                coap_response.opt.max_age = min_ttl
+            else:
+                coap_response = aiocoap.Message(
+                    content_format=CONTENT_FORMAT_DNS_MESSAGE,  # noqa: E501
+                    payload=dns_response,
+                )
+            if coap_config.get("use_etag", False):
                 aiocoap.resource.hashing_etag(coap_request, coap_response)
             return coap_response
 
