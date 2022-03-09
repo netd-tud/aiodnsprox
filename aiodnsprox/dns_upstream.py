@@ -11,6 +11,7 @@ import asyncio
 import abc
 import enum
 import logging
+import random
 import socket
 import typing
 import time
@@ -175,7 +176,7 @@ class MockDNSUpstream(DNSUpstream):
     }
     logger = logging.getLogger(".".join([__module__, __name__]))
 
-    def __init__(self, *args, IN=None, response_delay=None, **kwargs):
+    def __init__(self, *args, IN=None, response_delay=None, ttl=300, **kwargs):
         # pylint: disable=invalid-name,unused-argument,super-init-not-called
         self._IN = {}
         if isinstance(IN, dict):
@@ -204,6 +205,13 @@ class MockDNSUpstream(DNSUpstream):
         else:
             self.delay_queries = None
             self.delay_time = None
+        self.random_ttl = False
+        if isinstance(ttl, (list, tuple)) and len(ttl) == 2:
+            self.random_ttl = True
+        elif not isinstance(ttl, int):
+            raise TypeError(f"ttl {ttl} of invalid type {type(ttl)}")
+        self.ttl = ttl
+
 
     async def query(
         self, query: bytes, timeout: typing.Optional[float] = None
@@ -229,12 +237,13 @@ class MockDNSUpstream(DNSUpstream):
                 if "A" in self._IN and question.rdtype == dns.rdatatype.A:
                     data = self._IN["A"]
                 elif "AAAA" in self._IN and question.rdtype == dns.rdatatype.AAAA:
-                    data = self._IN["AAAA"]
-            if data is not None:
+                    entries = self._IN["AAAA"]
+            ttl = random.randint(*self.ttl) if self.random_ttl else self.ttl
+            for entry in entries:
                 answers.append(
                     dns.rrset.from_rdata_list(
                         question.name,
-                        300,
+                        ttl,
                         [
                             dns.rdata.GenericRdata(
                                 question.rdclass, question.rdtype, data
