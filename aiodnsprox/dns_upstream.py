@@ -181,23 +181,46 @@ class MockDNSUpstream(DNSUpstream):
         self._IN = {}
         if isinstance(IN, dict):
             for key in IN:
-                if isinstance(IN[key], str):
-                    try:
-                        self._IN[key] = socket.inet_pton(self._AF[key], IN[key])
-                    except OSError as exc:
-                        raise ValueError(
-                            f"{IN[key]} not a valid {key} record."
-                        ) from exc
-                elif isinstance(IN[key], bytes):
-                    try:
-                        socket.inet_ntop(self._AF[key], IN[key])
-                    except ValueError as exc:
-                        raise ValueError(
-                            f"{IN[key]} not a valid {key} record."
-                        ) from exc
-                    self._IN[key] = IN[key]
+                if isinstance(IN[key], (list, tuple)):
+                    for addr in IN[key]:
+                        record = self._parse_address(addr, key)
+                        if key not in self._IN:
+                            self._IN[key] = []
+                        self._IN[key].append(record)
                 else:
-                    raise TypeError(f"IN[{key}] of invalid type " f"{type(IN[key])}")
+                    self._IN[key] = [self._parse_address(IN[key], key)]
+        self._query_count = 0
+        if isinstance(response_delay, dict):
+            self.delay_queries = int(response_delay.get("queries"))
+            self.delay_time = float(response_delay.get("time"))
+        else:
+            self.delay_queries = None
+            self.delay_time = None
+        self.random_ttl = False
+        if isinstance(ttl, (list, tuple)) and len(ttl) == 2:
+            self.random_ttl = True
+        elif not isinstance(ttl, int):
+            raise TypeError(f"ttl {ttl} of invalid type {type(ttl)}")
+        self.ttl = ttl
+
+    def _parse_address(self, address, record_type):
+        if isinstance(address, str):
+            try:
+                return socket.inet_pton(self._AF[record_type], address)
+            except OSError as exc:
+                raise ValueError(
+                    f"{address} not a valid {record_type} record."
+                ) from exc
+        elif isinstance(address, bytes):
+            try:
+                socket.inet_ntop(self._AF[record_type], address)
+            except ValueError as exc:
+                raise ValueError(
+                    f"{address} not a valid {record_type} record."
+                ) from exc
+            return address
+        else:
+            raise TypeError(f"address of invalid type {type(address)}")
         self._query_count = 0
         if isinstance(response_delay, dict):
             self.delay_queries = int(response_delay.get("queries"))
@@ -232,10 +255,10 @@ class MockDNSUpstream(DNSUpstream):
         questions = resp.sections[dns.message.QUESTION]
         answers = resp.sections[dns.message.ANSWER]
         for question in questions:
-            data = None
+            entries = []
             if question.rdclass == dns.rdataclass.IN:
                 if "A" in self._IN and question.rdtype == dns.rdatatype.A:
-                    data = self._IN["A"]
+                    entries = self._IN["A"]
                 elif "AAAA" in self._IN and question.rdtype == dns.rdatatype.AAAA:
                     entries = self._IN["AAAA"]
             ttl = random.randint(*self.ttl) if self.random_ttl else self.ttl
@@ -246,12 +269,12 @@ class MockDNSUpstream(DNSUpstream):
                         ttl,
                         [
                             dns.rdata.GenericRdata(
-                                question.rdclass, question.rdtype, data
+                                question.rdclass, question.rdtype, entry
                             )
                         ],
                     )
                 )
-        return resp.to_wire(dns.message)
+        return resp.to_wire(dns.message, want_shuffle=False)
 
 
 class DNSUpstreamServerMixin(abc.ABC):

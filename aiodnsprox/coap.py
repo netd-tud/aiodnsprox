@@ -89,7 +89,7 @@ class DNSOverCoAPServerFactory(BaseServerFactory):
                                 record.ttl -= min_ttl
                     coap_response = aiocoap.Message(
                         content_format=CONTENT_FORMAT_DNS_MESSAGE,  # noqa: E501
-                        payload=resp.to_wire(),
+                        payload=resp.to_wire(want_shuffle=False),
                     )
                 else:
                     coap_response = aiocoap.Message(
