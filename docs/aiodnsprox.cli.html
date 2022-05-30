@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>CLI interface &#8212; aiodnsprox  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,6 +12,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -49,14 +50,14 @@
           <div class="body" role="main">
             
   <section id="cli-interface">
-<h1>CLI interface<a class="headerlink" href="#cli-interface" title="Permalink to this headline">¶</a></h1>
+<h1>CLI interface<a class="headerlink" href="#cli-interface" title="Permalink to this heading">¶</a></h1>
 <section id="module-aiodnsprox.cli.proxy">
-<span id="implementation-of-the-aiodns-proxy-command"></span><h2>Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command<a class="headerlink" href="#module-aiodnsprox.cli.proxy" title="Permalink to this headline">¶</a></h2>
+<span id="implementation-of-the-aiodns-proxy-command"></span><h2>Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command<a class="headerlink" href="#module-aiodnsprox.cli.proxy" title="Permalink to this heading">¶</a></h2>
 <p>A datagram-based DNS-over-X proxy.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.cli.proxy.DTLSCredentialsAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.cli.proxy.</span></span><span class="sig-name descname"><span class="pre">DTLSCredentialsAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option_strings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metavar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/cli/proxy.html#DTLSCredentialsAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.cli.proxy.DTLSCredentialsAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></p>
 <p>Argument parser Action class to parse PSK DTLS credentials into a
 dictionary.</p>
 </dd></dl>
@@ -64,7 +65,7 @@ dictionary.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.cli.proxy.HostPortAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.cli.proxy.</span></span><span class="sig-name descname"><span class="pre">HostPortAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option_strings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metavar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/cli/proxy.html#HostPortAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.cli.proxy.HostPortAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></p>
 <p>Argument parser Action class to parse a (host, port) pair into a
 dictionary.</p>
 <dl class="py attribute">
@@ -82,7 +83,7 @@ dictionary.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.cli.proxy.UpstreamAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.cli.proxy.</span></span><span class="sig-name descname"><span class="pre">UpstreamAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option_strings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metavar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/cli/proxy.html#UpstreamAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.cli.proxy.UpstreamAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#aiodnsprox.cli.proxy.HostPortAction" title="aiodnsprox.cli.proxy.HostPortAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.cli.proxy.HostPortAction</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#aiodnsprox.cli.proxy.HostPortAction" title="aiodnsprox.cli.proxy.HostPortAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">HostPortAction</span></code></a></p>
 <p>Argument parser Action class to parse upstream parameters into a
 dictionary.</p>
 <dl class="py attribute">
@@ -111,7 +112,7 @@ dictionary.</p>
 configuration file as provided in the CLI arguments (CLI arguments take
 precedence over file configuration).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>args</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Namespace</span></code>) – Parsed CLI arguments.</p>
 </dd>
 </dl>
@@ -122,7 +123,7 @@ precedence over file configuration).</p>
 <span class="sig-prename descclassname"><span class="pre">aiodnsprox.cli.proxy.</span></span><span class="sig-name descname"><span class="pre">get_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">upstream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/cli/proxy.html#get_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.cli.proxy.get_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get server factory for transport.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>upstream</strong> (<a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiodnsprox.dns_upstream.DNSUpstream</span></code></a>) – The proxied DNS server.</p></li>
 <li><p><strong>transport</strong> (<em>str</em>) – <p>One of the following strings:</p>
@@ -142,14 +143,14 @@ precedence over file configuration).</p>
 <span class="sig-prename descclassname"><span class="pre">aiodnsprox.cli.proxy.</span></span><span class="sig-name descname"><span class="pre">loglevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/cli/proxy.html#loglevel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.cli.proxy.loglevel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Type function to set the log level via command-line.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>value</strong> – either a name for a log level or their numeric representation
 (as string).</p>
 </dd>
-<dt class="field-even">Type</dt>
+<dt class="field-even">Type<span class="colon">:</span></dt>
 <dd class="field-even"><p>str</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The (integer) log level.</p>
 </dd>
 </dl>
@@ -214,14 +215,14 @@ servers and sets up the upstream cliend towards the proxied DNS server.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.
   </div>
   
   </body>

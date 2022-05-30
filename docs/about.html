@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>aiodnsprox—A DNS proxy based on Python’s asyncio &#8212; aiodnsprox  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,6 +12,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="author" title="About these documents" href="#" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -51,7 +52,7 @@
           <div class="body" role="main">
             
   <section id="aiodnsproxa-dns-proxy-based-on-python-s-asyncio">
-<h1>aiodnsprox—A DNS proxy based on Python’s asyncio<a class="headerlink" href="#aiodnsproxa-dns-proxy-based-on-python-s-asyncio" title="Permalink to this headline">¶</a></h1>
+<h1>aiodnsprox—A DNS proxy based on Python’s asyncio<a class="headerlink" href="#aiodnsproxa-dns-proxy-based-on-python-s-asyncio" title="Permalink to this heading">¶</a></h1>
 <a class="reference external image-reference" href="https://github.com/anr-bmbf-pivot/aiodnsprox/actions/workflows/test.yml"><img alt="Test aiodnsprox" src="https://github.com/anr-bmbf-pivot/aiodnsprox/actions/workflows/test.yml/badge.svg?event=schedule" /></a>
 <p>aiodnsprox is a DNS proxy based on Python’s <a class="reference external" href="https://docs.python.org/3/library/asyncio.html">asyncio</a>. It supports a variety
 of different DNS transports on both the serving side and the proxied side. On
@@ -71,14 +72,14 @@ unencrypted transfer and CoAP over DTLS.</p></li>
 that provides CoAP over DTLS server support, aiodnsprox is to be considered in
 an early <strong>alpha state</strong>.</p>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
 <p>Currently, aiodnsprox is not provided via PyPI, but you can install it using the
 Git link</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/anr-bmbf-pivot/aiodnsprox/
 </pre></div>
 </div>
 <section id="dependencies">
-<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h3>
 <p>aiodnsprox works on <a class="reference external" href="https://docs.python.org">Python</a> 3.7 or newer.</p>
 <p>The following packages are required (see <a class="reference external" href="https://github.com/anr-bmbf-pivot/aiodnsprox/blob/main/requirements.txt">requirements.txt</a>):
 To parse configuration files <a class="reference external" href="https://pyyaml.org">PyYAML</a> 5.4 or newer is used.
@@ -92,7 +93,7 @@ The branch is based on <a class="reference external" href="https://aiocoap.readt
 </section>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>To start e.g. a DNS over UDP proxy towards a public DNS over UDP server of
 <a class="reference external" href="https://www.opennic.org">OpenNIC</a>, use</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiodns-proxy -u -U <span class="m">185</span>.120.22.15
@@ -104,7 +105,7 @@ The branch is based on <a class="reference external" href="https://aiocoap.readt
 </div>
 </section>
 <section id="development">
-<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this heading">¶</a></h2>
 <p>Code contributions to aiodnsprox can be made in our <a class="reference external" href="https://github.com/anr-bmbf-pivot/aiodnsprox">Github repository</a>.
 Development there follows the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> recommendations and general best practices
 as best as possible.</p>
@@ -163,14 +164,14 @@ whole test suite is via the <a class="reference external" href="https://tox.read
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.
   </div>
   
   </body>
