@@ -235,7 +235,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected session type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to handle incoming DTLS message from &quot;</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to handle incoming DTLS message from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">connected</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_event</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">EVENT_CONNECTED</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
             <span class="c1"># pylint: disable=c-extension-no-member</span>
@@ -302,7 +302,7 @@
                 <span class="k">return</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dns_query_received</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received">[docs]</a>        <span class="k">def</span> <span class="nf">error_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
+<div class="viewcode-block" id="DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received">[docs]</a>        <span class="k">def</span> <span class="nf">error_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
             <span class="c1"># pylint: disable=line-too-long</span>
             <span class="sd">&quot;&quot;&quot;See `error_received()`_</span>
 
