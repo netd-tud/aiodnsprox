@@ -189,7 +189,7 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
         else:
             raise ValueError(f"Unexpected session type {type(addr)}")
         if ret < 0:
-            logger.warning("Unable to handle incoming DTLS message from " "%s", addr)
+            logger.warning("Unable to handle incoming DTLS message from %s", addr)
             return None, None, connected
         if self._last_event == self.EVENT_CONNECTED and not self.is_connected(addr):
             # pylint: disable=c-extension-no-member
@@ -256,7 +256,7 @@ class DNSOverDTLSServerFactory(BaseServerFactory):
                 return
             self.dns_query_received(data, addr)
 
-        def error_received(self, exc):  # pylint: disable=no-self-use
+        def error_received(self, exc):
             # pylint: disable=line-too-long
             """See `error_received()`_
 

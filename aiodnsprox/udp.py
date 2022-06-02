@@ -47,7 +47,7 @@ class DNSOverUDPServerFactory(BaseServerFactory):
             """  # noqa: E501
             self.dns_query_received(data, addr)
 
-        def error_received(self, exc):  # pylint: disable=no-self-use
+        def error_received(self, exc):
             # pylint: disable=line-too-long
             """See `error_received()`_
 
@@ -55,7 +55,7 @@ class DNSOverUDPServerFactory(BaseServerFactory):
             """  # noqa: E501
             raise exc  # pragma: no cover
 
-        def connection_lost(self, exc):  # pylint: disable=no-self-use
+        def connection_lost(self, exc):
             # pylint: disable=line-too-long,unnecessary-pass
             """See `connection_lost()`_
 
