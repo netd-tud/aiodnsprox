@@ -10,13 +10,14 @@ import logging
 import sys
 
 import pytest
+import pytest_asyncio
 
 from aiodnsprox.cli import proxy
 
 from .fixtures import config
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def servers():
     yield proxy.servers
     await proxy.close_servers()
