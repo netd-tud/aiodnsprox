@@ -14,6 +14,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -58,17 +59,110 @@
 <li class="toctree-l1"><a class="reference internal" href="aiodnsprox.html">aiodnsprox package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="aiodnsprox.cli.html">CLI interface</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.cli.html#module-aiodnsprox.cli.proxy">Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.cli.html#implementation-of-the-aiodns-proxy-command">Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#module-aiodnsprox.coap">aiodnsprox.coap module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#module-aiodnsprox.config">aiodnsprox.config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#module-aiodnsprox.dns_server">aiodnsprox.dns_server module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#module-aiodnsprox.dns_upstream">aiodnsprox.dns_upstream module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#module-aiodnsprox.dtls">aiodnsprox.dtls module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#module-aiodnsprox.udp">aiodnsprox.udp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#aiodnsprox-coap-module">aiodnsprox.coap module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory"><code class="docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext"><code class="docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory.ClosableContext</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource"><code class="docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory.DNSQueryResource</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.create_server"><code class="docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory.create_server()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.coap.NotAcceptable"><code class="docutils literal notranslate"><span class="pre">NotAcceptable</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.coap.NotAcceptable.code"><code class="docutils literal notranslate"><span class="pre">NotAcceptable.code</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#aiodnsprox-config-module">aiodnsprox.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.config.Config.add_args_config"><code class="docutils literal notranslate"><span class="pre">Config.add_args_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.config.Config.add_config"><code class="docutils literal notranslate"><span class="pre">Config.add_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.config.Config.add_yaml_config"><code class="docutils literal notranslate"><span class="pre">Config.add_yaml_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.config.Config.get"><code class="docutils literal notranslate"><span class="pre">Config.get()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#aiodnsprox-dns-server-module">aiodnsprox.dns_server module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_server.BaseDNSServer"><code class="docutils literal notranslate"><span class="pre">BaseDNSServer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_server.BaseDNSServer.close"><code class="docutils literal notranslate"><span class="pre">BaseDNSServer.close()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_server.BaseServerFactory"><code class="docutils literal notranslate"><span class="pre">BaseServerFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_server.BaseServerFactory.create_server"><code class="docutils literal notranslate"><span class="pre">BaseServerFactory.create_server()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#aiodnsprox-dns-upstream-module">aiodnsprox.dns_upstream module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSTransport"><code class="docutils literal notranslate"><span class="pre">DNSTransport</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSTransport.TCP"><code class="docutils literal notranslate"><span class="pre">DNSTransport.TCP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSTransport.UDP"><code class="docutils literal notranslate"><span class="pre">DNSTransport.UDP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSTransport.UDP_TCP_FALLBACK"><code class="docutils literal notranslate"><span class="pre">DNSTransport.UDP_TCP_FALLBACK</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream"><code class="docutils literal notranslate"><span class="pre">DNSUpstream</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.DEFAULT_LIFETIME"><code class="docutils literal notranslate"><span class="pre">DNSUpstream.DEFAULT_LIFETIME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.DEFAULT_TIMEOUT"><code class="docutils literal notranslate"><span class="pre">DNSUpstream.DEFAULT_TIMEOUT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.port"><code class="docutils literal notranslate"><span class="pre">DNSUpstream.port</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.query"><code class="docutils literal notranslate"><span class="pre">DNSUpstream.query()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin"><code class="docutils literal notranslate"><span class="pre">DNSUpstreamServerMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received"><code class="docutils literal notranslate"><span class="pre">DNSUpstreamServerMixin.dns_query_received()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.logger"><code class="docutils literal notranslate"><span class="pre">DNSUpstreamServerMixin.logger</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester"><code class="docutils literal notranslate"><span class="pre">DNSUpstreamServerMixin.send_response_to_requester()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream"><code class="docutils literal notranslate"><span class="pre">MockDNSUpstream</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream.query"><code class="docutils literal notranslate"><span class="pre">MockDNSUpstream.query()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#aiodnsprox-dtls-module">aiodnsprox.dtls module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.close"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.connect"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.handle_message"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper.handle_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.is_connected"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper.is_connected()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.sessions"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper.sessions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.write"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper.write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory"><code class="docutils literal notranslate"><span class="pre">DNSOverDTLSServerFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer"><code class="docutils literal notranslate"><span class="pre">DNSOverDTLSServerFactory.DNSOverDTLSServer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DODTLS_PORT"><code class="docutils literal notranslate"><span class="pre">DNSOverDTLSServerFactory.DODTLS_PORT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.create_server"><code class="docutils literal notranslate"><span class="pre">DNSOverDTLSServerFactory.create_server()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.dtls_class"><code class="docutils literal notranslate"><span class="pre">DNSOverDTLSServerFactory.dtls_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper.EVENT_CONNECTED"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper.EVENT_CONNECTED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper.LOG_LEVEL"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper.LOG_LEVEL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper.close"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper.connect"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper.handle_message"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper.handle_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper.is_connected"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper.is_connected()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper.sessions"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper.sessions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper.write"><code class="docutils literal notranslate"><span class="pre">TinyDTLSWrapper.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.html#aiodnsprox-udp-module">aiodnsprox.udp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory"><code class="docutils literal notranslate"><span class="pre">DNSOverUDPServerFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer"><code class="docutils literal notranslate"><span class="pre">DNSOverUDPServerFactory.DNSOverUDPServer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNS_PORT"><code class="docutils literal notranslate"><span class="pre">DNSOverUDPServerFactory.DNS_PORT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.create_server"><code class="docutils literal notranslate"><span class="pre">DNSOverUDPServerFactory.create_server()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -111,7 +205,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.0.post0.
   </div>
   
   </body>

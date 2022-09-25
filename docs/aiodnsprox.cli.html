@@ -14,6 +14,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -51,10 +52,10 @@
             
   <section id="cli-interface">
 <h1>CLI interface<a class="headerlink" href="#cli-interface" title="Permalink to this heading">¶</a></h1>
-<section id="module-aiodnsprox.cli.proxy">
-<span id="implementation-of-the-aiodns-proxy-command"></span><h2>Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command<a class="headerlink" href="#module-aiodnsprox.cli.proxy" title="Permalink to this heading">¶</a></h2>
+<section id="implementation-of-the-aiodns-proxy-command">
+<h2>Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command<a class="headerlink" href="#implementation-of-the-aiodns-proxy-command" title="Permalink to this heading">¶</a></h2>
 <p>A datagram-based DNS-over-X proxy.</p>
-<dl class="py class">
+<span class="target" id="module-aiodnsprox.cli.proxy"></span><dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.cli.proxy.DTLSCredentialsAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.cli.proxy.</span></span><span class="sig-name descname"><span class="pre">DTLSCredentialsAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option_strings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metavar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/cli/proxy.html#DTLSCredentialsAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.cli.proxy.DTLSCredentialsAction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></p>
@@ -184,7 +185,26 @@ servers and sets up the upstream cliend towards the proxied DNS server.</p>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">CLI interface</a><ul>
-<li><a class="reference internal" href="#module-aiodnsprox.cli.proxy">Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command</a></li>
+<li><a class="reference internal" href="#implementation-of-the-aiodns-proxy-command">Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command</a><ul>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.DTLSCredentialsAction"><code class="docutils literal notranslate"><span class="pre">DTLSCredentialsAction</span></code></a></li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.HostPortAction"><code class="docutils literal notranslate"><span class="pre">HostPortAction</span></code></a><ul>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.HostPortAction.DEFAULT_HOST"><code class="docutils literal notranslate"><span class="pre">HostPortAction.DEFAULT_HOST</span></code></a></li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.HostPortAction.DEFAULT_PORTS"><code class="docutils literal notranslate"><span class="pre">HostPortAction.DEFAULT_PORTS</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.UpstreamAction"><code class="docutils literal notranslate"><span class="pre">UpstreamAction</span></code></a><ul>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.UpstreamAction.TRANSPORTS"><code class="docutils literal notranslate"><span class="pre">UpstreamAction.TRANSPORTS</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.build_argparser"><code class="docutils literal notranslate"><span class="pre">build_argparser()</span></code></a></li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.close_servers"><code class="docutils literal notranslate"><span class="pre">close_servers()</span></code></a></li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.get_config"><code class="docutils literal notranslate"><span class="pre">get_config()</span></code></a></li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.get_factory"><code class="docutils literal notranslate"><span class="pre">get_factory()</span></code></a></li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.loglevel"><code class="docutils literal notranslate"><span class="pre">loglevel()</span></code></a></li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#aiodnsprox.cli.proxy.sync_main"><code class="docutils literal notranslate"><span class="pre">sync_main()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -222,7 +242,7 @@ servers and sets up the upstream cliend towards the proxied DNS server.</p>
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.0.post0.
   </div>
   
   </body>
