@@ -60,7 +60,7 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="aiodnsprox.cli.html">CLI interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.cli.html#implementation-of-the-aiodns-proxy-command">Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aiodnsprox.cli.html#module-aiodnsprox.cli.proxy">Implementation of the <code class="docutils literal notranslate"><span class="pre">aiodns-proxy</span></code> Command</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="aiodnsprox.cli.html#aiodnsprox.cli.proxy.DTLSCredentialsAction"><code class="docutils literal notranslate"><span class="pre">DTLSCredentialsAction</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="aiodnsprox.cli.html#aiodnsprox.cli.proxy.HostPortAction"><code class="docutils literal notranslate"><span class="pre">HostPortAction</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="aiodnsprox.cli.html#aiodnsprox.cli.proxy.HostPortAction.DEFAULT_HOST"><code class="docutils literal notranslate"><span class="pre">HostPortAction.DEFAULT_HOST</span></code></a></li>
@@ -85,10 +85,10 @@
 </ul>
 </div>
 </section>
-<section id="aiodnsprox-coap-module">
-<h2>aiodnsprox.coap module<a class="headerlink" href="#aiodnsprox-coap-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-aiodnsprox.coap">
+<span id="aiodnsprox-coap-module"></span><h2>aiodnsprox.coap module<a class="headerlink" href="#module-aiodnsprox.coap" title="Permalink to this heading">¶</a></h2>
 <p>DNS over CoAP serving side of the proxy.</p>
-<span class="target" id="module-aiodnsprox.coap"></span><dl class="py class">
+<dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.coap.DNSOverCoAPServerFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.coap.</span></span><span class="sig-name descname"><span class="pre">DNSOverCoAPServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dns_upstream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><span class="pre">DNSUpstream</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/coap.html#DNSOverCoAPServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.coap.DNSOverCoAPServerFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#aiodnsprox.dns_server.BaseServerFactory" title="aiodnsprox.dns_server.BaseServerFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseServerFactory</span></code></a></p>
@@ -204,10 +204,10 @@ port.</p></li>
 </dd></dl>
 
 </section>
-<section id="aiodnsprox-config-module">
-<h2>aiodnsprox.config module<a class="headerlink" href="#aiodnsprox-config-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-aiodnsprox.config">
+<span id="aiodnsprox-config-module"></span><h2>aiodnsprox.config module<a class="headerlink" href="#module-aiodnsprox.config" title="Permalink to this heading">¶</a></h2>
 <p>Proxy configuration</p>
-<span class="target" id="module-aiodnsprox.config"></span><dl class="py class">
+<dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.config.Config">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -263,10 +263,10 @@ argument congfiguration.</p>
 </dd></dl>
 
 </section>
-<section id="aiodnsprox-dns-server-module">
-<h2>aiodnsprox.dns_server module<a class="headerlink" href="#aiodnsprox-dns-server-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-aiodnsprox.dns_server">
+<span id="aiodnsprox-dns-server-module"></span><h2>aiodnsprox.dns_server module<a class="headerlink" href="#module-aiodnsprox.dns_server" title="Permalink to this heading">¶</a></h2>
 <p>Base definitions for the serving side of the DNS proxy</p>
-<span class="target" id="module-aiodnsprox.dns_server"></span><dl class="py class">
+<dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.dns_server.BaseDNSServer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dns_server.</span></span><span class="sig-name descname"><span class="pre">BaseDNSServer</span></span><a class="reference internal" href="_modules/aiodnsprox/dns_server.html#BaseDNSServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_server.BaseDNSServer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
@@ -317,10 +317,10 @@ default is selected by the implementation.</p></li>
 </dd></dl>
 
 </section>
-<section id="aiodnsprox-dns-upstream-module">
-<h2>aiodnsprox.dns_upstream module<a class="headerlink" href="#aiodnsprox-dns-upstream-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-aiodnsprox.dns_upstream">
+<span id="aiodnsprox-dns-upstream-module"></span><h2>aiodnsprox.dns_upstream module<a class="headerlink" href="#module-aiodnsprox.dns_upstream" title="Permalink to this heading">¶</a></h2>
 <p>Implementation of the proxying side of the DNS proxy.</p>
-<span class="target" id="module-aiodnsprox.dns_upstream"></span><dl class="py class">
+<dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.dns_upstream.DNSTransport">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dns_upstream.</span></span><span class="sig-name descname"><span class="pre">DNSTransport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dns_upstream.html#DNSTransport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dns_upstream.DNSTransport" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
@@ -500,10 +500,10 @@ provided and the transport to the server is
 </dd></dl>
 
 </section>
-<section id="aiodnsprox-dtls-module">
-<h2>aiodnsprox.dtls module<a class="headerlink" href="#aiodnsprox-dtls-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-aiodnsprox.dtls">
+<span id="aiodnsprox-dtls-module"></span><h2>aiodnsprox.dtls module<a class="headerlink" href="#module-aiodnsprox.dtls" title="Permalink to this heading">¶</a></h2>
 <p>DNS over DTLS serving side of the proxy.</p>
-<span class="target" id="module-aiodnsprox.dtls"></span><dl class="py class">
+<dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.dtls.BaseDTLSWrapper">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.dtls.</span></span><span class="sig-name descname"><span class="pre">BaseDTLSWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transport</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DatagramTransport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/dtls.html#BaseDTLSWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.dtls.BaseDTLSWrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
@@ -820,10 +820,10 @@ encrypted message to.</p></li>
 </dd></dl>
 
 </section>
-<section id="aiodnsprox-udp-module">
-<h2>aiodnsprox.udp module<a class="headerlink" href="#aiodnsprox-udp-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-aiodnsprox.udp">
+<span id="aiodnsprox-udp-module"></span><h2>aiodnsprox.udp module<a class="headerlink" href="#module-aiodnsprox.udp" title="Permalink to this heading">¶</a></h2>
 <p>DNS over UDP serving side of the proxy.</p>
-<span class="target" id="module-aiodnsprox.udp"></span><dl class="py class">
+<dl class="py class">
 <dt class="sig sig-object py" id="aiodnsprox.udp.DNSOverUDPServerFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiodnsprox.udp.</span></span><span class="sig-name descname"><span class="pre">DNSOverUDPServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dns_upstream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSUpstream" title="aiodnsprox.dns_upstream.DNSUpstream"><span class="pre">DNSUpstream</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiodnsprox/udp.html#DNSOverUDPServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiodnsprox.udp.DNSOverUDPServerFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#aiodnsprox.dns_server.BaseServerFactory" title="aiodnsprox.dns_server.BaseServerFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseServerFactory</span></code></a></p>
@@ -935,7 +935,7 @@ DNS over DTLS server.</p>
     <ul>
 <li><a class="reference internal" href="#">aiodnsprox package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#aiodnsprox-coap-module">aiodnsprox.coap module</a><ul>
+<li><a class="reference internal" href="#module-aiodnsprox.coap">aiodnsprox.coap module</a><ul>
 <li><a class="reference internal" href="#aiodnsprox.coap.DNSOverCoAPServerFactory"><code class="docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory</span></code></a><ul>
 <li><a class="reference internal" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext"><code class="docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory.ClosableContext</span></code></a><ul>
 <li><a class="reference internal" href="#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext.close"><code class="docutils literal notranslate"><span class="pre">DNSOverCoAPServerFactory.ClosableContext.close()</span></code></a></li>
@@ -956,7 +956,7 @@ DNS over DTLS server.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#aiodnsprox-config-module">aiodnsprox.config module</a><ul>
+<li><a class="reference internal" href="#module-aiodnsprox.config">aiodnsprox.config module</a><ul>
 <li><a class="reference internal" href="#aiodnsprox.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
 <li><a class="reference internal" href="#aiodnsprox.config.Config.add_args_config"><code class="docutils literal notranslate"><span class="pre">Config.add_args_config()</span></code></a></li>
 <li><a class="reference internal" href="#aiodnsprox.config.Config.add_config"><code class="docutils literal notranslate"><span class="pre">Config.add_config()</span></code></a></li>
@@ -966,7 +966,7 @@ DNS over DTLS server.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#aiodnsprox-dns-server-module">aiodnsprox.dns_server module</a><ul>
+<li><a class="reference internal" href="#module-aiodnsprox.dns_server">aiodnsprox.dns_server module</a><ul>
 <li><a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer"><code class="docutils literal notranslate"><span class="pre">BaseDNSServer</span></code></a><ul>
 <li><a class="reference internal" href="#aiodnsprox.dns_server.BaseDNSServer.close"><code class="docutils literal notranslate"><span class="pre">BaseDNSServer.close()</span></code></a></li>
 </ul>
@@ -977,7 +977,7 @@ DNS over DTLS server.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#aiodnsprox-dns-upstream-module">aiodnsprox.dns_upstream module</a><ul>
+<li><a class="reference internal" href="#module-aiodnsprox.dns_upstream">aiodnsprox.dns_upstream module</a><ul>
 <li><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport"><code class="docutils literal notranslate"><span class="pre">DNSTransport</span></code></a><ul>
 <li><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.TCP"><code class="docutils literal notranslate"><span class="pre">DNSTransport.TCP</span></code></a></li>
 <li><a class="reference internal" href="#aiodnsprox.dns_upstream.DNSTransport.UDP"><code class="docutils literal notranslate"><span class="pre">DNSTransport.UDP</span></code></a></li>
@@ -1003,7 +1003,7 @@ DNS over DTLS server.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#aiodnsprox-dtls-module">aiodnsprox.dtls module</a><ul>
+<li><a class="reference internal" href="#module-aiodnsprox.dtls">aiodnsprox.dtls module</a><ul>
 <li><a class="reference internal" href="#aiodnsprox.dtls.BaseDTLSWrapper"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper</span></code></a><ul>
 <li><a class="reference internal" href="#aiodnsprox.dtls.BaseDTLSWrapper.close"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper.close()</span></code></a></li>
 <li><a class="reference internal" href="#aiodnsprox.dtls.BaseDTLSWrapper.connect"><code class="docutils literal notranslate"><span class="pre">BaseDTLSWrapper.connect()</span></code></a></li>
@@ -1041,7 +1041,7 @@ DNS over DTLS server.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#aiodnsprox-udp-module">aiodnsprox.udp module</a><ul>
+<li><a class="reference internal" href="#module-aiodnsprox.udp">aiodnsprox.udp module</a><ul>
 <li><a class="reference internal" href="#aiodnsprox.udp.DNSOverUDPServerFactory"><code class="docutils literal notranslate"><span class="pre">DNSOverUDPServerFactory</span></code></a><ul>
 <li><a class="reference internal" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer"><code class="docutils literal notranslate"><span class="pre">DNSOverUDPServerFactory.DNSOverUDPServer</span></code></a><ul>
 <li><a class="reference internal" href="#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.close"><code class="docutils literal notranslate"><span class="pre">DNSOverUDPServerFactory.DNSOverUDPServer.close()</span></code></a></li>
@@ -1094,7 +1094,7 @@ DNS over DTLS server.</p>
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.1.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.
   </div>
   
   </body>
