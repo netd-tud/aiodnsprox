@@ -9,9 +9,6 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/readable.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -72,13 +69,13 @@
 
 
 <div class="viewcode-block" id="NotAcceptable"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.NotAcceptable">[docs]</a><span class="k">class</span> <span class="nc">NotAcceptable</span><span class="p">(</span><span class="n">aiocoap</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">ConstructionRenderableError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Exception to represent a 4.06 Not Acceptable CoAP error response&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception to represent a 4.06 Not Acceptable CoAP error response&quot;&quot;&quot;</span>
 
     <span class="n">code</span> <span class="o">=</span> <span class="n">NOT_ACCEPTABLE</span></div>
 
 
 <div class="viewcode-block" id="DNSOverCoAPServerFactory"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory">[docs]</a><span class="k">class</span> <span class="nc">DNSOverCoAPServerFactory</span><span class="p">(</span><span class="n">BaseServerFactory</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Factory to create DNS over CoAP servers&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Factory to create DNS over CoAP servers&quot;&quot;&quot;</span>
 
     <span class="c1"># pylint: disable=too-few-public-methods</span>
 
@@ -99,7 +96,7 @@
             <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_responses</span><span class="p">[</span><span class="n">query</span><span class="p">]</span>
 
 <div class="viewcode-block" id="DNSOverCoAPServerFactory.DNSQueryResource"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource">[docs]</a>    <span class="k">class</span> <span class="nc">DNSQueryResource</span><span class="p">(</span><span class="n">aiocoap</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;The DNS over CoAP resource of the DNS over CoAP server.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The DNS over CoAP resource of the DNS over CoAP server.</span>
 
 <span class="sd">        :param factory: The factory that created the DNS over CoAP server.</span>
 <span class="sd">        :type factory: :py:class:`DNSOverCoAPServerFactory`</span>
@@ -135,7 +132,7 @@
             <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_render_acceptable</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DNSOverCoAPServerFactory.DNSQueryResource.render_fetch"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_fetch">[docs]</a>        <span class="k">async</span> <span class="k">def</span> <span class="nf">render_fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.resource.Resource` method to serve a FETCH</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.resource.Resource` method to serve a FETCH</span>
 <span class="sd">            request</span>
 
 <span class="sd">            :param request: The FETCH request</span>
@@ -144,7 +141,7 @@
             <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_render_with_payload</span><span class="p">(</span><span class="n">request</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DNSOverCoAPServerFactory.DNSQueryResource.render_get"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_get">[docs]</a>        <span class="k">async</span> <span class="k">def</span> <span class="nf">render_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.resource.Resource` method to serve a GET</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.resource.Resource` method to serve a GET</span>
 <span class="sd">            request</span>
 
 <span class="sd">            :param request: The GET request</span>
@@ -162,7 +159,7 @@
             <span class="k">raise</span> <span class="n">aiocoap</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">BadRequest</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DNSOverCoAPServerFactory.DNSQueryResource.render_post"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.DNSQueryResource.render_post">[docs]</a>        <span class="k">async</span> <span class="k">def</span> <span class="nf">render_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.resource.Resource` method to serve a POST</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.resource.Resource` method to serve a POST</span>
 <span class="sd">            request</span>
 
 <span class="sd">            :param request: The POST request</span>
@@ -171,7 +168,7 @@
             <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_render_with_payload</span><span class="p">(</span><span class="n">request</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="DNSOverCoAPServerFactory.ClosableContext"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.ClosableContext">[docs]</a>    <span class="k">class</span> <span class="nc">ClosableContext</span><span class="p">(</span><span class="n">aiocoap</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">BaseDNSServer</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.Context` that also serves as an extension of</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;:py:class:`aiocoap.Context` that also serves as an extension of</span>
 <span class="sd">        :py:class:`.dns_server.BaseDNSServer` so it can be returned by</span>
 <span class="sd">        :py:meth:`DNSOverCoAPServerFactory.create_server`&quot;&quot;&quot;</span>
 
@@ -186,7 +183,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">request_interfaces</span> <span class="o">=</span> <span class="n">ri_type</span><span class="p">()</span></div></div>
 
 <div class="viewcode-block" id="DNSOverCoAPServerFactory.create_server"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.coap.DNSOverCoAPServerFactory.create_server">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Creates an ``aiocoap`` server context.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates an ``aiocoap`` server context.</span>
 
 <span class="sd">        :param loop: the asyncio event loop the server should run in</span>
 <span class="sd">        :type loop: :py:class:`asyncio.AbstractEventLoop`</span>
@@ -270,7 +267,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.2.
   </div>
   
   </body>

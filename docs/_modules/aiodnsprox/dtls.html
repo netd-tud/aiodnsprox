@@ -9,9 +9,6 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/readable.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -71,7 +68,7 @@
 
 
 <div class="viewcode-block" id="BaseDTLSWrapper"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper">[docs]</a><span class="k">class</span> <span class="nc">BaseDTLSWrapper</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;An abstract wrapper for a DTLS implementation</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An abstract wrapper for a DTLS implementation</span>
 
 <span class="sd">    :param transport: The datagram transport the datagrams should be encrypted</span>
 <span class="sd">                      and decrypted for.</span>
@@ -83,7 +80,7 @@
 
 <div class="viewcode-block" id="BaseDTLSWrapper.is_connected"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.is_connected">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Check if a session with ``addr`` was established.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if a session with ``addr`` was established.</span>
 
 <span class="sd">        :param addr: A remote endpoint (implementation-specific)</span>
 <span class="sd">        :returns: ``True``, when a session with ``addr`` is established,</span>
@@ -93,7 +90,7 @@
 
 <div class="viewcode-block" id="BaseDTLSWrapper.sessions"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.sessions">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">sessions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Returns all currently established sessions.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns all currently established sessions.</span>
 
 <span class="sd">        :returns: A sequence of (implementation-specific) remote endpoints with</span>
 <span class="sd">                  which a session is established.</span>
@@ -102,7 +99,7 @@
 
 <div class="viewcode-block" id="BaseDTLSWrapper.connect"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.connect">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Establish a session with ``addr``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Establish a session with ``addr``.</span>
 
 <span class="sd">        :param addr: An (implementation-specific) remote endpoint</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -110,7 +107,7 @@
 
 <div class="viewcode-block" id="BaseDTLSWrapper.close"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.close">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Closes a session with ``addr``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Closes a session with ``addr``.</span>
 
 <span class="sd">        :param addr: An (implementation-specific) remote endpoint</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -120,7 +117,7 @@
     <span class="k">def</span> <span class="nf">handle_message</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Handles a DTLS message that came over the datagram transport.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handles a DTLS message that came over the datagram transport.</span>
 
 <span class="sd">        :param msg: An incoming DTLS message.</span>
 <span class="sd">        :type msg: bytes</span>
@@ -140,7 +137,7 @@
 
 <div class="viewcode-block" id="BaseDTLSWrapper.write"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.BaseDTLSWrapper.write">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Send a ``msg`` encrypted to ``addr``</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a ``msg`` encrypted to ``addr``</span>
 
 <span class="sd">        :param msg: The message to encrypt via DTLS.</span>
 <span class="sd">        :type msg: bytes</span>
@@ -151,7 +148,7 @@
 
 
 <div class="viewcode-block" id="TinyDTLSWrapper"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.TinyDTLSWrapper">[docs]</a><span class="k">class</span> <span class="nc">TinyDTLSWrapper</span><span class="p">(</span><span class="n">BaseDTLSWrapper</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A wrapper for</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A wrapper for</span>
 <span class="sd">    `tinydtls &lt;https://projects.eclipse.org/projects/iot.tinydtls&gt;`_.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -260,14 +257,14 @@
 
 
 <div class="viewcode-block" id="DNSOverDTLSServerFactory"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory">[docs]</a><span class="k">class</span> <span class="nc">DNSOverDTLSServerFactory</span><span class="p">(</span><span class="n">BaseServerFactory</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Factory to create DNS over DLTS servers&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Factory to create DNS over DLTS servers&quot;&quot;&quot;</span>
 
     <span class="c1"># pylint: disable=too-few-public-methods</span>
     <span class="n">DODTLS_PORT</span> <span class="o">=</span> <span class="mi">853</span>
     <span class="n">dtls_class</span> <span class="o">=</span> <span class="n">TinyDTLSWrapper</span>
 
 <div class="viewcode-block" id="DNSOverDTLSServerFactory.DNSOverDTLSServer"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer">[docs]</a>    <span class="k">class</span> <span class="nc">DNSOverDTLSServer</span><span class="p">(</span><span class="n">BaseDNSServer</span><span class="p">,</span> <span class="n">DNSUpstreamServerMixin</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;DNS over DTLS server implementation.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DNS over DTLS server implementation.</span>
 
 <span class="sd">        :param factory: The factory that created the DNS over DTLS server.</span>
 <span class="sd">        :type factory: :py:class:`DNSOverDTLSServerFactory`</span>
@@ -285,7 +282,7 @@
 
 <div class="viewcode-block" id="DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_made"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_made">[docs]</a>        <span class="k">def</span> <span class="nf">connection_made</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transport</span><span class="p">):</span>
             <span class="c1"># pylint: disable=line-too-long</span>
-            <span class="sd">&quot;&quot;&quot;See `connection_made()`_</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;See `connection_made()`_</span>
 
 <span class="sd">            .. _`connection_made()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_made</span>
 <span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
@@ -294,7 +291,7 @@
 
 <div class="viewcode-block" id="DNSOverDTLSServerFactory.DNSOverDTLSServer.datagram_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.datagram_received">[docs]</a>        <span class="k">def</span> <span class="nf">datagram_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
             <span class="c1"># pylint: disable=line-too-long</span>
-            <span class="sd">&quot;&quot;&quot;See `datagram_received()`_</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;See `datagram_received()`_</span>
 
 <span class="sd">            .. _`datagram_received()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.datagram_received</span>
 <span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
@@ -305,7 +302,7 @@
 
 <div class="viewcode-block" id="DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.error_received">[docs]</a>        <span class="k">def</span> <span class="nf">error_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
             <span class="c1"># pylint: disable=line-too-long</span>
-            <span class="sd">&quot;&quot;&quot;See `error_received()`_</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;See `error_received()`_</span>
 
 <span class="sd">            .. _`error_received()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.DatagramProtocol.error_received</span>
 <span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
@@ -325,7 +322,7 @@
 
 <div class="viewcode-block" id="DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_lost"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.DNSOverDTLSServer.connection_lost">[docs]</a>        <span class="k">def</span> <span class="nf">connection_lost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>  <span class="c1"># pylint: disable=unused-argument</span>
             <span class="c1"># pylint: disable=line-too-long</span>
-            <span class="sd">&quot;&quot;&quot;See `connection_lost()`_</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;See `connection_lost()`_</span>
 
 <span class="sd">            .. _`connection_lost()`: https://docs.python.org/3/library/asyncio-protocol.html#asyncio.BaseProtocol.connection_lost</span>
 <span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
@@ -341,7 +338,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNSOverDTLSServer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DNSOverDTLSServerFactory.create_server"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dtls.DNSOverDTLSServerFactory.create_server">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Creates an :py:class:`DNSOverDTLSServer` object.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates an :py:class:`DNSOverDTLSServer` object.</span>
 
 <span class="sd">        :param loop: the asyncio event loop the server should run in</span>
 <span class="sd">        :type loop: :py:class:`asyncio.AbstractEventLoop`</span>
@@ -396,7 +393,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.2.
   </div>
   
   </body>

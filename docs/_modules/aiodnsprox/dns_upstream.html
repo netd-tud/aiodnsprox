@@ -9,9 +9,6 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/readable.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -69,7 +66,7 @@
 
 
 <div class="viewcode-block" id="DNSTransport"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSTransport">[docs]</a><span class="k">class</span> <span class="nc">DNSTransport</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Type to identify the server proxied via :py:class:`DNSUpstream`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Type to identify the server proxied via :py:class:`DNSUpstream`.</span>
 
 <span class="sd">    - :py:attr:`TCP` for DNS over TCP</span>
 <span class="sd">    - :py:attr:`UDP` for DNS over UDP</span>
@@ -83,7 +80,7 @@
 
 
 <div class="viewcode-block" id="DNSUpstream"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream">[docs]</a><span class="k">class</span> <span class="nc">DNSUpstream</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Implementation of the DNS client towards the proxied DNS server</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implementation of the DNS client towards the proxied DNS server</span>
 
 <span class="sd">    :param host: Host of the proxied DNS server</span>
 <span class="sd">    :type host: str</span>
@@ -129,7 +126,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Port of the proxied DNS server</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Port of the proxied DNS server</span>
 
 <span class="sd">        :type: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -163,7 +160,7 @@
 <div class="viewcode-block" id="DNSUpstream.query"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Query proxied DNS server.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Query proxied DNS server.</span>
 
 <span class="sd">        :param query: DNS query in the on-the-wire format</span>
 <span class="sd">        :type query: bytes</span>
@@ -207,7 +204,7 @@
 
 
 <div class="viewcode-block" id="MockDNSUpstream"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream">[docs]</a><span class="k">class</span> <span class="nc">MockDNSUpstream</span><span class="p">(</span><span class="n">DNSUpstream</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Mocks an upstream by statically responding with a preconfigured set of</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mocks an upstream by statically responding with a preconfigured set of</span>
 <span class="sd">    records.</span>
 
 <span class="sd">    :param IN: Records for the RDATA class IN. A mapping that maps the name of</span>
@@ -274,7 +271,7 @@
 
 
 <div class="viewcode-block" id="DNSUpstreamServerMixin"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin">[docs]</a><span class="k">class</span> <span class="nc">DNSUpstreamServerMixin</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Mixin for the serving side of the proxy for easy access towards the</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin for the serving side of the proxy for easy access towards the</span>
 <span class="sd">    proxied side.</span>
 
 <span class="sd">    :param dns_upstream: The proxied DNS server.</span>
@@ -307,7 +304,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">send_response_to_requester</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DNSUpstreamServerMixin.dns_query_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received">[docs]</a>    <span class="k">def</span> <span class="nf">dns_query_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;The serving end of the proxy notifies that it received a DNS query</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The serving end of the proxy notifies that it received a DNS query</span>
 <span class="sd">        and sends it to the proxied DNS server. When a response is received</span>
 <span class="sd">        asynchronously, :py:meth:`send_response_to_requester` is called to</span>
 <span class="sd">        notify the serving end about the received response.</span>
@@ -324,7 +321,7 @@
 
 <div class="viewcode-block" id="DNSUpstreamServerMixin.send_response_to_requester"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Called when proxied DNS server responded to a DNS query send by</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when proxied DNS server responded to a DNS query send by</span>
 <span class="sd">        :py:meth:`dns_query_received`.</span>
 
 <span class="sd">        :param response: The DNS response in on-the-wire format received from</span>
@@ -366,7 +363,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.2.
   </div>
   
   </body>

@@ -9,9 +9,6 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/readable.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -61,7 +58,7 @@
 
 
 <span class="k">class</span> <span class="nc">_Singleton</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Singleton meta class.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Singleton meta class.</span>
 
 <span class="sd">    see https://stackoverflow.com/q/6760685</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -75,7 +72,7 @@
 
 
 <div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">_Singleton</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Singleton Config mapping class to represent both config file and CLI</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Singleton Config mapping class to represent both config file and CLI</span>
 <span class="sd">    argument congfiguration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -98,7 +95,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
 <div class="viewcode-block" id="Config.get"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.config.Config.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get configuration section.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get configuration section.</span>
 
 <span class="sd">        :param key: Name of the configuration section.</span>
 <span class="sd">        :type key: str</span>
@@ -107,7 +104,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Config.add_config"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.config.Config.add_config">[docs]</a>    <span class="k">def</span> <span class="nf">add_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Adds configuration from a mapping</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds configuration from a mapping</span>
 
 <span class="sd">        :param config: A mapping that contains the new configuration sections.</span>
 <span class="sd">        :type config: :py:class:`typing.Mapping`.</span>
@@ -115,7 +112,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Config.add_yaml_config"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.config.Config.add_yaml_config">[docs]</a>    <span class="k">def</span> <span class="nf">add_yaml_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yaml_file</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Adds configuration from a YAML file</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds configuration from a YAML file</span>
 
 <span class="sd">        :param yaml: A file-like object to a YAML file.</span>
 <span class="sd">        :type yaml: A file-like object.</span>
@@ -123,7 +120,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">yaml_file</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Config.add_args_config"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.config.Config.add_args_config">[docs]</a>    <span class="k">def</span> <span class="nf">add_args_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Adds configuration from CLI arguments</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds configuration from CLI arguments</span>
 
 <span class="sd">        :param args: parsed CLI arguments.</span>
 <span class="sd">        :type args: :py:class:`argparse.Namespace`</span>
@@ -165,7 +162,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.2.
   </div>
   
   </body>

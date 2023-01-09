@@ -10,9 +10,6 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/readable.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <link rel="author" title="About these documents" href="#" />
@@ -76,7 +73,7 @@ an early <strong>alpha state</strong>.</p>
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
 <p>Currently, aiodnsprox is not provided via PyPI, but you can install it using the
 Git link</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/anr-bmbf-pivot/aiodnsprox/
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/anr-bmbf-pivot/aiodnsprox/
 </pre></div>
 </div>
 <section id="dependencies">
@@ -97,11 +94,11 @@ The branch is based on <a class="reference external" href="https://aiocoap.readt
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>To start e.g. a DNS over UDP proxy towards a public DNS over UDP server of
 <a class="reference external" href="https://www.opennic.org">OpenNIC</a>, use</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiodns-proxy -u -U <span class="m">185</span>.120.22.15
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiodns-proxy<span class="w"> </span>-u<span class="w"> </span>-U<span class="w"> </span><span class="m">185</span>.120.22.15
 </pre></div>
 </div>
 <p>For more information on the provided arguments, see</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiodns-proxy -h
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aiodns-proxy<span class="w"> </span>-h
 </pre></div>
 </div>
 </section>
@@ -172,7 +169,7 @@ whole test suite is via the <a class="reference external" href="https://tox.read
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.2.
   </div>
   
   </body>
