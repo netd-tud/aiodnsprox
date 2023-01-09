@@ -42,7 +42,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install tox
+        python -m pip install tox<4
         sudo apt-get update
         sudo apt-get install -y tmux dnsmasq
     - name: Test with tox
