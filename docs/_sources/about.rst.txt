@@ -17,7 +17,7 @@ On the serving side, DNS over UDP is supported as well but in addition the
 following are supported:
 
 - DNS over DTLS (`RFC 8094`_)
-- DNS over CoAP (DoC, `draft-lenders-dns-over-coap`_), supporting both
+- DNS over CoAP (DoC, `draft-ietf-core-dns-over-coap`_), supporting both
   unencrypted transfer and CoAP over DTLS.
 
 Since aiodnsprox currently is using an experimental feature branch of `aiocoap`_
@@ -85,7 +85,7 @@ whole test suite is via the `tox`_ tool. Just run
 
 .. _`asyncio`: https://docs.python.org/3/library/asyncio.html
 .. _`RFC 8094`: https://datatracker.ietf.org/doc/html/rfc8094
-.. _`draft-lenders-dns-over-coap`: https://datatracker.ietf.org/doc/html/draft-lenders-dns-over-coap
+.. _`draft-ietf-core-dns-over-coap`: https://datatracker.ietf.org/doc/html/draft-ietf-core-dns-over-coap
 .. _`Python`: https://docs.python.org
 .. _`requirements.txt`: https://github.com/anr-bmbf-pivot/aiodnsprox/blob/main/requirements.txt
 .. _`PyYAML`: https://pyyaml.org

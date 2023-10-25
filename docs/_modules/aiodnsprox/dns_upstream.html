@@ -1,16 +1,15 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>aiodnsprox.dns_upstream &#8212; aiodnsprox  documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/readable.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/readable.css?v=e058d051" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -65,7 +64,9 @@
 <span class="kn">import</span> <span class="nn">dns.message</span>
 
 
-<div class="viewcode-block" id="DNSTransport"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSTransport">[docs]</a><span class="k">class</span> <span class="nc">DNSTransport</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="DNSTransport">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSTransport">[docs]</a>
+<span class="k">class</span> <span class="nc">DNSTransport</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Type to identify the server proxied via :py:class:`DNSUpstream`.</span>
 
 <span class="sd">    - :py:attr:`TCP` for DNS over TCP</span>
@@ -79,7 +80,10 @@
     <span class="n">TCP</span> <span class="o">=</span> <span class="mi">2</span></div>
 
 
-<div class="viewcode-block" id="DNSUpstream"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream">[docs]</a><span class="k">class</span> <span class="nc">DNSUpstream</span><span class="p">:</span>
+
+<div class="viewcode-block" id="DNSUpstream">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream">[docs]</a>
+<span class="k">class</span> <span class="nc">DNSUpstream</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Implementation of the DNS client towards the proxied DNS server</span>
 
 <span class="sd">    :param host: Host of the proxied DNS server</span>
@@ -157,7 +161,9 @@
         <span class="n">resp</span><span class="o">.</span><span class="n">set_rcode</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">rcode</span><span class="o">.</span><span class="n">SERVFAIL</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">resp</span>
 
-<div class="viewcode-block" id="DNSUpstream.query"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span>
+<div class="viewcode-block" id="DNSUpstream.query">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstream.query">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Query proxied DNS server.</span>
@@ -200,10 +206,14 @@
         <span class="k">if</span> <span class="n">tuple_resp</span><span class="p">:</span>
             <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">resp</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_</span>
-        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">to_wire</span><span class="p">()</span></div></div>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">to_wire</span><span class="p">()</span></div>
+</div>
 
 
-<div class="viewcode-block" id="MockDNSUpstream"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream">[docs]</a><span class="k">class</span> <span class="nc">MockDNSUpstream</span><span class="p">(</span><span class="n">DNSUpstream</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MockDNSUpstream">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream">[docs]</a>
+<span class="k">class</span> <span class="nc">MockDNSUpstream</span><span class="p">(</span><span class="n">DNSUpstream</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mocks an upstream by statically responding with a preconfigured set of</span>
 <span class="sd">    records.</span>
 
@@ -241,7 +251,9 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IN[</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">] of invalid type &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">IN</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MockDNSUpstream.query"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span>
+<div class="viewcode-block" id="MockDNSUpstream.query">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.MockDNSUpstream.query">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
         <span class="n">qry</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">from_wire</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
@@ -267,10 +279,14 @@
                         <span class="p">],</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
-        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">to_wire</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">to_wire</span><span class="p">(</span><span class="n">dns</span><span class="o">.</span><span class="n">message</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="DNSUpstreamServerMixin"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin">[docs]</a><span class="k">class</span> <span class="nc">DNSUpstreamServerMixin</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DNSUpstreamServerMixin">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin">[docs]</a>
+<span class="k">class</span> <span class="nc">DNSUpstreamServerMixin</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin for the serving side of the proxy for easy access towards the</span>
 <span class="sd">    proxied side.</span>
 
@@ -303,7 +319,9 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">send_response_to_requester</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DNSUpstreamServerMixin.dns_query_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received">[docs]</a>    <span class="k">def</span> <span class="nf">dns_query_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
+<div class="viewcode-block" id="DNSUpstreamServerMixin.dns_query_received">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.dns_query_received">[docs]</a>
+    <span class="k">def</span> <span class="nf">dns_query_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The serving end of the proxy notifies that it received a DNS query</span>
 <span class="sd">        and sends it to the proxied DNS server. When a response is received</span>
 <span class="sd">        asynchronously, :py:meth:`send_response_to_requester` is called to</span>
@@ -319,7 +337,10 @@
         <span class="n">coroutine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_query_response</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span>
         <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">coroutine</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DNSUpstreamServerMixin.send_response_to_requester"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+
+<div class="viewcode-block" id="DNSUpstreamServerMixin.send_response_to_requester">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.dns_upstream.DNSUpstreamServerMixin.send_response_to_requester">[docs]</a>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when proxied DNS server responded to a DNS query send by</span>
 <span class="sd">        :py:meth:`dns_query_received`.</span>
@@ -332,7 +353,9 @@
 <span class="sd">                          :py:meth:`dns_query_received` for the ``query`` that</span>
 <span class="sd">                          ``response`` is the response to.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
+
 </pre></div>
 
             <div class="clearer"></div>
@@ -363,7 +386,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
   </div>
   
   </body>

@@ -1,16 +1,15 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>aiodnsprox.udp &#8212; aiodnsprox  documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/readable.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/readable.css?v=e058d051" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -55,13 +54,17 @@
 <span class="kn">from</span> <span class="nn">.dns_upstream</span> <span class="kn">import</span> <span class="n">DNSUpstreamServerMixin</span>
 
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory">[docs]</a><span class="k">class</span> <span class="nc">DNSOverUDPServerFactory</span><span class="p">(</span><span class="n">BaseServerFactory</span><span class="p">):</span>
+<div class="viewcode-block" id="DNSOverUDPServerFactory">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory">[docs]</a>
+<span class="k">class</span> <span class="nc">DNSOverUDPServerFactory</span><span class="p">(</span><span class="n">BaseServerFactory</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Factory to create DNS over UDP servers&quot;&quot;&quot;</span>
 
     <span class="c1"># pylint: disable=too-few-public-methods</span>
     <span class="n">DNS_PORT</span> <span class="o">=</span> <span class="mi">53</span>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer">[docs]</a>    <span class="k">class</span> <span class="nc">DNSOverUDPServer</span><span class="p">(</span><span class="n">BaseDNSServer</span><span class="p">,</span> <span class="n">DNSUpstreamServerMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer">[docs]</a>
+    <span class="k">class</span> <span class="nc">DNSOverUDPServer</span><span class="p">(</span><span class="n">BaseDNSServer</span><span class="p">,</span> <span class="n">DNSUpstreamServerMixin</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;DNS over UDP server implementation</span>
 
 <span class="sd">        :param factory: The factory that created the DNS over DTLS server.</span>
@@ -72,10 +75,15 @@
             <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dns_upstream</span><span class="o">=</span><span class="n">factory</span><span class="o">.</span><span class="n">dns_upstream</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.send_response_to_requester"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.send_response_to_requester">[docs]</a>        <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">requester</span><span class="p">):</span>
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.send_response_to_requester">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.send_response_to_requester">[docs]</a>
+        <span class="k">def</span> <span class="nf">send_response_to_requester</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">requester</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">requester</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.connection_made"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_made">[docs]</a>        <span class="k">def</span> <span class="nf">connection_made</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transport</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.connection_made">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_made">[docs]</a>
+        <span class="k">def</span> <span class="nf">connection_made</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transport</span><span class="p">):</span>
             <span class="c1"># pylint: disable=line-too-long</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;See `connection_made()`_</span>
 
@@ -83,7 +91,10 @@
 <span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="n">transport</span></div>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received">[docs]</a>        <span class="k">def</span> <span class="nf">datagram_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.datagram_received">[docs]</a>
+        <span class="k">def</span> <span class="nf">datagram_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
             <span class="c1"># pylint: disable=line-too-long</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;See `datagram_received()`_</span>
 
@@ -91,7 +102,10 @@
 <span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dns_query_received</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.error_received"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.error_received">[docs]</a>        <span class="k">def</span> <span class="nf">error_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.error_received">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.error_received">[docs]</a>
+        <span class="k">def</span> <span class="nf">error_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
             <span class="c1"># pylint: disable=line-too-long</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;See `error_received()`_</span>
 
@@ -99,7 +113,10 @@
 <span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
             <span class="k">raise</span> <span class="n">exc</span>  <span class="c1"># pragma: no cover</span></div>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost">[docs]</a>        <span class="k">def</span> <span class="nf">connection_lost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.connection_lost">[docs]</a>
+        <span class="k">def</span> <span class="nf">connection_lost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
             <span class="c1"># pylint: disable=line-too-long,unnecessary-pass</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;See `connection_lost()`_</span>
 
@@ -107,15 +124,22 @@
 <span class="sd">            &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
             <span class="k">pass</span>  <span class="c1"># pragma: no cover</span></div>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.close"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.close">[docs]</a>        <span class="k">async</span> <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DNSOverUDPServerFactory.DNSOverUDPServer.close">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.DNSOverUDPServer.close">[docs]</a>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="kc">None</span></div>
+</div>
+
 
     <span class="k">def</span> <span class="nf">_create_server_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DNSOverUDPServer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DNSOverUDPServerFactory.create_server"><a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.create_server">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="DNSOverUDPServerFactory.create_server">
+<a class="viewcode-back" href="../../aiodnsprox.html#aiodnsprox.udp.DNSOverUDPServerFactory.create_server">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">local_addr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates an :py:class:`DNSOverUDPServer` object.</span>
 
 <span class="sd">        :param loop: the asyncio event loop the server should run in</span>
@@ -140,7 +164,9 @@
             <span class="n">local_addr</span><span class="o">=</span><span class="n">local_addr</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">protocol</span></div></div>
+        <span class="k">return</span> <span class="n">protocol</span></div>
+</div>
+
 </pre></div>
 
             <div class="clearer"></div>
@@ -171,7 +197,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Martine S. Lenders.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
   </div>
   
   </body>
