@@ -21,7 +21,7 @@ from .dns_server import BaseServerFactory, BaseDNSServer
 from .dns_upstream import DNSUpstreamServerMixin
 
 
-CONTENT_FORMAT_DNS_MESSAGE = 65053
+CONTENT_FORMAT_DNS_MESSAGE = 553
 
 
 class NotAcceptable(aiocoap.error.ConstructionRenderableError):
