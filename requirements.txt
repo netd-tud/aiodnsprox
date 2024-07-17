@@ -1,4 +1,4 @@
 dnspython>=2.1
-DTLSSocket>=0.1
+DTLSSocket==0.1.16
 PyYAML>=5.4
 aiocoap[linkheader,tinydtls,oscore]>=0.4
