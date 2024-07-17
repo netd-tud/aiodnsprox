@@ -26,11 +26,15 @@ def config():
 
 
 @pytest.fixture
-def dns_server():
+def dns_server(tmp_path):
+    config = tmp_path / "dnsmasq.conf"
+    config.write_text("")
     port = random.randint(1 << 2, 0xFF) << 8 | 53
     proc = subprocess.Popen(
         [
             "dnsmasq",
+            "-C",
+            str(config),
             "-k",
             "-p",
             str(port),
