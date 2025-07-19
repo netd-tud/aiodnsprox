@@ -22,7 +22,7 @@ following are supported:
 
 Since aiodnsprox currently is using an experimental feature branch of `aiocoap`_
 that provides CoAP over DTLS server support, aiodnsprox is to be considered in
-an early **alpha state**.
+an early **beta state**.
 
 Installation
 ============
