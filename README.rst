@@ -27,8 +27,13 @@ an early **beta state**.
 Installation
 ============
 
-Currently, aiodnsprox is not provided via PyPI, but you can install it using the
-Git link
+Releases can be installed from PyPI
+
+.. code:: bash
+
+  pip install aiodnsprox
+
+You can install the latest development version directly from GitHub
 
 .. code:: bash
 
