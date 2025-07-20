@@ -8,4 +8,4 @@
 
 # pylint: disable=missing-module-docstring
 
-__version__ = "v0.0.7b1"
+__version__ = "v0.0.7b2"
