@@ -42,7 +42,7 @@ class BaseServerFactory(abc.ABC):
         self,
         loop: asyncio.AbstractEventLoop,
         *args,
-        local_addr: typing.Tuple[str, int] = None,
+        local_addr: typing.Optional[typing.Tuple[str, int]] = None,
         **kwargs
     ) -> BaseDNSServer:
         """Creates a :py:class:`BaseDNSServer` object.

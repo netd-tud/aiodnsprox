@@ -13,7 +13,7 @@ import logging
 import time
 import typing
 
-from DTLSSocket import dtls
+from DTLSSocket import dtls  # type: ignore
 
 from .config import Config
 from .dns_server import BaseServerFactory, BaseDNSServer

@@ -11,10 +11,10 @@ import os
 import asyncio
 import base64
 
-import aiocoap
-import aiocoap.resource
-import aiocoap.transports.tinydtls_server
-from aiocoap.numbers import NOT_ACCEPTABLE
+import aiocoap                              # type: ignore
+import aiocoap.resource                     # type: ignore
+import aiocoap.transports.tinydtls_server   # type: ignore
+from aiocoap.numbers import NOT_ACCEPTABLE  # type: ignore
 
 from .config import Config
 from .dns_server import BaseServerFactory, BaseDNSServer

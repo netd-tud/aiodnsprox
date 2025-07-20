@@ -51,7 +51,7 @@ class DNSUpstream:
     :type transport: DNSTransport
     """
 
-    _QUERY_FUNC = {
+    _QUERY_FUNC: dict[DNSTransport, typing.Callable] = {
         DNSTransport.UDP: dns.asyncquery.udp,
         DNSTransport.UDP_TCP_FALLBACK: dns.asyncquery.udp_with_fallback,
         DNSTransport.TCP: dns.asyncquery.tcp,
@@ -63,7 +63,7 @@ class DNSUpstream:
         self,
         host: str,
         port: typing.Optional[int] = None,
-        transport: typing.Optional[DNSTransport] = DNSTransport.UDP,
+        transport: DNSTransport = DNSTransport.UDP,
     ):
         self._host = host
         if port is None:
@@ -223,7 +223,7 @@ class MockDNSUpstream(DNSUpstream):
                         ],
                     )
                 )
-        return resp.to_wire(dns.message)
+        return resp.to_wire()
 
 
 class DNSUpstreamServerMixin(abc.ABC):
@@ -259,7 +259,7 @@ class DNSUpstreamServerMixin(abc.ABC):
         )
         self.send_response_to_requester(resp, requester)
 
-    def dns_query_received(self, query: bytes, requester) -> typing.NoReturn:
+    def dns_query_received(self, query: bytes, requester):
         """The serving end of the proxy notifies that it received a DNS query
         and sends it to the proxied DNS server. When a response is received
         asynchronously, :py:meth:`send_response_to_requester` is called to
@@ -276,7 +276,7 @@ class DNSUpstreamServerMixin(abc.ABC):
         loop.create_task(coroutine)
 
     @abc.abstractmethod
-    def send_response_to_requester(self, response: bytes, requester) -> typing.NoReturn:
+    def send_response_to_requester(self, response: bytes, requester):
         """Called when proxied DNS server responded to a DNS query send by
         :py:meth:`dns_query_received`.
 

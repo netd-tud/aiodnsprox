@@ -25,7 +25,7 @@ FACTORIES = {
     "dtls": dtls.DNSOverDTLSServerFactory,
     "udp": udp.DNSOverUDPServerFactory,
 }
-servers = []
+servers: list[typing.Tuple[asyncio.Transport, asyncio.Protocol]] = []
 
 
 def loglevel(value):

@@ -19,7 +19,7 @@ class _Singleton(type):
     see https://stackoverflow.com/q/6760685
     """
 
-    _instances = {}
+    _instances: dict[typing.Type["_Singleton"], "_Singleton"] = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
@@ -59,7 +59,7 @@ class Config(metaclass=_Singleton):
         """
         return self._sections.get(section, default)
 
-    def add_config(self, config: typing.Mapping) -> typing.NoReturn:
+    def add_config(self, config: typing.Mapping):
         """Adds configuration from a mapping
 
         :param config: A mapping that contains the new configuration sections.
@@ -67,7 +67,7 @@ class Config(metaclass=_Singleton):
         """
         self._sections.update(config)
 
-    def add_yaml_config(self, yaml_file) -> typing.NoReturn:
+    def add_yaml_config(self, yaml_file):
         """Adds configuration from a YAML file
 
         :param yaml: A file-like object to a YAML file.
@@ -75,7 +75,7 @@ class Config(metaclass=_Singleton):
         """
         self.add_config(yaml.load(yaml_file, yaml.loader.FullLoader))
 
-    def add_args_config(self, args) -> typing.NoReturn:
+    def add_args_config(self, args):
         """Adds configuration from CLI arguments
 
         :param args: parsed CLI arguments.
