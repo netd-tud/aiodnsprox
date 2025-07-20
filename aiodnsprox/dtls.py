@@ -172,7 +172,9 @@ class TinyDTLSWrapper(BaseDTLSWrapper):
         return list(self._active_sessions)
 
     def connect(self, addr):
-        self._dtls.connect(*addr)
+        connection = self._dtls.connect(*addr)
+        if connection:
+            self._active_sessions[addr] = connection
 
     def close(self, addr):
         if self.is_connected(addr):
