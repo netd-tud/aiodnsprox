@@ -54,9 +54,10 @@ jobs:
       run: |
         tox -e build-doc
     - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
         flags: ${{ matrix.python-version }}
+        token: ${{ secrets.CODECOV_TOKEN }}
     - name: Upload doc
       if: matrix.python-version == '3.13'
       run: |
