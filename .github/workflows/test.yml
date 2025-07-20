@@ -48,7 +48,7 @@ jobs:
     - name: Test with tox
       run: |
         pyenv="py$(echo "${{ matrix.python-version }}" | tr -d '.')"
-        tox -e flake8,pylint,${pyenv}-test
+        tox -e ${pyenv}-mypy,flake8,pylint,${pyenv}-test
     - name: Build doc
       if: matrix.python-version == '3.13'
       run: |
