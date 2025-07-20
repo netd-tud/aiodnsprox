@@ -5,6 +5,9 @@ aiodnsprox—A DNS proxy based on Python's asyncio
 .. image:: https://github.com/netd-tud/aiodnsprox/actions/workflows/test.yml/badge.svg?event=schedule
    :alt: Test aiodnsprox
    :target: https://github.com/netd-tud/aiodnsprox/actions/workflows/test.yml
+.. image:: https://codecov.io/gh/miri64/aiodnsprox/graph/badge.svg?token=ZA9K5L0DF2
+   :alt: Coverage aiodnsprox
+   :target: https://codecov.io/gh/miri64/aiodnsprox
 
 aiodnsprox is a DNS proxy based on Python's `asyncio`_. It supports a variety
 of different DNS transports on both the serving side and the proxied side. On
