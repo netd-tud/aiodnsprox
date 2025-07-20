@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright (C) 2021 Freie Universität Berlin
+# Copyright (C) 2021-23 Freie Universität Berlin
+# Copyright (C) 2023-25 TU Dresden
 #
 # Distributed under terms of the MIT license.
 
@@ -13,7 +14,7 @@ from setuptools import setup, find_packages
 PACKAGE = "aiodnsprox"
 DESCRIPTION = "A Python-based DNS-over-X proxy based on aiocoap "
 AUTHOR = "Martine S. Lenders"
-AUTHOR_EMAIL = "m.lenders@fu-berlin.de"
+AUTHOR_EMAIL = "martine.lenders@tu-dresden.de"
 URL = "https://github.com/netd-tud/aiodnsprox"
 
 
