@@ -69,6 +69,7 @@ def test_tinydtls_wrapper__handle_message(caplog, mocker, config):
             b"\x99\x61\x55\x00\x00\x00\x02\xc0\xa8\x01\x00",
             ("::1", 853),
         ) == (None, None, False)
+    # Seems not to be logged like that anymore
     # assert "Unable to handle incoming DTLS message from ('::1', 853)" in caplog.text
 
 
