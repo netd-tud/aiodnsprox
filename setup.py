@@ -14,7 +14,7 @@ PACKAGE = "aiodnsprox"
 DESCRIPTION = "A Python-based DNS-over-X proxy based on aiocoap "
 AUTHOR = "Martine S. Lenders"
 AUTHOR_EMAIL = "m.lenders@fu-berlin.de"
-URL = "https://github.com/anr-bmbf-pivot/aiodnsprox"
+URL = "https://github.com/netd-tud/aiodnsprox"
 
 
 def get_requirements():

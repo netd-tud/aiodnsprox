@@ -2,9 +2,9 @@
 aiodnsprox—A DNS proxy based on Python's asyncio
 ================================================
 
-.. image:: https://github.com/anr-bmbf-pivot/aiodnsprox/actions/workflows/test.yml/badge.svg?event=schedule
+.. image:: https://github.com/netd-tud/aiodnsprox/actions/workflows/test.yml/badge.svg?event=schedule
    :alt: Test aiodnsprox
-   :target: https://github.com/anr-bmbf-pivot/aiodnsprox/actions/workflows/test.yml
+   :target: https://github.com/netd-tud/aiodnsprox/actions/workflows/test.yml
 
 aiodnsprox is a DNS proxy based on Python's `asyncio`_. It supports a variety
 of different DNS transports on both the serving side and the proxied side. On
@@ -37,7 +37,7 @@ You can install the latest development version directly from GitHub
 
 .. code:: bash
 
-  pip install git+https://github.com/anr-bmbf-pivot/aiodnsprox/
+  pip install git+https://github.com/netd-tud/aiodnsprox/
 
 Dependencies
 ------------
@@ -92,18 +92,18 @@ whole test suite is via the `tox`_ tool. Just run
 .. _`RFC 8094`: https://datatracker.ietf.org/doc/html/rfc8094
 .. _`draft-ietf-core-dns-over-coap`: https://datatracker.ietf.org/doc/html/draft-ietf-core-dns-over-coap
 .. _`Python`: https://docs.python.org
-.. _`requirements.txt`: https://github.com/anr-bmbf-pivot/aiodnsprox/blob/main/requirements.txt
+.. _`requirements.txt`: https://github.com/netd-tud/aiodnsprox/blob/main/requirements.txt
 .. _`PyYAML`: https://pyyaml.org
 .. _`dnspython`: https://www.dnspython.org
 .. _`tinydtls`: https://projects.eclipse.org/projects/iot.tinydtls
 .. _`DTLSSocket`: https://git.fslab.de/jkonra2m/tinydtls-cython
 .. _`aiocoap`: https://aiocoap.readthedocs.io
 .. _`OpenNIC`: https://www.opennic.org
-.. _`Github repository`: https://github.com/anr-bmbf-pivot/aiodnsprox
+.. _`Github repository`: https://github.com/netd-tud/aiodnsprox
 .. _`PEP8`: https://www.python.org/dev/peps/pep-0008/
-.. _`issue tracker`: https://github.com/anr-bmbf-pivot/aiodnsprox/issues
-.. _`documentation`: https://anr-bmbf-pivot.github.io/aiodnsprox
+.. _`issue tracker`: https://github.com/netd-tud/aiodnsprox/issues
+.. _`documentation`: https://netd-tud/aiodnsprox
 .. _`sphinx`: https://www.sphinx-doc.org
-.. _`tests`: https://github.com/anr-bmbf-pivot/aiodnsprox/tree/main/tests
+.. _`tests`: https://github.com/netd-tud/aiodnsprox/tree/main/tests
 .. _`pytest`: https://pytest.org
 .. _`tox`: https://tox.readthedocs.io
